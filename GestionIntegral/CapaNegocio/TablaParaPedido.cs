@@ -1,24 +1,28 @@
-﻿using System;
+﻿using GestionIntegral.CapaDatos;
+using GestionIntegral.CapaNegocio;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionIntegral.CapaDatos
+namespace GestionIntegral.CapaNegocio
 {
     class TablaParaPedido
     {
-        DetallePedido de = new DetallePedido();
-        Producto pr = new Producto();
-        DataTable tabla = new DataTable();
+        MetodosDetallePedido metDetalle = new MetodosDetallePedido();
 
-        public DataTable Tabla { get => tabla; set => tabla = value; }
+        Producto pr = new Producto();
+        DataTable Tabla = new DataTable();
+
+   
 
         public void CrearTabla(int id)
         {
-            de.IdDetallePedido = id;
-            Tabla = de.ListarDetallePedidoPorId();
+            DetallePedido de = new DetallePedido(id);
+
+            Tabla = metDetalle.ListarDetallePedidoPorId(de);
             
         }
 

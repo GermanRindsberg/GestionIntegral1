@@ -34,7 +34,6 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnActualizar = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.gridProducto = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -59,7 +58,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtDescripcionFamilia = new System.Windows.Forms.TextBox();
             this.txtDescripcionDiseño = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnBorrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridProducto)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -88,9 +87,9 @@
             // btnCerrar
             // 
             this.btnCerrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnCerrar.Location = new System.Drawing.Point(261, 467);
+            this.btnCerrar.Location = new System.Drawing.Point(203, 467);
             this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(120, 47);
+            this.btnCerrar.Size = new System.Drawing.Size(180, 50);
             this.btnCerrar.TabIndex = 51;
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.UseVisualStyleBackColor = true;
@@ -99,32 +98,20 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnLimpiar.Location = new System.Drawing.Point(261, 414);
+            this.btnLimpiar.Location = new System.Drawing.Point(10, 467);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(120, 47);
+            this.btnLimpiar.Size = new System.Drawing.Size(180, 50);
             this.btnLimpiar.TabIndex = 50;
             this.btnLimpiar.Text = "Limpiar campos";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
-            // 
-            // btnActualizar
-            // 
-            this.btnActualizar.Enabled = false;
-            this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnActualizar.Location = new System.Drawing.Point(136, 414);
-            this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(120, 47);
-            this.btnActualizar.TabIndex = 49;
-            this.btnActualizar.Text = "Editar producto";
-            this.btnActualizar.UseVisualStyleBackColor = true;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // btnAgregar
             // 
             this.btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.btnAgregar.Location = new System.Drawing.Point(10, 414);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(120, 47);
+            this.btnAgregar.Size = new System.Drawing.Size(180, 50);
             this.btnAgregar.TabIndex = 48;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -135,7 +122,7 @@
             this.gridProducto.AllowUserToAddRows = false;
             this.gridProducto.AllowUserToDeleteRows = false;
             this.gridProducto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProducto.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
+            this.gridProducto.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -154,11 +141,9 @@
             this.gridProducto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProducto.ShowCellErrors = false;
             this.gridProducto.ShowCellToolTips = false;
-            this.gridProducto.Size = new System.Drawing.Size(495, 439);
+            this.gridProducto.Size = new System.Drawing.Size(495, 460);
             this.gridProducto.TabIndex = 47;
             this.gridProducto.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridProducto_CellClick);
-            this.gridProducto.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridProducto_CellContentClick);
-            this.gridProducto.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridProducto_CellDoubleClick);
             // 
             // groupBox1
             // 
@@ -394,30 +379,29 @@
             this.txtDescripcionDiseño.Size = new System.Drawing.Size(200, 26);
             this.txtDescripcionDiseño.TabIndex = 41;
             // 
-            // button1
+            // btnBorrar
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(10, 467);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 47);
-            this.button1.TabIndex = 54;
-            this.button1.Text = "Borrar Producto";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnBorrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnBorrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.btnBorrar.Location = new System.Drawing.Point(203, 414);
+            this.btnBorrar.Name = "btnBorrar";
+            this.btnBorrar.Size = new System.Drawing.Size(180, 50);
+            this.btnBorrar.TabIndex = 54;
+            this.btnBorrar.Text = "Borrar Producto";
+            this.btnBorrar.UseVisualStyleBackColor = false;
+            this.btnBorrar.Click += new System.EventHandler(this.button1_Click);
             // 
             // Productos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(897, 544);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(897, 519);
+            this.Controls.Add(this.btnBorrar);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.gridProducto);
             this.Controls.Add(this.groupBox1);
@@ -443,7 +427,6 @@
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.DataGridView gridProducto;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -463,7 +446,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDescripcionFamilia;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnBorrar;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtFami;
         private System.Windows.Forms.TextBox txtDise;

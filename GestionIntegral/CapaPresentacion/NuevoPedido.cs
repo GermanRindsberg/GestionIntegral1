@@ -1,4 +1,5 @@
 ﻿using GestionIntegral.CapaDatos;
+using GestionIntegral.CapaNegocio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,20 +20,16 @@ namespace GestionIntegral.CapaPresentacion
 
         int ultimoId;//id para crear el ultimo idDetallePedido y agregarle datos
         int idProducto;//cambia cuando se selecciona el comboBox, sirve para no repetir en el pedido 2 productos iguales
-
-        
-        int idCliente;
-        int tipoLista;
+        int idCliente;//Se usa para saber que tipo de lista se usa
+        int tipoLista;//Se usa para saber que precio va en el textbox precio unitario
         string tipoListaColumna;//variable para buscar el tipo de precio para el txt del pedido nuevo
-        string detalleProducto;
-
-        TablaParaPedido ta = new TablaParaPedido();
+        string detalleProducto;//cuando selecciona el comboBox producto trae a esta variable el texto
         
-        Cliente cl = new Cliente();
-        Pedidos pedido = new Pedidos();
-        Transporte tr = new Transporte();
-        Producto pro = new Producto();
-        DetallePedido detalle = new DetallePedido();
+        TablaParaPedido ta = new TablaParaPedido();
+        MetodosGenericos mg = new MetodosGenericos();
+        MetodosDetallePedido metDetalle = new MetodosDetallePedido();
+        MetodosProductos metProductos = new MetodosProductos();
+
 
         public int idPedido;
         public string operacion = "insertar";
@@ -50,16 +47,17 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (operacion == "insertar")
             {
-                ListarClientes();
-                ListarProductos();
+                ListarClientesEnComboBox();
+                ListarProductosEnComboBox();
+                ListarTransporteEncomboBox();
                 CrearidDetallePedido();
-                ListarTransporte();
                 ta.CrearTabla(0);
             }
 
             if (operacion == "editar")
             {
-               
+
+                
                 ListarProductos();//cargo combobox de productos
                 ListarTransporte(); //cargo combobox de transportes
                 ListarClientes(); //cargo combobox de clientes
@@ -100,12 +98,16 @@ namespace GestionIntegral.CapaPresentacion
                         checkOtro.Checked = true;
                         tipoDePago = "Otro";
                     }
-                    txtFechaPago.Text = pedido.FechaPago.Value.ToString("dd MMMM, yyyy");
+                    
 
                 }
                 else
                 {
                     checkPagado.Checked = false;
+                }
+                if (pedido.FechaEnvio != null)
+                {
+                    checkEnviado.Checked = true;
                 }
 
                 detalle.IdDetallePedido = pedido.IdDetallePedido;//le paso a detalle pedido el id a traer, que es el de pedido.idDetallePedido
@@ -128,10 +130,6 @@ namespace GestionIntegral.CapaPresentacion
                 ta.CrearTabla(detalle.IdDetallePedido);
                 gridPedidoNuevo.DataSource = ta.Tabla;
                 gridPedidoNuevo.Columns[0].Visible = false;
-
-
-
-
             }
         }
 
@@ -141,6 +139,7 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 ultimoId = pedido.SeleccionarUltimoIdYSumarleUno() + 1;
+
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
                     detalle.IdDetallePedido = ultimoId;
@@ -161,7 +160,6 @@ namespace GestionIntegral.CapaPresentacion
                     {
                         pedido.IdEstado = 1;
                         pedido.FechaEnvio = null;
-                        
                     }
                     else
                     {
@@ -219,9 +217,9 @@ namespace GestionIntegral.CapaPresentacion
 
             if (operacion == "editar")
             {
+                pedido.IdCliente = idCliente;
                 detalle.IdDetallePedido = pedido.IdDetallePedido;//id Detalle pedido
                 detalle.EliminarDetallePedido();
-
                 ultimoId = pedido.SeleccionarUltimoIdYSumarleUno() + 1;
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
@@ -234,10 +232,10 @@ namespace GestionIntegral.CapaPresentacion
                     pedido.Total = float.Parse(lblTotal.Text);
                     detalle.InsertarDetallePedido();
                 }
-
+                
                 if (checkPagado.Checked == true)
                 {
-                    if (txtFechaEnvio.Text == "")
+                    if (checkEnviado.Checked!=true)
                     {
                         pedido.IdEstado = 1;
                         pedido.FechaEnvio = null;
@@ -252,17 +250,19 @@ namespace GestionIntegral.CapaPresentacion
                     pedido.Total = float.Parse(lblTotal.Text);
                     pedido.NumGuia = txtNroGuia.Text;
                     pedido.IdDetallePedido = detalle.IdDetallePedido;
+                    pedido.FechaPago = dateTimePicker2.Value;
                     pedido.EditarPedido();
 
                     MessageBox.Show("Editado con exito");
 
                     limpiarCamposPedido();
                 }
+               
                 else
                 {
                     if (MessageBox.Show("¿Pedido no pagado, ingresar igualmente?", "FALTA PAGO", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        if (txtFechaEnvio.Text == "")
+                        if (checkEnviado.Checked != true)
                         {
                             pedido.IdEstado = 1;
                             pedido.FechaEnvio = null;
@@ -277,6 +277,7 @@ namespace GestionIntegral.CapaPresentacion
                         pedido.NumGuia = txtNroGuia.Text;
                         pedido.Total = float.Parse(lblTotal.Text);
                         pedido.IdDetallePedido = detalle.IdDetallePedido;
+                        pedido.FechaPago = null;
                         pedido.EditarPedido();
                         MessageBox.Show("Editado con exito");
                         limpiarCamposPedido();
@@ -291,9 +292,12 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnSumarProducto_Click(object sender, EventArgs e)
         {
-            ta.AgregarDatos(Convert.ToInt32(cbProducto.SelectedValue.ToString()), cbProducto.Text, float.Parse(txtPrecioLista.Text), int.Parse(txtCant.Text));
-            gridPedidoNuevo.DataSource = ta.Tabla;
-            gridPedidoNuevo.Columns[0].Visible = false;
+            if (cbProducto.SelectedIndex > 0)
+            {
+                ta.AgregarDatos(Convert.ToInt32(cbProducto.SelectedValue.ToString()), cbProducto.Text, float.Parse(txtPrecioLista.Text), int.Parse(txtCant.Text));
+                gridPedidoNuevo.DataSource = ta.Tabla;
+                gridPedidoNuevo.Columns[0].Visible = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -339,10 +343,14 @@ namespace GestionIntegral.CapaPresentacion
             //no me deja borrar elemento
             if (gridPedidoNuevo.SelectedRows.Count > 0)
             {
-                int fila = Convert.ToInt32(gridPedidoNuevo.CurrentRow.Index.ToString());
+                if (gridPedidoNuevo.SelectedRows.Count != null)
+                {
+                    int fila = Convert.ToInt32(gridPedidoNuevo.CurrentRow.Index.ToString());
+                
                 ta.BorrarDatos(fila);
                 gridPedidoNuevo.DataSource = ta.Tabla;
                 gridPedidoNuevo.Columns[0].Visible = false;
+                }
             }
             else
                 MessageBox.Show("Debe seleccionar una fila");
@@ -370,53 +378,96 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 ListarTransporte();
+                ListarClientes();
+            }
+            ListarProductos();
+        }
+
+        private void dateFechaEnvio_ValueChanged(object sender, EventArgs e)
+        {
+            txtFechaEnvio.Text = dateFechaEnvio.Value.ToString("dd MMMM, yyyy");
+
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            txtFechaPago.Text = dateTimePicker2.Value.ToString("dd MMMM, yyyy");
+
+        }
+
+        private void txtNroGuia_TextChanged(object sender, EventArgs e)
+        {
+            txtFechaEnvio.Text = dateFechaEnvio.Value.ToString("dd MMMM, yyyy");
+        }
+
+        private void btnNuevosCliente_Click(object sender, EventArgs e)
+        {
+            Clientes cl = new Clientes();
+            cl.ShowDialog();
+        }
+
+        private void checkEnviado_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkEnviado.Checked == true)
+            {
+                dateFechaEnvio.Enabled = true;
+                txtFechaEnvio.Enabled = true;
+                cbTransporte.Enabled = true;
+                txtNroGuia.Enabled = true;
+            }
+            else
+            {
+                if (operacion == "editar" && txtFechaEnvio.Text != "")
+                {
+                    dateFechaEnvio.Enabled = false;
+                    txtFechaEnvio.Enabled = false;
+                    txtFechaEnvio.Text = "";
+                    cbTransporte.Enabled = false;
+                    ListarTransporte();
+                    txtNroGuia.Enabled = false;
+                    txtNroGuia.Text = "";
+                }
             }
         }
         #endregion
 
         #region METODOS
-        private void ListarProductos()
-        {
-           
-            cbProducto.DataSource = pro.ListarProductos();
-            cbProducto.DisplayMember = "descripcionProducto";
-            cbProducto.ValueMember = "idProducto";
-            cbProducto.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbProducto.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
+       
 
         private void limpiarCamposPedido()
         {
-            ListarProductos();
-            ListarClientes();
+            ListarProductosEnComboBox();
+            ListarClientesEnComboBox();
             txtPrecioLista.Text = "";
             txtCant.Text = "";
             checkPagado.Checked = false;
-            this.Close();
-
-
+            //this.Close();
         }
 
         private void CrearidDetallePedido()
         {
-            //DetallePedido de = new DetallePedido();
-            detalle.UltimoIdDetallePedido();
-            ultimoId = detalle.IdDetallePedido + 1;
+            ultimoId = metDetalle.UltimoIdDetallePedido() + 1;
         }
 
-        private void ListarClientes()
+        private void ListarClientesEnComboBox()
         {
-           
-            cbCliente.DataSource = cl.ListarClientes();
-            cbCliente.DisplayMember = "razonSocial";
-            cbCliente.ValueMember = "id";
-            cbCliente.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            mg.LlenarComboBox(cbCliente, "Clientes");
+        }
 
-
+        private void ListarTransporteEncomboBox()
+        {
+            mg.LlenarComboBox(cbTransporte, "Transporte");
 
         }
 
+        private void ListarProductosEnComboBox()
+        {
+            mg.LlenarComboBox(cbProducto, "Producto");
+
+        }
+
+        /*al seleccionar un producto del comboBox automaticamente trae el
+         * tipo de precio. Este tipo de columna lo trae cuando elijo el cliente en el evento del combobox*/
         private void ElegirProducto()
         {
             if (cbProducto.SelectedIndex > 0)
@@ -428,11 +479,10 @@ namespace GestionIntegral.CapaPresentacion
                 }
                 else
 
-                pro.IdProducto = Convert.ToInt32(cbProducto.SelectedValue.ToString());
-
                 detalleProducto = cbProducto.Text;
+                
+               Producto pro = metProductos.CrearProducto(cbProducto.SelectedValue.ToString());
 
-                pro.ListarProductoPorId();
 
                 if (tipoListaColumna == "lista1")
                 {
@@ -485,60 +535,60 @@ namespace GestionIntegral.CapaPresentacion
             
         }
     
-        private void ListarTransporte()
-        {
-            Transporte tr = new Transporte();
-            cbTransporte.DataSource = tr.ListarTransportes();
-            cbTransporte.DisplayMember = "razonSocial";
-            cbTransporte.ValueMember = "id";
-            cbTransporte.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbTransporte.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-        }
+       
         #endregion
 
         #region CHECKBOX
         private void checkPagado_CheckedChanged(object sender, EventArgs e)
         {
-
-            checkDeposito.Enabled = true;
-            checkCheque.Enabled = true;
-            checkEfectivo.Enabled = true;
-            checkEfectivo.Checked = true;
-            checkOtro.Enabled = true;
-            txtFechaPago.Text = dateTimePicker2.Value.ToString("dd MMMM, yyyy");
-
+            if (checkPagado.Checked == true)
+            {
+                checkDeposito.Enabled = true;
+                checkCheque.Enabled = true;
+                checkEfectivo.Enabled = true;
+                checkEfectivo.Checked = true;
+                checkOtro.Enabled = true;
+                txtFechaPago.Text = dateTimePicker2.Value.ToString("dd MMMM, yyyy");
+            }
+            else
+            {
+                checkDeposito.Enabled = false;
+                checkCheque.Enabled = false;
+                checkEfectivo.Enabled = false;
+                checkEfectivo.Checked = false;
+                checkOtro.Enabled = false;
+                txtFechaPago.Text = "";
+            }
         }
 
         private void checkEfectivo_CheckedChanged_1(object sender, EventArgs e)
         {
-          
             if (checkEfectivo.Checked == true)
             {
                 tipoDePago = "Efectivo";
                 checkDeposito.Checked = false;
                 checkCheque.Checked = false;
                 checkOtro.Checked = false;
-
             }
+            else
+                tipoDePago = "";
         }
 
         private void checkCheque_CheckedChanged(object sender, EventArgs e)
         {
-           
             if (checkCheque.Checked == true)
             {
                 tipoDePago = "Cheque";
                 checkDeposito.Checked = false;
                 checkEfectivo.Checked = false;
                 checkOtro.Checked = false;
-
             }
+            else
+                tipoDePago = "";
         }
 
         private void checkDeposito_CheckedChanged(object sender, EventArgs e)
         {
-      
             if (checkDeposito.Checked == true)
             {
                 tipoDePago = "Deposito";
@@ -547,6 +597,8 @@ namespace GestionIntegral.CapaPresentacion
                 checkOtro.Checked = false;
 
             }
+            else
+                tipoDePago = "";
         }
 
         private void checkOtro_CheckedChanged(object sender, EventArgs e)
@@ -560,28 +612,11 @@ namespace GestionIntegral.CapaPresentacion
                 checkDeposito.Checked = false;
 
             }
-
+            else
+                tipoDePago = "";
         }
-
-
-
         #endregion
 
-        private void dateFechaEnvio_ValueChanged(object sender, EventArgs e)
-        {
-            txtFechaEnvio.Text = dateFechaEnvio.Value.ToString("dd MMMM, yyyy");
-            
-        }
-
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-            txtFechaPago.Text = dateTimePicker2.Value.ToString("dd MMMM, yyyy");
-
-        }
-
-        private void txtNroGuia_TextChanged(object sender, EventArgs e)
-        {
-            txtFechaEnvio.Text = dateFechaEnvio.Value.ToString("dd MMMM, yyyy");
-        }
+      
     }
 }

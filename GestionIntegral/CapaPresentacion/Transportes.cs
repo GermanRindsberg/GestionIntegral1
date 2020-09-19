@@ -1,4 +1,5 @@
 ﻿using GestionIntegral.CapaDatos;
+using GestionIntegral.CapaNegocio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,10 +14,10 @@ namespace GestionIntegral.CapaPresentacion
 {
     public partial class Transportes : Form
     {
-        Direccion dir = new Direccion();
-
+        MetodosGenericos mg = new MetodosGenericos();
+        MetodosTransporte mttr = new MetodosTransporte();
+        MetodosDireccion mtDir = new MetodosDireccion();
         int idTransporte;
-        
         string operacion = "insertar";
 
         public Transportes()
@@ -26,44 +27,48 @@ namespace GestionIntegral.CapaPresentacion
 
         private void Transportes_Load(object sender, EventArgs e)
         {
-            ListarProvincias();
-            ListarTransporte();
-            limpiarCampos();
-
+            ListarTransporteEnGrid("", "1");
+            ListarTransporteEnComboBox();
+            ListarProvinciaEnComboBox();
+            if (idTransporte != null)
+            {
+                cbRazonSocial.SelectedValue = idTransporte;
+            }
         }
 
-        private void ListarProvincias()
+        #region METODOS
+
+        private void diseñoTabla()
         {
-            cbProvincia.DataSource = dir.ListarProvincias();
-            cbProvincia.DisplayMember = "nombre";
-            cbProvincia.ValueMember = "id";
-            cbProvincia.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbProvincia.AutoCompleteSource = AutoCompleteSource.ListItems;
+            gridTransporte.ClearSelection();
+
+            this.gridTransporte.Columns[0].Visible = false;//idTransporte
+            this.gridTransporte.Columns[1].HeaderText = "Razon Social";//RazonSOcial
+            this.gridTransporte.Columns[2].Visible = false;//idDireccion
+            this.gridTransporte.Columns[3].HeaderText = "Telefono 1";//Telefono
+            this.gridTransporte.Columns[4].HeaderText = "Observaciones";//Observaciones
+            this.gridTransporte.Columns[5].Visible = false;//Activo
+            this.gridTransporte.Columns[6].Visible = false;//idDIreccion
+            this.gridTransporte.Columns[7].Visible = false;//idLocalidad
+            this.gridTransporte.Columns[8].HeaderText = "Calle";//calle
+            this.gridTransporte.Columns[9].HeaderText = "Nro";//numero
+            this.gridTransporte.Columns[10].HeaderText = "Depto";//depto
+            this.gridTransporte.Columns[11].HeaderText = "Piso";//piso
+            this.gridTransporte.Columns[12].Visible=false;//idlocalidad
+            this.gridTransporte.Columns[13].HeaderText = "Localidad"; ;//nomre
+            this.gridTransporte.Columns[14].Visible = false;//cp
+            this.gridTransporte.Columns[15].Visible = false;//idprovincia
+            this.gridTransporte.Columns[16].HeaderText = "Provincia";//nombre
         }
 
-        private void ListarTransporte()
+        private void ListarTransporteEnGrid(string condicion, string activo)
         {
-            Transporte tr = new Transporte();
-            cbRazonSocial.DataSource = tr.ListarTransportes();
-            cbRazonSocial.DisplayMember = "razonSocial";
-            cbRazonSocial.ValueMember = "id";
-            cbRazonSocial.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbRazonSocial.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-
-            ConexionBBDD con = new ConexionBBDD();
-
-            con.ActualizarGrid(gridTransporte, "SELECT* FROM Transporte " +
-                "INNER JOIN Direccion on Transporte.idDireccion = Direccion.id " +
-                "INNER JOIN Localidad on Direccion.idLocalidad = Localidad.id  " +
-                "INNER JOIN Provincia on Localidad.idProvincia = Provincia.id WHERE Transporte.activo=1;");
+            gridTransporte.DataSource = mttr.ListarTransporte(condicion, activo);
             diseñoTabla();
         }
 
         private void limpiarCampos()
         {
-            ListarProvincias();
-            ListarTransporte();
             txtCalle.Text = "";
             txtNro.Text = "";
             txtDepto.Text = "";
@@ -72,133 +77,151 @@ namespace GestionIntegral.CapaPresentacion
             txtObservaciones.Text = "";
             txtCodigoPostal.Text = "";
             cbLocalidad.Text = "";
-         
-            
+            txtCodigoPostal.Text = "";
+            checkActivo.Checked = true;
+            operacion = "insertar";
+            radioActivos.Checked = true;
 
 
         }
 
-        private void diseñoTabla()
+        private void ListarTransporteEnComboBox()
         {
-            this.gridTransporte.Columns[0].Visible = false;//id Transporte
-            //this.gridTransporte.Columns[1].Visible = false;//razon social
-            this.gridTransporte.Columns[2].Visible = false;//idDireccion
-            //this.gridTransporte.Columns[3].Visible = false;//Telefono
-            //this.gridTransporte.Columns[4].Visible = false;//Observaciones
-            this.gridTransporte.Columns[5].Visible = false;//activo
-            this.gridTransporte.Columns[6].Visible = false;//idDireccion
-            this.gridTransporte.Columns[7].Visible = false;//idLocalidad
-            //this.gridTransporte.Columns[8].Visible = false;//calle
-            //this.gridTransporte.Columns[9].Visible = false;//nro
-            this.gridTransporte.Columns[10].Visible = false;//depto
-            this.gridTransporte.Columns[11].Visible = false;//Piso
-            this.gridTransporte.Columns[12].Visible = false;//idLocalidad
-            this.gridTransporte.Columns[13].Visible = false;//Idprovincia
-            //this.gridTransporte.Columns[14].Visible = false;//Localidad
-            this.gridTransporte.Columns[15].Visible = false;//codigoPostañ
-            this.gridTransporte.Columns[16].Visible = false;//idProvincia
-            //this.gridTransporte.Columns[17].Visible = false;//provincia
-
-
-            this.gridTransporte.Columns[1].HeaderText = "Razon Social";
-            this.gridTransporte.Columns[3].HeaderText = "Telefono";
-            this.gridTransporte.Columns[4].HeaderText = "Observaciones";
-            this.gridTransporte.Columns[8].HeaderText = "Calle";
-            this.gridTransporte.Columns[9].HeaderText = "Nro";
-            this.gridTransporte.Columns[9].Width = 60;
-            this.gridTransporte.Columns[14].HeaderText = "Localidad";
-            this.gridTransporte.Columns[17].HeaderText = "Provincia";
-
+            mg.LlenarComboBox(cbRazonSocial, "Transporte");
         }
-
-        private void ListarLocalidad()
+   
+        private void ListarProvinciaEnComboBox()
         {
-            cbLocalidad.DataSource = dir.ListarLocalidades();
-            cbLocalidad.DisplayMember = "nombre";
-            cbLocalidad.ValueMember = "id";
-            cbLocalidad.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbLocalidad.AutoCompleteSource = AutoCompleteSource.ListItems;
+            mg.LlenarComboBox(cbProvincia, "Provincia");
         }
+
+        private void ListarLocalidadEnComboBox()
+        {
+            mg.LlenarComboBox(cbLocalidad, "Localidad");
+        }
+
+        #endregion
+
+
 
         private void btnAgregarTransporte_Click(object sender, EventArgs e)
         {
-
             if (operacion == "insertar")
             {
-                Direccion dir = new Direccion();
-                //INSERTO DIRECCION/LOCALIDAD/PROVINCIA
+                //creo una direccion
+                int idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                string calle = txtCalle.Text;
+                String numero = txtNro.Text;
+                String piso = txtPiso.Text;
+                string depto = txtDepto.Text;
+                Direccion dir = new Direccion(idLocalidad, calle, numero, piso, depto);//creo el objeto direccion 
+                mtDir.InsertarDireccion(dir);//inserto la direccion
 
-                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                dir.Calle = txtCalle.Text;
-                dir.Numero = txtNro.Text;
-                dir.Piso = txtPiso.Text;
-                dir.Depto = txtDepto.Text;
+                //creo un cliente
+                string razonSocial = cbRazonSocial.Text.ToString();
+                int idDireccion = dir.IdDireccion;
+                string tel1 = txtTel1.Text;
+                string observaciones = txtObservaciones.Text;
 
-                dir.InsertarDireccion();
+                Transporte objtransporte = new Transporte(razonSocial, idDireccion, tel1, observaciones, true);//creo el objeto cliente
 
-                //INGRESO TRANSPORTE
-                Transporte objTransporte = new Transporte();
-                objTransporte.RazonSocial = cbRazonSocial.Text.ToString();
-                objTransporte.IdDireccion = dir.IdDireccion;
-                objTransporte.Tel = txtTel1.Text;
-                objTransporte.Activo = true;
-                objTransporte.Observaciones = txtObservaciones.Text;
-                objTransporte.InsertarTransporte();
+                mttr.InsertarTransportes(objtransporte);//inserto el cliente
+
                 MessageBox.Show("Insertado con exito");
-                this.Close();
+                limpiarCampos();
+                ListarTransporteEnGrid("", "1");
+                ListarTransporteEnComboBox();
 
+                diseñoTabla();
 
             }
             if (operacion == "editar")
             {
-                Transporte tr = new Transporte();
-                tr.IdTransporte = idTransporte;
-                tr.RazonSocial = cbRazonSocial.Text;
-                tr.IdDireccion = dir.IdDireccion;
-                tr.Tel = txtTel1.Text;
-                tr.Activo = true;
-                tr.Observaciones = txtObservaciones.Text;
-                tr.EditarTransporte();
+                Transporte objTransporte = mttr.CrearTransporte(Convert.ToString(idTransporte));//traigo el cliente y su direccion por id
+                Direccion dir = mtDir.CrearDireccion(Convert.ToString(objTransporte.IdDireccion));
+                Boolean activo = true;
 
-               
+                //creo una direccion
+                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
                 dir.Calle = txtCalle.Text;
                 dir.Numero = txtNro.Text;
                 dir.Piso = txtPiso.Text;
                 dir.Depto = txtDepto.Text;
-                dir.CodigoPostal = txtCodigoPostal.Text;
-                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                dir.EditarDireccion();
+                mtDir.EditarDireccion(dir);//edito la direccion
+                if (checkActivo.Checked == true)
+                {
+                    activo = true;
+                }
+                if (checkActivo.Checked == false)
+                {
+                    activo = false;
+                }
+
+                objTransporte.Activo = activo;
+               
+                objTransporte.Observaciones = txtObservaciones.Text;
+
+                mttr.EditarTransporte(objTransporte);
 
                 MessageBox.Show("Editado con exito");
                 operacion = "insertar";
                 limpiarCampos();
-                ListarTransporte();
+                ListarTransporteEnGrid("", "1");
+                ListarTransporteEnComboBox();
+                cbProvincia.SelectedIndex = 0;
                 diseñoTabla();
-                this.Close();
+            }
+        }
+
+        private void cbRazonSocial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
+            {
+                string idTransporte = cbRazonSocial.SelectedValue.ToString(); //COn esto le mando al cliente cual es la id
+
+                Transporte tr = mttr.CrearTransporte(idTransporte);
+
+                Direccion dir = mtDir.CrearDireccion(Convert.ToString(tr.IdDireccion));
+                txtCalle.Text = dir.Calle;
+                txtNro.Text = dir.Numero;
+                txtDepto.Text = dir.Depto;
+                txtPiso.Text = dir.Piso;
+                cbProvincia.SelectedValue = dir.IdProvincia;
+                cbLocalidad.SelectedValue = dir.IdLocalidad;
+               
+                txtCodigoPostal.Text = dir.CodigoPostal;
+                txtTel1.Text = tr.Tel;
+                checkActivo.Checked = tr.Activo;
+                txtObservaciones.Text = tr.Observaciones;
+                operacion = "editar";
+
+
             }
 
         }
 
         private void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
-            ConexionBBDD con = new ConexionBBDD();
 
-            con.ActualizarGrid(gridTransporte, "SELECT* FROM Transporte " +
-                "INNER JOIN Direccion on Transporte.idDireccion = Direccion.id " +
-                "INNER JOIN Localidad on Direccion.idLocalidad = Localidad.id  " +
-                "INNER JOIN Provincia on Localidad.idProvincia = Provincia.id  " +
-                "WHERE Transporte.activo=1 AND Transporte.razonSocial like '%" + txtBuscar.Text + "%';");
+            if (radioActivos.Checked == true)
+            {
+                ListarTransporteEnGrid(txtBuscar.Text, "1");
+            }
+            else
+            {
+                ListarTransporteEnGrid(txtBuscar.Text, "2");
+            }
+
             diseñoTabla();
         }
 
+
         private void cbProvincia_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (cbProvincia.SelectedIndex > 0)
             {
-                dir.IdProvincia = Convert.ToInt32(cbProvincia.SelectedValue.ToString());
-                ListarLocalidad();
-                dir.ListarCodigoPostal(txtCodigoPostal);
+                mg.idProvincia = Convert.ToInt32(cbProvincia.SelectedValue.ToString());
+                ListarLocalidadEnComboBox();
             }
         }
 
@@ -207,61 +230,20 @@ namespace GestionIntegral.CapaPresentacion
 
             if (cbLocalidad.SelectedIndex > 0)
             {
-                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                int idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
 
-                dir.ListarCodigoPostal(txtCodigoPostal);
+                mtDir.ListarCodigoPostal(txtCodigoPostal, idLocalidad);
             }
-        }
-
-        private void cbRazonSocial_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Transporte tr = new Transporte();
-
-            if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
-            {
-                idTransporte = (Convert.ToInt32(cbRazonSocial.SelectedValue.ToString())); //COn esto le mando al cliente cual es la id
-                tr.IdTransporte = idTransporte;
-
-                tr.ListarTransportePorId();//con la id que le mande aca traigo todos los datos de ese objeto cliente
-                
-                //empiezo a setear todos los campos
-                dir.IdDireccion = tr.IdDireccion;//seteo la id en el objeto
-                dir.ListarDireccionPorId();//traigo todos los datos de ese objeto seteado
-                txtCalle.Text = dir.Calle;
-                txtNro.Text = dir.Numero;
-                txtDepto.Text = dir.Depto;
-                txtPiso.Text = dir.Piso;
-                cbProvincia.SelectedValue = dir.IdProvincia;
-                cbLocalidad.SelectedValue = dir.IdLocalidad;
-                txtCodigoPostal.Text = dir.CodigoPostal;
-                txtObservaciones.Text = tr.Observaciones;
-                txtTel1.Text = tr.Tel;
-
-                operacion = "editar";
-
-
-            }
-
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            ListarProvincias();
-            ListarTransporte();
             limpiarCampos();
-           
-        }
+            ListarTransporteEnComboBox();
+            ListarProvinciaEnComboBox();
+            ListarTransporteEnComboBox();
 
-        private void btnEditarTransporte_Click(object sender, EventArgs e)
-        {
-            if (gridTransporte.SelectedRows.Count > 0)
-            {
-                cbRazonSocial.SelectedValue = int.Parse(gridTransporte.CurrentRow.Cells[0].Value.ToString());
 
-                operacion = "editar";
-            }
-            else
-                MessageBox.Show("Debe seleccionar una fila");
         }
 
         private void gridTransporte_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -280,15 +262,41 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (gridTransporte.SelectedRows.Count > 0)
             {
-                if (MessageBox.Show("¿Desea eliminar el Transporte?", "ELIMINAR TRANSPORTE", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("¿Desea eliminar el Transporte, pasara a ser inactivo?", "ELIMINAR TRANSPORTE", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Transporte tr = new Transporte();
-                    tr.IdTransporte = int.Parse(gridTransporte.CurrentRow.Cells[0].Value.ToString());
-                    tr.EliminarTransporte(0);
+                    Transporte objTransporte = mttr.CrearTransporte(Convert.ToString(idTransporte));//traigo el cliente y su direccion por id
+                    Direccion dir = mtDir.CrearDireccion(Convert.ToString(objTransporte.IdDireccion));
+                    Boolean activo = false;
+
+                    //creo una direccion
+                    dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                    dir.Calle = txtCalle.Text;
+                    dir.Numero = txtNro.Text;
+                    dir.Piso = txtPiso.Text;
+                    dir.Depto = txtDepto.Text;
+                    mtDir.EditarDireccion(dir);//edito la direccion
+            
+
+                    objTransporte.Activo = activo;
+
+                    objTransporte.Observaciones = txtObservaciones.Text;
+
+                    mttr.EditarTransporte(objTransporte);
+
+
+                    MessageBox.Show("Borrado con exito");
+                    operacion = "insertar";
+                    limpiarCampos();
+                    ListarTransporteEnGrid("", "1");
+                    ListarTransporteEnComboBox();
+                    cbProvincia.SelectedIndex = 0;
+                    diseñoTabla();
+
                 }
             }
-
-            limpiarCampos();
         }
+
+            
+        
     }
 }

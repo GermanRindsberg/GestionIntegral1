@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnNuevosCliente = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkEnviado = new System.Windows.Forms.CheckBox();
             this.txtFechaEnvio = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,6 +45,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.cbTransporte = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtFechaPago = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.checkOtro = new System.Windows.Forms.CheckBox();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.checkDeposito = new System.Windows.Forms.CheckBox();
@@ -67,8 +71,7 @@
             this.dtFechaPedido = new System.Windows.Forms.DateTimePicker();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGenerarPedido = new System.Windows.Forms.Button();
-            this.txtFechaPago = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -77,6 +80,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.btnNuevosCliente);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.groupBox1);
@@ -100,10 +105,26 @@
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(466, 715);
+            this.groupBox2.Size = new System.Drawing.Size(466, 725);
             this.groupBox2.TabIndex = 56;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nuevo Pedido";
+            // 
+            // btnNuevosCliente
+            // 
+            this.btnNuevosCliente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnNuevosCliente.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnNuevosCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
+            this.btnNuevosCliente.ForeColor = System.Drawing.Color.Black;
+            this.btnNuevosCliente.Location = new System.Drawing.Point(321, 44);
+            this.btnNuevosCliente.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
+            this.btnNuevosCliente.Name = "btnNuevosCliente";
+            this.btnNuevosCliente.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnNuevosCliente.Size = new System.Drawing.Size(33, 27);
+            this.btnNuevosCliente.TabIndex = 78;
+            this.btnNuevosCliente.Text = "+";
+            this.btnNuevosCliente.UseVisualStyleBackColor = true;
+            this.btnNuevosCliente.Click += new System.EventHandler(this.btnNuevosCliente_Click);
             // 
             // label3
             // 
@@ -118,6 +139,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.checkEnviado);
             this.groupBox3.Controls.Add(this.txtFechaEnvio);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
@@ -129,16 +151,29 @@
             this.groupBox3.Controls.Add(this.cbTransporte);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(7, 590);
+            this.groupBox3.Location = new System.Drawing.Point(7, 582);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(443, 115);
+            this.groupBox3.Size = new System.Drawing.Size(443, 138);
             this.groupBox3.TabIndex = 76;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envio";
             // 
+            // checkEnviado
+            // 
+            this.checkEnviado.AutoSize = true;
+            this.checkEnviado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.checkEnviado.Location = new System.Drawing.Point(6, 21);
+            this.checkEnviado.Name = "checkEnviado";
+            this.checkEnviado.Size = new System.Drawing.Size(85, 24);
+            this.checkEnviado.TabIndex = 82;
+            this.checkEnviado.Text = "Enviado";
+            this.checkEnviado.UseVisualStyleBackColor = true;
+            this.checkEnviado.CheckedChanged += new System.EventHandler(this.checkEnviado_CheckedChanged);
+            // 
             // txtFechaEnvio
             // 
-            this.txtFechaEnvio.Location = new System.Drawing.Point(211, 36);
+            this.txtFechaEnvio.Enabled = false;
+            this.txtFechaEnvio.Location = new System.Drawing.Point(211, 59);
             this.txtFechaEnvio.Name = "txtFechaEnvio";
             this.txtFechaEnvio.ReadOnly = true;
             this.txtFechaEnvio.Size = new System.Drawing.Size(226, 24);
@@ -149,7 +184,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(209, 19);
+            this.label5.Location = new System.Drawing.Point(209, 42);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(115, 16);
             this.label5.TabIndex = 79;
@@ -160,7 +195,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(6, 19);
+            this.label4.Location = new System.Drawing.Point(6, 42);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(175, 16);
             this.label4.TabIndex = 77;
@@ -168,9 +203,10 @@
             // 
             // dateFechaEnvio
             // 
+            this.dateFechaEnvio.Enabled = false;
             this.dateFechaEnvio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.dateFechaEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateFechaEnvio.Location = new System.Drawing.Point(5, 38);
+            this.dateFechaEnvio.Location = new System.Drawing.Point(5, 61);
             this.dateFechaEnvio.Name = "dateFechaEnvio";
             this.dateFechaEnvio.Size = new System.Drawing.Size(196, 26);
             this.dateFechaEnvio.TabIndex = 76;
@@ -179,7 +215,8 @@
             // 
             // txtNroGuia
             // 
-            this.txtNroGuia.Location = new System.Drawing.Point(211, 82);
+            this.txtNroGuia.Enabled = false;
+            this.txtNroGuia.Location = new System.Drawing.Point(211, 105);
             this.txtNroGuia.Name = "txtNroGuia";
             this.txtNroGuia.Size = new System.Drawing.Size(226, 24);
             this.txtNroGuia.TabIndex = 69;
@@ -193,7 +230,7 @@
             this.txtTransporte.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.txtTransporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
             this.txtTransporte.ForeColor = System.Drawing.Color.Black;
-            this.txtTransporte.Location = new System.Drawing.Point(166, 82);
+            this.txtTransporte.Location = new System.Drawing.Point(166, 105);
             this.txtTransporte.Margin = new System.Windows.Forms.Padding(0);
             this.txtTransporte.Name = "txtTransporte";
             this.txtTransporte.Size = new System.Drawing.Size(35, 26);
@@ -208,7 +245,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(209, 63);
+            this.label2.Location = new System.Drawing.Point(209, 86);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(166, 16);
             this.label2.TabIndex = 70;
@@ -219,7 +256,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(5, 65);
+            this.label13.Location = new System.Drawing.Point(5, 88);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(88, 16);
             this.label13.TabIndex = 72;
@@ -227,8 +264,9 @@
             // 
             // cbTransporte
             // 
+            this.cbTransporte.Enabled = false;
             this.cbTransporte.FormattingEnabled = true;
-            this.cbTransporte.Location = new System.Drawing.Point(6, 82);
+            this.cbTransporte.Location = new System.Drawing.Point(6, 105);
             this.cbTransporte.Name = "cbTransporte";
             this.cbTransporte.Size = new System.Drawing.Size(157, 26);
             this.cbTransporte.TabIndex = 71;
@@ -251,6 +289,25 @@
             this.groupBox1.TabIndex = 75;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pago";
+            // 
+            // txtFechaPago
+            // 
+            this.txtFechaPago.Location = new System.Drawing.Point(254, 28);
+            this.txtFechaPago.Name = "txtFechaPago";
+            this.txtFechaPago.ReadOnly = true;
+            this.txtFechaPago.Size = new System.Drawing.Size(182, 24);
+            this.txtFechaPago.TabIndex = 80;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(254, 10);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(115, 16);
+            this.label6.TabIndex = 81;
+            this.label6.Text = "Fecha de envio";
             // 
             // checkOtro
             // 
@@ -329,7 +386,7 @@
             // cbCliente
             // 
             this.cbCliente.FormattingEnabled = true;
-            this.cbCliente.Location = new System.Drawing.Point(8, 40);
+            this.cbCliente.Location = new System.Drawing.Point(8, 44);
             this.cbCliente.Name = "cbCliente";
             this.cbCliente.Size = new System.Drawing.Size(307, 26);
             this.cbCliente.TabIndex = 65;
@@ -462,18 +519,18 @@
             // gridPedidoNuevo
             // 
             this.gridPedidoNuevo.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            this.gridPedidoNuevo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.gridPedidoNuevo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.gridPedidoNuevo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridPedidoNuevo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridPedidoNuevo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridPedidoNuevo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.gridPedidoNuevo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPedidoNuevo.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.gridPedidoNuevo.Location = new System.Drawing.Point(9, 189);
@@ -522,7 +579,7 @@
             // 
             this.dtFechaPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.dtFechaPedido.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFechaPedido.Location = new System.Drawing.Point(321, 40);
+            this.dtFechaPedido.Location = new System.Drawing.Point(328, 15);
             this.dtFechaPedido.Name = "dtFechaPedido";
             this.dtFechaPedido.Size = new System.Drawing.Size(129, 26);
             this.dtFechaPedido.TabIndex = 36;
@@ -532,7 +589,7 @@
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnCancelar.ForeColor = System.Drawing.Color.Black;
-            this.btnCancelar.Location = new System.Drawing.Point(107, 731);
+            this.btnCancelar.Location = new System.Drawing.Point(107, 740);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(89, 47);
             this.btnCancelar.TabIndex = 44;
@@ -545,7 +602,7 @@
             this.btnGenerarPedido.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGenerarPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnGenerarPedido.ForeColor = System.Drawing.Color.Black;
-            this.btnGenerarPedido.Location = new System.Drawing.Point(12, 731);
+            this.btnGenerarPedido.Location = new System.Drawing.Point(12, 740);
             this.btnGenerarPedido.Name = "btnGenerarPedido";
             this.btnGenerarPedido.Size = new System.Drawing.Size(89, 47);
             this.btnGenerarPedido.TabIndex = 43;
@@ -553,24 +610,14 @@
             this.btnGenerarPedido.UseVisualStyleBackColor = true;
             this.btnGenerarPedido.Click += new System.EventHandler(this.btnGenerarPedido_Click);
             // 
-            // txtFechaPago
+            // label7
             // 
-            this.txtFechaPago.Location = new System.Drawing.Point(254, 28);
-            this.txtFechaPago.Name = "txtFechaPago";
-            this.txtFechaPago.ReadOnly = true;
-            this.txtFechaPago.Size = new System.Drawing.Size(182, 24);
-            this.txtFechaPago.TabIndex = 80;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(254, 10);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(115, 16);
-            this.label6.TabIndex = 81;
-            this.label6.Text = "Fecha de envio";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(186, 21);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(136, 18);
+            this.label7.TabIndex = 79;
+            this.label7.Text = "Fecha del pedido";
             // 
             // NuevoPedido
             // 
@@ -639,5 +686,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtFechaPago;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnNuevosCliente;
+        private System.Windows.Forms.CheckBox checkEnviado;
+        private System.Windows.Forms.Label label7;
     }
 }

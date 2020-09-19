@@ -81,33 +81,41 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CapaDatos\Cliente.cs" />
-    <Compile Include="CapaDatos\ConexionBBDD.cs" />
+    <Compile Include="CapaNegocio\ConexionBBDD.cs" />
     <Compile Include="CapaDatos\DetallePedido.cs" />
     <Compile Include="CapaDatos\Direccion.cs" />
     <Compile Include="CapaDatos\Diseño.cs" />
-    <Compile Include="CapaDatos\Pedidos.cs" />
+    <Compile Include="CapaDatos\OrdenDeTrabajo.cs" />
+    <Compile Include="CapaDatos\Pedido.cs" />
     <Compile Include="CapaDatos\Producto.cs" />
     <Compile Include="CapaDatos\Stock.cs" />
-    <Compile Include="CapaDatos\TablaParaPedido.cs" />
+    <Compile Include="CapaNegocio\MetodosDetallePedido.cs" />
+    <Compile Include="CapaNegocio\MetodosDireccion.cs" />
+    <Compile Include="CapaNegocio\MetodosDiseño.cs" />
+    <Compile Include="CapaNegocio\MetodosFamilia.cs" />
+    <Compile Include="CapaNegocio\MetodosGenericos.cs" />
+    <Compile Include="CapaNegocio\MetodosPedido.cs" />
+    <Compile Include="CapaNegocio\MetodosStock.cs" />
+    <Compile Include="CapaNegocio\MetodosTransporte.cs" />
+    <Compile Include="CapaNegocio\TablaParaPedido.cs" />
+    <Compile Include="CapaDatos\Taller.cs" />
     <Compile Include="CapaDatos\Transporte.cs" />
     <Compile Include="CapaDatos\Familia.cs" />
+    <Compile Include="CapaNegocio\MetodosCliente.cs" />
+    <Compile Include="CapaNegocio\MetodosOT.cs" />
+    <Compile Include="CapaNegocio\MetodosProductos.cs" />
+    <Compile Include="CapaNegocio\MetodosTaller.cs" />
     <Compile Include="CapaPresentacion\Clientes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\DetallePedidos.cs">
+    <Compile Include="CapaPresentacion\Principal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\DetallePedidos.Designer.cs">
-      <DependentUpon>DetallePedidos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CapaPresentacion\MDIParent1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\MDIParent1.Designer.cs">
-      <DependentUpon>MDIParent1.cs</DependentUpon>
+    <Compile Include="CapaPresentacion\Principal.Designer.cs">
+      <DependentUpon>Principal.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\NuevoPedido.cs">
       <SubType>Form</SubType>
@@ -115,11 +123,23 @@
     <Compile Include="CapaPresentacion\NuevoPedido.Designer.cs">
       <DependentUpon>NuevoPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\OrdenDeTrabajo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\OrdenDeTrabajo.Designer.cs">
+      <DependentUpon>OrdenDeTrabajo.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Productos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Productos.Designer.cs">
       <DependentUpon>Productos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Talleres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Talleres.Designer.cs">
+      <DependentUpon>Talleres.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Transportes.cs">
       <SubType>Form</SubType>
@@ -132,17 +152,20 @@
     <EmbeddedResource Include="CapaPresentacion\Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\DetallePedidos.resx">
-      <DependentUpon>DetallePedidos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\MDIParent1.resx">
-      <DependentUpon>MDIParent1.cs</DependentUpon>
+    <EmbeddedResource Include="CapaPresentacion\Principal.resx">
+      <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\NuevoPedido.resx">
       <DependentUpon>NuevoPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\OrdenDeTrabajo.resx">
+      <DependentUpon>OrdenDeTrabajo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Productos.resx">
       <DependentUpon>Productos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Talleres.resx">
+      <DependentUpon>Talleres.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Transportes.resx">
       <DependentUpon>Transportes.cs</DependentUpon>

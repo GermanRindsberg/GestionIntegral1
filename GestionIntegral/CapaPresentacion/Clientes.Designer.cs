@@ -32,11 +32,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnProductoNuevo = new System.Windows.Forms.GroupBox();
+            this.radioInactivos = new System.Windows.Forms.RadioButton();
+            this.radioActivos = new System.Windows.Forms.RadioButton();
             this.btnEliminarCliente = new System.Windows.Forms.Button();
             this.btnTransporte = new System.Windows.Forms.Button();
             this.cbLocalidad = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.btnEditarCliente = new System.Windows.Forms.Button();
             this.cbTransporte = new System.Windows.Forms.ComboBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cbProvincia = new System.Windows.Forms.ComboBox();
@@ -73,8 +74,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtCalle = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioActivos = new System.Windows.Forms.RadioButton();
-            this.radioInactivos = new System.Windows.Forms.RadioButton();
             this.btnProductoNuevo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -87,7 +86,6 @@
             this.btnProductoNuevo.Controls.Add(this.btnTransporte);
             this.btnProductoNuevo.Controls.Add(this.cbLocalidad);
             this.btnProductoNuevo.Controls.Add(this.label21);
-            this.btnProductoNuevo.Controls.Add(this.btnEditarCliente);
             this.btnProductoNuevo.Controls.Add(this.cbTransporte);
             this.btnProductoNuevo.Controls.Add(this.txtBuscar);
             this.btnProductoNuevo.Controls.Add(this.cbProvincia);
@@ -133,15 +131,39 @@
             this.btnProductoNuevo.TabStop = false;
             this.btnProductoNuevo.Text = "Datos Cliente";
             // 
+            // radioInactivos
+            // 
+            this.radioInactivos.AutoSize = true;
+            this.radioInactivos.Location = new System.Drawing.Point(819, 36);
+            this.radioInactivos.Name = "radioInactivos";
+            this.radioInactivos.Size = new System.Drawing.Size(90, 21);
+            this.radioInactivos.TabIndex = 56;
+            this.radioInactivos.Text = "Inactivos";
+            this.radioInactivos.UseVisualStyleBackColor = true;
+            this.radioInactivos.CheckedChanged += new System.EventHandler(this.radioInactivos_CheckedChanged);
+            // 
+            // radioActivos
+            // 
+            this.radioActivos.AutoSize = true;
+            this.radioActivos.Checked = true;
+            this.radioActivos.Location = new System.Drawing.Point(735, 36);
+            this.radioActivos.Name = "radioActivos";
+            this.radioActivos.Size = new System.Drawing.Size(78, 21);
+            this.radioActivos.TabIndex = 55;
+            this.radioActivos.TabStop = true;
+            this.radioActivos.Text = "Activos";
+            this.radioActivos.UseVisualStyleBackColor = true;
+            this.radioActivos.CheckedChanged += new System.EventHandler(this.radioActivos_CheckedChanged);
+            // 
             // btnEliminarCliente
             // 
             this.btnEliminarCliente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEliminarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnEliminarCliente.ForeColor = System.Drawing.Color.Black;
-            this.btnEliminarCliente.Location = new System.Drawing.Point(296, 410);
+            this.btnEliminarCliente.Location = new System.Drawing.Point(277, 412);
             this.btnEliminarCliente.Name = "btnEliminarCliente";
-            this.btnEliminarCliente.Size = new System.Drawing.Size(90, 46);
+            this.btnEliminarCliente.Size = new System.Drawing.Size(110, 50);
             this.btnEliminarCliente.TabIndex = 54;
             this.btnEliminarCliente.Text = "Eliminar Cliente";
             this.btnEliminarCliente.UseVisualStyleBackColor = false;
@@ -170,9 +192,9 @@
             // 
             this.cbLocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbLocalidad.FormattingEnabled = true;
-            this.cbLocalidad.Location = new System.Drawing.Point(164, 120);
+            this.cbLocalidad.Location = new System.Drawing.Point(207, 120);
             this.cbLocalidad.Name = "cbLocalidad";
-            this.cbLocalidad.Size = new System.Drawing.Size(221, 24);
+            this.cbLocalidad.Size = new System.Drawing.Size(181, 24);
             this.cbLocalidad.TabIndex = 7;
             this.cbLocalidad.SelectedIndexChanged += new System.EventHandler(this.cbLocalidad_SelectedIndexChanged_1);
             // 
@@ -186,19 +208,6 @@
             this.label21.Size = new System.Drawing.Size(158, 15);
             this.label21.TabIndex = 35;
             this.label21.Text = "Buscar por razon social";
-            // 
-            // btnEditarCliente
-            // 
-            this.btnEditarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEditarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnEditarCliente.ForeColor = System.Drawing.Color.Black;
-            this.btnEditarCliente.Location = new System.Drawing.Point(106, 409);
-            this.btnEditarCliente.Name = "btnEditarCliente";
-            this.btnEditarCliente.Size = new System.Drawing.Size(89, 47);
-            this.btnEditarCliente.TabIndex = 51;
-            this.btnEditarCliente.Text = "Editar Cliente";
-            this.btnEditarCliente.UseVisualStyleBackColor = true;
-            this.btnEditarCliente.Click += new System.EventHandler(this.btnEditarCliente_Click_1);
             // 
             // cbTransporte
             // 
@@ -224,7 +233,7 @@
             this.cbProvincia.FormattingEnabled = true;
             this.cbProvincia.Location = new System.Drawing.Point(9, 120);
             this.cbProvincia.Name = "cbProvincia";
-            this.cbProvincia.Size = new System.Drawing.Size(149, 24);
+            this.cbProvincia.Size = new System.Drawing.Size(182, 24);
             this.cbProvincia.TabIndex = 6;
             this.cbProvincia.Text = "Seleccione un valor";
             this.cbProvincia.SelectedIndexChanged += new System.EventHandler(this.cbProvincia_SelectedIndexChanged_1);
@@ -237,7 +246,7 @@
             this.gridClientes.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -247,14 +256,14 @@
             this.gridClientes.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridClientes.DefaultCellStyle = dataGridViewCellStyle2;
             this.gridClientes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridClientes.Location = new System.Drawing.Point(394, 62);
+            this.gridClientes.Location = new System.Drawing.Point(396, 62);
             this.gridClientes.Name = "gridClientes";
             this.gridClientes.RowHeadersVisible = false;
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
@@ -264,7 +273,7 @@
             this.gridClientes.ShowCellToolTips = false;
             this.gridClientes.ShowEditingIcon = false;
             this.gridClientes.ShowRowErrors = false;
-            this.gridClientes.Size = new System.Drawing.Size(1160, 395);
+            this.gridClientes.Size = new System.Drawing.Size(1158, 395);
             this.gridClientes.TabIndex = 36;
             this.gridClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridClientes_CellClick);
             // 
@@ -273,9 +282,9 @@
             this.btnLimpiarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnLimpiarCliente.ForeColor = System.Drawing.Color.Black;
-            this.btnLimpiarCliente.Location = new System.Drawing.Point(201, 409);
+            this.btnLimpiarCliente.Location = new System.Drawing.Point(144, 410);
             this.btnLimpiarCliente.Name = "btnLimpiarCliente";
-            this.btnLimpiarCliente.Size = new System.Drawing.Size(89, 47);
+            this.btnLimpiarCliente.Size = new System.Drawing.Size(110, 50);
             this.btnLimpiarCliente.TabIndex = 48;
             this.btnLimpiarCliente.Text = "Limpiar campos";
             this.btnLimpiarCliente.UseVisualStyleBackColor = true;
@@ -296,9 +305,9 @@
             this.btnAgregarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAgregarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnAgregarCliente.ForeColor = System.Drawing.Color.Black;
-            this.btnAgregarCliente.Location = new System.Drawing.Point(11, 409);
+            this.btnAgregarCliente.Location = new System.Drawing.Point(11, 410);
             this.btnAgregarCliente.Name = "btnAgregarCliente";
-            this.btnAgregarCliente.Size = new System.Drawing.Size(89, 47);
+            this.btnAgregarCliente.Size = new System.Drawing.Size(110, 50);
             this.btnAgregarCliente.TabIndex = 47;
             this.btnAgregarCliente.Text = "Generar Cliente";
             this.btnAgregarCliente.UseVisualStyleBackColor = true;
@@ -416,6 +425,8 @@
             // checkActivo
             // 
             this.checkActivo.AutoSize = true;
+            this.checkActivo.Checked = true;
+            this.checkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkActivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkActivo.Location = new System.Drawing.Point(215, 321);
             this.checkActivo.Name = "checkActivo";
@@ -580,30 +591,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Razon Social";
             // 
-            // radioActivos
-            // 
-            this.radioActivos.AutoSize = true;
-            this.radioActivos.Location = new System.Drawing.Point(735, 36);
-            this.radioActivos.Name = "radioActivos";
-            this.radioActivos.Size = new System.Drawing.Size(78, 21);
-            this.radioActivos.TabIndex = 55;
-            this.radioActivos.TabStop = true;
-            this.radioActivos.Text = "Activos";
-            this.radioActivos.UseVisualStyleBackColor = true;
-            this.radioActivos.CheckedChanged += new System.EventHandler(this.radioActivos_CheckedChanged);
-            // 
-            // radioInactivos
-            // 
-            this.radioInactivos.AutoSize = true;
-            this.radioInactivos.Location = new System.Drawing.Point(819, 36);
-            this.radioInactivos.Name = "radioInactivos";
-            this.radioInactivos.Size = new System.Drawing.Size(90, 21);
-            this.radioInactivos.TabIndex = 56;
-            this.radioInactivos.TabStop = true;
-            this.radioInactivos.Text = "Inactivos";
-            this.radioInactivos.UseVisualStyleBackColor = true;
-            this.radioInactivos.CheckedChanged += new System.EventHandler(this.radioInactivos_CheckedChanged);
-            // 
             // Clientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -633,7 +620,6 @@
         private System.Windows.Forms.Button btnTransporte;
         private System.Windows.Forms.ComboBox cbLocalidad;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Button btnEditarCliente;
         private System.Windows.Forms.ComboBox cbTransporte;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.ComboBox cbProvincia;
@@ -652,7 +638,6 @@
         private System.Windows.Forms.TextBox txtMail;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtCuit;
-        private System.Windows.Forms.CheckBox checkActivo;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtTel2;
         private System.Windows.Forms.Label label9;
@@ -672,5 +657,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton radioInactivos;
         private System.Windows.Forms.RadioButton radioActivos;
+        private System.Windows.Forms.CheckBox checkActivo;
     }
 }

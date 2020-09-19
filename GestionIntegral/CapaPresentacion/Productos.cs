@@ -1,4 +1,5 @@
 ﻿using GestionIntegral.CapaDatos;
+using GestionIntegral.CapaNegocio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,12 +13,14 @@ namespace GestionIntegral.CapaPresentacion
 {
     public partial class Productos : Form
     {
-        ConexionBBDD con = new ConexionBBDD();
+        MetodosGenericos mg = new MetodosGenericos();
+        MetodosFamilia mfa = new MetodosFamilia();
+        MetodosDiseño mDi = new MetodosDiseño();
+        MetodosProductos mpro = new MetodosProductos();
+
+        int idFamilia;
+        int idDiseño;
         int idUnico;
-        string descripcionProducto;
-        Familia fa = new Familia();
-        Diseño di = new Diseño();
-        Producto pro = new Producto();
 
         string operacion = "insertar";
 
@@ -29,22 +32,14 @@ namespace GestionIntegral.CapaPresentacion
 
         #region METODOS
 
-        private void ListarDiseños()
+        private void ListarDiseñoEnComboBox()
         {
-            cbDiseño.DataSource = di.ListarDiseños();
-            cbDiseño.DisplayMember = "descripcion";
-            cbDiseño.ValueMember = "idDiseños";
-            cbDiseño.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbDiseño.AutoCompleteSource = AutoCompleteSource.ListItems;
+            mg.LlenarComboBox(cbDiseño, "Diseños");
         }
-
-        private void ListarFamilia()
+        
+        private void ListarFamiliaEnComboBox()
         {
-            cbFamilia.DataSource = fa.ListarFamilia();
-            cbFamilia.DisplayMember = "descripcion";
-            cbFamilia.ValueMember = "idFamilia";
-            cbFamilia.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbFamilia.AutoCompleteSource = AutoCompleteSource.ListItems;
+            mg.LlenarComboBox(cbFamilia, "Familia");
         }
 
         private void diseñoTabla()
@@ -68,53 +63,41 @@ namespace GestionIntegral.CapaPresentacion
             txtLista3.Text = "";
         }
 
-        private void LlenarGrid()
+        private void ListarProductosEnGrid(string condicion)
         {
-            con.ActualizarGrid(gridProducto, "Select * from Producto ");
+            gridProducto.DataSource = mpro.ListarProducto(condicion);
             diseñoTabla();
         }
 
-
-        private Boolean encuentraValorUnico(int mensaje)
+        private Boolean encuentraValorUnico()
         {
-            bool existe = false;
-
             if (gridProducto.RowCount > 0)
             {
                 for (int i = 0; i < gridProducto.RowCount; i++)
                 {
-                    if (Convert.ToInt32(gridProducto.Rows[i].Cells[3].Value) == Convert.ToInt32(idUnico) && mensaje == 1)
+                    if (Convert.ToInt32(gridProducto.Rows[i].Cells[3].Value) == idUnico)
                     {
                         MessageBox.Show("El producto ya ha sido ingresado");
-                        existe = true;
-                        break;
+                        return true;
                     }
-                    if (Convert.ToInt32(gridProducto.Rows[i].Cells[3].Value) == Convert.ToInt32(idUnico) && mensaje == 0)
-                    {
-                        existe = true;
-                        break;
-                    }
-                }
-
-
-                if (existe == false)
-                {
-                    existe = false;
-
+                    else
+                        return false;
                 }
             }
-            return existe;
+            return false;
         }
+
         #endregion
 
 
         #region EVENTOS
+
         private void Productos_Load(object sender, EventArgs e)
         {
 
-            ListarDiseños();
-            ListarFamilia();
-            LlenarGrid();
+            ListarDiseñoEnComboBox();
+            ListarFamiliaEnComboBox();
+            ListarProductosEnGrid("");
             
 
         }
@@ -147,12 +130,11 @@ namespace GestionIntegral.CapaPresentacion
 
                 else
                 {
-                    Familia fam = new Familia();
-                    fam.DescripcionFamilia = txtDescripcionFamilia.Text;
-                    fam.InsertarFamilia();
-                    existe = true;
-                    limpiarCampos();
-                    ListarFamilia();
+                    string descripcionFamilia = txtDescripcionFamilia.Text;
+                    Familia fam = new Familia(descripcionFamilia);
+                    mfa.InsertarFamilia(fam);
+                    ListarFamiliaEnComboBox();
+                    ListarProductosEnGrid("");
 
                 }
             }
@@ -186,18 +168,13 @@ namespace GestionIntegral.CapaPresentacion
                 }
                 else
                 {
-                    Diseño di = new Diseño();
-                    di.DescripcionDiseño = txtDescripcionDiseño.Text;
-                    di.InsertarDiseño();
-                    existe = true;
-                    limpiarCampos();
-                    ListarDiseños();
-
+                    string descripcionDiseño = txtDescripcionDiseño.Text;
+                    Diseño dis = new Diseño(descripcionDiseño);
+                    mDi.InsertarDiseño(dis);
+                    ListarDiseñoEnComboBox();
+                    ListarProductosEnGrid("");
                 }
             }
-
-
-
 
         }
 
@@ -205,40 +182,31 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbFamilia.SelectedIndex > 0)
             {
-                fa.IdFamilia = (Convert.ToInt32(cbFamilia.SelectedValue.ToString()));
-                
-              
-                fa.ListarFamiliaPorId();
+                if (cbFamilia.SelectedIndex > 0 && cbFamilia.Text != default)
+                {
+                    idFamilia = Convert.ToInt32(cbFamilia.SelectedValue.ToString());
 
-                txtFami.Text = fa.DescripcionFamilia;
-                txtLista1.Text = pro.Lista1.ToString();
-                txtLista2.Text = pro.Lista2.ToString();
-                txtLista3.Text = pro.Lista3.ToString();
+                    Familia fa = mfa.CrearFamilia(idFamilia);
+
+                    txtDescripcionFamilia.Text = fa.DescripcionFamilia;
+                    operacion = "editar";
+                }
             }
         }
-
-        private void btnActualizar_Click(object sender, EventArgs e)
+        
+        private void cbDiseño_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (gridProducto.SelectedCells.Count > 0)
+            if (cbDiseño.SelectedIndex > 0 && cbDiseño.Text != default)
             {
-                
-                cbFamilia.SelectedValue = int.Parse(gridProducto.CurrentRow.Cells[1].Value.ToString());
-                cbDiseño.SelectedValue = int.Parse(gridProducto.CurrentRow.Cells[2].Value.ToString());
-                pro.IdProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
-                pro.ListarProductoPorId();
-                txtLista1.Text = pro.Lista1.ToString();
-                txtLista2.Text = pro.Lista2.ToString();
-                txtLista3.Text = pro.Lista3.ToString();
-                operacion = "editar";
-             
-            }
-            else
-                MessageBox.Show("Debe seleccionar una fila");
-            
+                idDiseño = Convert.ToInt32(cbDiseño.SelectedValue.ToString());
 
+                Diseño di = mDi.CrearDiseño(idDiseño);
+
+                txtDescripcionDiseño.Text = di.DescripcionDiseño;
+                operacion = "editar";
+            }
         }
-    
+
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -249,70 +217,47 @@ namespace GestionIntegral.CapaPresentacion
             limpiarCampos();
         }
 
-        private void gridProducto_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            btnActualizar.Enabled = true;
-        }
-
         private void gridProducto_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            btnActualizar.Enabled = true;
-        }
-
-        private void gridProducto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            if (gridProducto.SelectedCells.Count > 0)
+            if (gridProducto.SelectedRows.Count > 0)
             {
-
                 cbFamilia.SelectedValue = int.Parse(gridProducto.CurrentRow.Cells[1].Value.ToString());
                 cbDiseño.SelectedValue = int.Parse(gridProducto.CurrentRow.Cells[2].Value.ToString());
-                pro.IdProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
-                pro.ListarProductoPorId();
-                txtLista1.Text = pro.Lista1.ToString();
-                txtLista2.Text = pro.Lista2.ToString();
-                txtLista3.Text = pro.Lista3.ToString();
+                txtLista1.Text = gridProducto.CurrentRow.Cells[5].Value.ToString();
+                txtLista2.Text = gridProducto.CurrentRow.Cells[6].Value.ToString();
+                txtLista3.Text = gridProducto.CurrentRow.Cells[7].Value.ToString();
                 operacion = "editar";
-
             }
-            else
-                MessageBox.Show("Debe seleccionar una fila");
-
+            
         }
 
         private void txtBuscar_KeyUp_1(object sender, KeyEventArgs e)
         {
-            ConexionBBDD con = new ConexionBBDD();
-
-            con.ActualizarGrid(gridProducto, "SELECT* FROM Producto WHERE Producto.descripcionProducto like '%" + txtBuscar.Text + "%';");
-
-            diseñoTabla();
+            ListarProductosEnGrid(txtBuscar.Text); 
+          
         }
-
+        
         private void btnAgregar_Click_1(object sender, EventArgs e)
         {
-
-            idUnico = Convert.ToInt32( fa.IdFamilia.ToString() + di.IdDiseño.ToString());
-            descripcionProducto = fa.DescripcionFamilia + " " + di.DescripcionDiseño;
+            idUnico = Convert.ToInt32(idFamilia.ToString() + idDiseño.ToString());
+            string descripcionProducto = txtDescripcionDiseño.Text + " " + txtDescripcionFamilia;
+           
 
             if (operacion == "insertar")
             {
-                if (encuentraValorUnico(1) == false && operacion == "insertar" )
+                Producto producto = new Producto(idDiseño, idUnico, idFamilia, descripcionProducto,
+               float.Parse(txtLista1.Text), float.Parse(txtLista2.Text), float.Parse(txtLista3.Text));
+
+                if (encuentraValorUnico() == false && operacion == "insertar" )
                 {
                     if (txtLista1.Text != ""|| txtLista2.Text != "" || txtLista3.Text != "")
                     {
-                        pro.IdDiseño = di.IdDiseño;
-                        pro.IdFamilia = fa.IdFamilia;
-                        pro.ValorUnico = idUnico;
-                        pro.Lista1 = float.Parse(txtLista1.Text);
-                        pro.Lista2 = float.Parse(txtLista2.Text);
-                        pro.Lista3 = float.Parse(txtLista3.Text);
-                        pro.DescripcionProducto = descripcionProducto;
-                        pro.InsertarProductos();
+                        mpro.InsertarProducto(producto);
 
-                        LlenarGrid();
+                        //pro.InsertarStock();
 
-                        MessageBox.Show("Datos Insertados con exito");
+                        MessageBox.Show("Datos Insertados con exito" );
+                        ListarProductosEnGrid("");
                         limpiarCampos();
                     }
                     else {
@@ -326,49 +271,22 @@ namespace GestionIntegral.CapaPresentacion
             }
             if (operacion == "editar")
             {
-                pro.IdProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
-                pro.IdDiseño = di.IdDiseño;
-                pro.IdFamilia = fa.IdFamilia;
-                pro.ValorUnico = idUnico;
-                pro.DescripcionProducto = descripcionProducto;
-                pro.Lista1 = float.Parse(txtLista1.Text);
-                pro.Lista2 = float.Parse(txtLista2.Text);
-                pro.Lista3 = float.Parse(txtLista3.Text);
 
-                fa.IdFamilia = int.Parse(gridProducto.CurrentRow.Cells[1].Value.ToString());
-                fa.DescripcionFamilia = txtDescripcionFamilia.Text;
+                int idProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
 
+                Producto productoAeditar = new Producto(idProducto,idDiseño, idUnico, idFamilia, descripcionProducto,
+                 float.Parse(txtLista1.Text), float.Parse(txtLista2.Text), float.Parse(txtLista3.Text));
 
-                di.IdDiseño = int.Parse(gridProducto.CurrentRow.Cells[2].Value.ToString());
-                di.DescripcionDiseño = txtDescripcionDiseño.Text;
-
-                di.EditarDiseño();
-                fa.EditarFamilia();
-                pro.EditarProducto();
+                mpro.EditarProducto(productoAeditar);
 
                 MessageBox.Show("Editado con exito");
                 limpiarCampos();
-                LlenarGrid();
+                ListarProductosEnGrid("");
 
             }
-            this.Close();
+         
 
         }
-
-        private void cbDiseño_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbDiseño.SelectedIndex > 0)
-            {
-                di.IdDiseño = Convert.ToInt32(cbDiseño.SelectedValue.ToString());
-                di.ListarDiseñoPorId();
-
-                txtDise.Text = di.DescripcionDiseño;
-            }
-        }
-
-
-
-        #endregion
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -376,63 +294,77 @@ namespace GestionIntegral.CapaPresentacion
             {
                 if (MessageBox.Show("¿Desea eliminar el Producto?", "ELIMINAR PRODUCTO", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Producto pr = new Producto();
-                    pr.IdProducto= int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
-                    pr.EliminarProducto();
+                    int idProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
+                    string descripcionProducto = txtDescripcionDiseño.Text + " " + txtDescripcionFamilia;
+
+                    Producto productoABorrar = new Producto(idProducto);
+
+                    mpro.EliminarProducto(productoABorrar);
+
+                    MessageBox.Show("Borrado con exito");
+                    limpiarCampos();
+                    ListarProductosEnGrid("");
                 }
             }
-            LlenarGrid();
-            limpiarCampos();
+
         }
 
         private void btnBorrarFamilia_Click(object sender, EventArgs e)
         {
-        
-                if (MessageBox.Show("¿Desea eliminar esta Familia?", "ELIMINAR FAMILIAR", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                Familia fam = new Familia();
-                fam.IdFamilia = int.Parse(cbFamilia.SelectedValue.ToString());
-                fam.EliminarFamilia();
 
-                
+            if (MessageBox.Show("¿Desea eliminar esta Familia?", "ELIMINAR FAMILIAR", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
 
+                int idFamilia = int.Parse(gridProducto.CurrentRow.Cells[1].Value.ToString());
+
+                Familia familiaABorrar = new Familia(idFamilia);
+
+                mfa.EliminarFamilia(familiaABorrar);
+
+                MessageBox.Show("Borrado con exito");
                 limpiarCampos();
-                if (cbFamilia.Items.Count > 0)
-                {
-                    ListarFamilia();
-                }
-                else
-                {
-                    cbFamilia.Text = "Seleccione un valor";
-                }
-
+                ListarProductosEnGrid("");
 
             }
-      
+            if (cbFamilia.Items.Count > 0)
+            {
+                ListarFamiliaEnComboBox();
             }
+            else
+            {
+                cbFamilia.Text = "Seleccione un valor";
+            }
+        }
 
         private void btnBorrarDiseño_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Desea eliminar esta Familia?", "ELIMINAR FAMILIAR", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Diseño di = new Diseño();
-                di.IdDiseño = int.Parse(cbDiseño.SelectedValue.ToString());
-                di.EliminarDiseño();
+                int idDiseño = int.Parse(gridProducto.CurrentRow.Cells[2].Value.ToString());
 
-                
+                Diseño diseñoABorrar = new Diseño(idDiseño);
+
+                mDi.EliminarDiseño(diseñoABorrar);
+
+                MessageBox.Show("Borrado con exito");
                 limpiarCampos();
-                if (cbDiseño.Items.Count > 0)
-                {
-                    ListarDiseños();
-                }
-                else
-                {
-                    cbDiseño.Text = "Seleccione un valor";
-                }
+                ListarProductosEnGrid("");
+
+            }
+            if (cbDiseño.Items.Count > 0)
+            {
+                ListarDiseñoEnComboBox();
+            }
+            else
+            {
+                cbDiseño.Text = "Seleccione un valor";
             }
 
-        
+
         }
+        #endregion
+
+
     }
 }
 
