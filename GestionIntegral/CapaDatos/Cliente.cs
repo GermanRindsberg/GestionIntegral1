@@ -48,5 +48,21 @@ namespace GestionIntegral.CapaDatos
 
         public Cliente()
         { }
+
+        public Cliente(int idCliente, string razonSocial, int idDireccion, string tel1, string tel2, bool activo, string email, string cuit, int idTransporte, DateTime fechaAlta, string observaciones, int tipoLista)
+        {
+            IdCliente = idCliente;
+            RazonSocial = razonSocial;
+            IdDireccion = idDireccion;
+            Tel1 = tel1;
+            Tel2 = tel2;
+            Activo = activo;
+            Email = email;
+            Cuit = cuit;
+            IdTransporte = idTransporte;
+            FechaAlta = fechaAlta;
+            Observaciones = observaciones;
+            TipoLista = tipoLista;
+        }
     }
 }

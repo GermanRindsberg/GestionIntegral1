@@ -434,6 +434,7 @@
             this.checkActivo.TabIndex = 16;
             this.checkActivo.Text = "Activo / Inactivo";
             this.checkActivo.UseVisualStyleBackColor = true;
+            this.checkActivo.CheckedChanged += new System.EventHandler(this.checkActivo_CheckedChanged);
             // 
             // label10
             // 

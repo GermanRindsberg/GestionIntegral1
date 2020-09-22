@@ -17,8 +17,6 @@ namespace GestionIntegral.CapaPresentacion
         MetodosGenericos mg = new MetodosGenericos();
         MetodosTransporte mttr = new MetodosTransporte();
         MetodosDireccion mtDir = new MetodosDireccion();
-        
-    
 
         string operacion = "insertar";
 
@@ -56,6 +54,17 @@ namespace GestionIntegral.CapaPresentacion
         private void ListarTransporteEnGrid(string condicion, string activo)
         {
             gridTransporte.DataSource = mttr.ListarTransporte(condicion, activo);
+            gridTransporte.Columns[0].Visible = false;
+            gridTransporte.Columns[1].Width = 200;
+            gridTransporte.Columns[2].Visible = false;
+            gridTransporte.Columns[5].Width = 50;
+            gridTransporte.Columns[6].Width = 70;
+            gridTransporte.Columns[7].Width = 70;
+            gridTransporte.Columns[8].Width = 200;
+            gridTransporte.Columns[9].Width = 150;
+            gridTransporte.Columns[11].Width = 250;
+            gridTransporte.Columns[12].Visible = false;
+
         }
 
         private void limpiarCampos()
@@ -93,7 +102,7 @@ namespace GestionIntegral.CapaPresentacion
 
         #endregion
 
-
+        #region EVENTOS
 
         private void btnAgregarTransporte_Click(object sender, EventArgs e)
         {
@@ -125,11 +134,11 @@ namespace GestionIntegral.CapaPresentacion
                 limpiarCampos();
                 ListarTransporteEnGrid("", "1");
                 ListarTransporteEnComboBox();
-                operacion = "insertar";
+               
             }
             if (operacion == "editar")
             {
-               
+
                 //edito la direccion
                 idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
                 calle = txtCalle.Text;
@@ -151,8 +160,8 @@ namespace GestionIntegral.CapaPresentacion
                 razonSocial = cbRazonSocial.Text;
                 tel1 = txtTel1.Text;
                 observaciones = txtObservaciones.Text;
-                
-                Transporte tran = new Transporte(idTransporte,razonSocial,idDireccion, tel1,observaciones,activo);
+
+                Transporte tran = new Transporte(idTransporte, razonSocial, idDireccion, tel1, observaciones, activo);
                 mttr.EditarTransporte(tran);
 
                 MessageBox.Show("Editado con exito");
@@ -168,11 +177,12 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
             {
-                idTransporte =Convert.ToInt32( cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
+                idTransporte = Convert.ToInt32(cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
 
                 Transporte tr = mttr.CrearTransporte(idTransporte.ToString());
-                
+
                 Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(tr.IdDireccion));
+
                 idDireccion = dir.IdDireccion;
                 txtCalle.Text = dir.Calle;
                 txtNro.Text = dir.Numero;
@@ -180,7 +190,7 @@ namespace GestionIntegral.CapaPresentacion
                 txtPiso.Text = dir.Piso;
                 cbProvincia.SelectedValue = dir.IdProvincia;
                 cbLocalidad.SelectedValue = dir.IdLocalidad;
-               
+
                 txtCodigoPostal.Text = dir.CodigoPostal;
                 txtTel1.Text = tr.Tel;
                 checkActivo.Checked = tr.Activo;
@@ -259,7 +269,7 @@ namespace GestionIntegral.CapaPresentacion
                     dir.Piso = txtPiso.Text;
                     dir.Depto = txtDepto.Text;
                     mtDir.EditarDireccion(dir);//edito la direccion
-            
+
 
                     objTransporte.Activo = activo;
 
@@ -281,7 +291,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void radioInactivos_CheckedChanged(object sender, EventArgs e)
         {
-            ListarTransporteEnGrid("","0");
+            ListarTransporteEnGrid("", "0");
         }
 
         private void radioActivos_CheckedChanged(object sender, EventArgs e)
@@ -289,6 +299,9 @@ namespace GestionIntegral.CapaPresentacion
             ListarTransporteEnGrid("", "1");
         }
 
-       
+        #endregion
+
+
+
     }
 }

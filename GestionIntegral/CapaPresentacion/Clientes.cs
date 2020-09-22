@@ -20,9 +20,29 @@ namespace GestionIntegral.CapaPresentacion
         MetodosCliente mtcl = new MetodosCliente();
         MetodosDireccion mtDir = new MetodosDireccion();
 
-        int tipoLista;
+
         String operacion="insertar";
         public int idCliente;
+
+        //variables direccion
+        int idDireccion;
+        int idLocalidad;
+        string calle;
+        String numero;
+        String piso;
+        string depto;
+        //variables Cliente
+        string razonSocial;
+        private string tel1;
+        private string tel2;
+        private Boolean activo;
+        private string email;
+        private string cuit;
+        private DateTime fechaAlta;
+        private string observaciones;
+        int tipoLista;
+        int idTransporte;
+
 
         public Clientes()
         {
@@ -44,15 +64,14 @@ namespace GestionIntegral.CapaPresentacion
 
         #region METODOS
 
-        private void diseñoTabla()
-        {
-          
-        }
-
         private void ListarClientesEnGrid(string condicion, string activo)
         {
             gridClientes.DataSource = mtcl.ListarClientes(condicion, activo);
-            diseñoTabla();
+            gridClientes.Columns[0].Visible = false;
+            gridClientes.Columns[2].Visible = false;
+            gridClientes.Columns[5].Visible = false;
+            gridClientes.Columns[8].Visible = false;
+            gridClientes.Columns[11].Visible = false;
         }
 
         private void limpiarCampos()
@@ -107,26 +126,30 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 //creo una direccion
-                int idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                string calle = txtCalle.Text;
-                String numero = txtNro.Text;
-                String piso = txtPiso.Text;
-                string depto = txtDepto.Text;
+                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                calle = txtCalle.Text;
+                numero = txtNro.Text;
+                piso = txtPiso.Text;
+                depto = txtDepto.Text;
+
                 Direccion dir = new Direccion(idLocalidad, calle, numero, piso, depto);//creo el objeto direccion 
+
                 mtDir.InsertarDireccion(dir);//inserto la direccion
 
-                //creo un cliente
-                string razonSocial = cbRazonSocial.Text.ToString();
-                int idDireccion = dir.IdDireccion;
-                string tel1 = txtTel1.Text;
-                string tel2 = txtTel2.Text;
-                string email = txtMail.Text;
-                string cuit = txtCuit.Text;
-                int idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
-                DateTime fechaAlta = dtpFechaAlta.Value;
-                string observaciones = txtObservaciones.Text;
+                
 
-                Cliente objCliente = new Cliente(razonSocial, idDireccion, tel1, tel2, true,
+                //creo un cliente
+                razonSocial = cbRazonSocial.Text.ToString();
+                idDireccion = mtDir.UltimoIdDireccion();
+                tel1 = txtTel1.Text;
+                tel2 = txtTel2.Text;
+                email = txtMail.Text;
+                cuit = txtCuit.Text;
+                idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                fechaAlta = dtpFechaAlta.Value;
+                observaciones = txtObservaciones.Text;
+
+                Cliente objCliente = new Cliente(razonSocial, idDireccion, tel1, tel2, activo,
                     email, cuit, idTransporte, fechaAlta, observaciones, tipoLista);//creo el objeto cliente
 
                 mtcl.InsertarClientes(objCliente);//inserto el cliente
@@ -135,23 +158,19 @@ namespace GestionIntegral.CapaPresentacion
                 limpiarCampos();
                 ListarClientesEnGrid("", "1");
                 ListarTransporteEnComboBox();
-
-                diseñoTabla();
-
             }
             if (operacion == "editar")
             {
-                Cliente objCliente = mtcl.CrearCliente(Convert.ToString(idCliente));//traigo el cliente y su direccion por id
-                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objCliente.IdDireccion));
-                Boolean activo = true;
-
-                //creo una direccion
-                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                dir.Calle = txtCalle.Text;
-                dir.Numero = txtNro.Text;
-                dir.Piso = txtPiso.Text;
-                dir.Depto = txtDepto.Text;
+               //edito la direccion
+                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                calle = txtCalle.Text;
+                numero = txtNro.Text;
+                piso = txtPiso.Text;
+                depto = txtDepto.Text;
+                Direccion dir = new Direccion(idDireccion, idLocalidad, calle, numero, depto, piso);
                 mtDir.EditarDireccion(dir);//edito la direccion
+
+
                 if (checkActivo.Checked == true)
                 {
                     activo = true;
@@ -160,24 +179,24 @@ namespace GestionIntegral.CapaPresentacion
                 {
                     activo = false;
                 }
+                razonSocial = cbRazonSocial.Text;
+                tel1 = txtTel1.Text;
+                tel2 = txtTel2.Text;
+                email = txtMail.Text;
+                cuit = txtCuit.Text;
+                idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                fechaAlta = dtpFechaAlta.Value;
+                observaciones = txtObservaciones.Text;
 
-                objCliente.Email = txtMail.Text;
-                objCliente.Cuit = txtCuit.Text;
-                objCliente.IdTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
-                objCliente.Activo = activo;
-                objCliente.FechaAlta = dtpFechaAlta.Value;
-                objCliente.Observaciones = txtObservaciones.Text;
-                objCliente.TipoLista = tipoLista;
+                Cliente cl = new Cliente(idCliente,razonSocial, idDireccion,tel1,tel2,activo,email,cuit,idTransporte,fechaAlta,observaciones,tipoLista);
 
-                mtcl.EditarClientes(objCliente);
+                mtcl.EditarClientes(cl);
 
                 MessageBox.Show("Editado con exito");
-                operacion = "insertar";
                 limpiarCampos();
                 ListarClientesEnGrid("", "1");
                 ListarTransporteEnComboBox();
                 cbProvincia.SelectedIndex = 0;
-                diseñoTabla();
             }
         }
 
@@ -185,10 +204,12 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
             {
-                string idCliente =  cbRazonSocial.SelectedValue.ToString(); //COn esto le mando al cliente cual es la id
+               idCliente =  Convert.ToInt32(cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
 
-                Cliente cl = mtcl.CrearCliente(idCliente);
+                Cliente cl = mtcl.CrearCliente(idCliente.ToString());
+               
                 Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(cl.IdDireccion));
+                idDireccion = cl.IdDireccion;
                 txtCalle.Text = dir.Calle;
                 txtNro.Text = dir.Numero;
                 txtDepto.Text = dir.Depto;
@@ -221,7 +242,6 @@ namespace GestionIntegral.CapaPresentacion
                 ListarClientesEnGrid(txtBuscar.Text, "2");
             }
 
-            diseñoTabla();
         }
 
         private void cbProvincia_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -310,7 +330,6 @@ namespace GestionIntegral.CapaPresentacion
                     ListarClientesEnGrid("", "1");
                     ListarTransporteEnComboBox();
                     cbProvincia.SelectedIndex = 0;
-                    diseñoTabla();
 
                 }
             }
@@ -342,13 +361,23 @@ namespace GestionIntegral.CapaPresentacion
             if (radioInactivos.Checked == true)
             {
                 radioActivos.Checked = false;
-                ListarClientesEnGrid("", "2");
+                ListarClientesEnGrid("", "0");
+            }
+        }
+
+        private void checkActivo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkActivo.Checked == true)
+            {
+                activo = true;
+            }
+            else
+            {
+                activo = false;
             }
         }
 
         #endregion
-
-
 
 
     }

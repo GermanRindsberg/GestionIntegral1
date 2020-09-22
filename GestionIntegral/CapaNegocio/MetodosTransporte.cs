@@ -88,7 +88,6 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", 1);
             Comando.Parameters.AddWithValue("@condicion", id);
-
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             List<Transporte> ListaGenerica = new List<Transporte>();
@@ -98,8 +97,8 @@ namespace GestionIntegral.CapaNegocio
                 tr.RazonSocial = LeerFilas.GetString(1);
                 tr.IdDireccion = LeerFilas.GetInt32(2);
                 tr.Tel = LeerFilas.GetString(3);
-                tr.Observaciones = LeerFilas.GetString(4);
-                tr.Activo = LeerFilas.GetBoolean(5);
+                tr.Observaciones = LeerFilas.GetString(11);
+                tr.Activo = LeerFilas.GetBoolean(12);
               
              
             }

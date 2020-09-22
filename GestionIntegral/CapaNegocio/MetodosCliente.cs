@@ -21,7 +21,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "ClientesCreate";
             Comando.CommandType = CommandType.StoredProcedure;
-
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@razonSocial", cl.RazonSocial);
             Comando.Parameters.AddWithValue("@idDireccion", cl.IdDireccion);
             Comando.Parameters.AddWithValue("@tel1", cl.Tel1);
@@ -35,7 +35,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@tipoLista", cl.TipoLista);
 
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+           
             Conexion.Close();
         }
 
@@ -57,6 +57,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "ClientesUpdate";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idCliente", cl.IdCliente);
             Comando.Parameters.AddWithValue("@razonSocial", cl.RazonSocial);
             Comando.Parameters.AddWithValue("@idDireccion", cl.IdDireccion);
@@ -70,7 +71,6 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@observaciones", cl.Observaciones);
             Comando.Parameters.AddWithValue("@tipoLista", cl.TipoLista);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
             Conexion.Close();
 
         }

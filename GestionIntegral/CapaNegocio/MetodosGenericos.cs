@@ -74,7 +74,7 @@ namespace GestionIntegral.CapaNegocio
                 cb.AutoCompleteMode = AutoCompleteMode.Suggest;
                 cb.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
-
+          
             if (nombreTabla!="Localidad"&& nombreTabla != "Producto")
             {
                 DataTable Tabla = new DataTable();
