@@ -17,6 +17,8 @@ namespace GestionIntegral.CapaPresentacion
         TablaParaPedido ta = new TablaParaPedido();
         MetodosTaller mt = new MetodosTaller();
         MetodosProductos mp = new MetodosProductos();
+        MetodosGenericos mg = new MetodosGenericos();
+            
 
         public OrdenDeTrabajo()
         {
@@ -47,25 +49,17 @@ namespace GestionIntegral.CapaPresentacion
 
         private void OrdenDeTrabajo_Load(object sender, EventArgs e)
         {
-            ListarTalleres();
+            ListarTalleresEnComboBox();
         }
 
-        private void ListarTalleres()
+        private void ListarTalleresEnComboBox()
         {
-            cbTaller.DataSource = mt.ListarTaller("","1");
-            cbTaller.DisplayMember = "razonSocial";
-            cbTaller.ValueMember = "id";
-            cbTaller.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbTaller.AutoCompleteSource = AutoCompleteSource.ListItems;
+            mg.LlenarComboBox(cbTaller, "Talleres");
         }
 
-        private void ListarProductos()
+        private void ListarProductosEnComboBox()
         {
-            cbTaller.DataSource = mp.ListarProductos();
-            cbTaller.DisplayMember = "Nombre del producto";
-            cbTaller.ValueMember = "id";
-            cbTaller.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbTaller.AutoCompleteSource = AutoCompleteSource.ListItems;
+            mg.LlenarComboBox(cbProducto, "Producto");
         }
 
         private void btnMasCantidad_Click(object sender, EventArgs e)

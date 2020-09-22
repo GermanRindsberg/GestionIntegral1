@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnNuevosCliente = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -48,7 +49,7 @@
             this.txtFechaPago = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.checkOtro = new System.Windows.Forms.CheckBox();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateFechaPago = new System.Windows.Forms.DateTimePicker();
             this.checkDeposito = new System.Windows.Forms.CheckBox();
             this.checkPagado = new System.Windows.Forms.CheckBox();
             this.checkCheque = new System.Windows.Forms.CheckBox();
@@ -71,7 +72,6 @@
             this.dtFechaPedido = new System.Windows.Forms.DateTimePicker();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGenerarPedido = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -109,6 +109,15 @@
             this.groupBox2.TabIndex = 56;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nuevo Pedido";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(186, 21);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(136, 18);
+            this.label7.TabIndex = 79;
+            this.label7.Text = "Fecha del pedido";
             // 
             // btnNuevosCliente
             // 
@@ -276,7 +285,7 @@
             this.groupBox1.Controls.Add(this.txtFechaPago);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.checkOtro);
-            this.groupBox1.Controls.Add(this.dateTimePicker2);
+            this.groupBox1.Controls.Add(this.dateFechaPago);
             this.groupBox1.Controls.Add(this.checkDeposito);
             this.groupBox1.Controls.Add(this.checkPagado);
             this.groupBox1.Controls.Add(this.checkCheque);
@@ -305,9 +314,9 @@
             this.label6.ForeColor = System.Drawing.Color.Black;
             this.label6.Location = new System.Drawing.Point(254, 10);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(115, 16);
+            this.label6.Size = new System.Drawing.Size(113, 16);
             this.label6.TabIndex = 81;
-            this.label6.Text = "Fecha de envio";
+            this.label6.Text = "Fecha de pago";
             // 
             // checkOtro
             // 
@@ -322,15 +331,15 @@
             this.checkOtro.UseVisualStyleBackColor = true;
             this.checkOtro.CheckedChanged += new System.EventHandler(this.checkOtro_CheckedChanged);
             // 
-            // dateTimePicker2
+            // dateFechaPago
             // 
-            this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(119, 26);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(129, 26);
-            this.dateTimePicker2.TabIndex = 74;
-            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
+            this.dateFechaPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.dateFechaPago.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateFechaPago.Location = new System.Drawing.Point(119, 26);
+            this.dateFechaPago.Name = "dateFechaPago";
+            this.dateFechaPago.Size = new System.Drawing.Size(129, 26);
+            this.dateFechaPago.TabIndex = 74;
+            this.dateFechaPago.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // checkDeposito
             // 
@@ -519,18 +528,18 @@
             // gridPedidoNuevo
             // 
             this.gridPedidoNuevo.AllowUserToAddRows = false;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            this.gridPedidoNuevo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.gridPedidoNuevo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.gridPedidoNuevo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridPedidoNuevo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridPedidoNuevo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridPedidoNuevo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gridPedidoNuevo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPedidoNuevo.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.gridPedidoNuevo.Location = new System.Drawing.Point(9, 189);
@@ -610,15 +619,6 @@
             this.btnGenerarPedido.UseVisualStyleBackColor = true;
             this.btnGenerarPedido.Click += new System.EventHandler(this.btnGenerarPedido_Click);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(186, 21);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(136, 18);
-            this.label7.TabIndex = 79;
-            this.label7.Text = "Fecha del pedido";
-            // 
             // NuevoPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -673,7 +673,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateFechaPago;
         private System.Windows.Forms.CheckBox checkDeposito;
         private System.Windows.Forms.CheckBox checkPagado;
         private System.Windows.Forms.CheckBox checkCheque;

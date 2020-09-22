@@ -32,6 +32,21 @@ namespace GestionIntegral.CapaDatos
         public float Total { get => total; set => total = value; }
         public DateTime? FechaEnvio { get => fechaEnvio; set => fechaEnvio = value; }
 
-        
+        public Pedido(int idDetallePedido, DateTime fecha, int idCliente, int idEstado, string numGuia, string medioPago, DateTime? fechaPago, float total, DateTime? fechaEnvio)
+        {
+            IdDetallePedido = idDetallePedido;
+            Fecha = fecha;
+            IdCliente = idCliente;
+            IdEstado = idEstado;
+            NumGuia = numGuia;
+            MedioPago = medioPago;
+            FechaPago = fechaPago;
+            Total = total;
+            FechaEnvio = fechaEnvio;
+        }
+
+        public Pedido()
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GestionIntegral.CapaDatos;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -45,19 +46,21 @@ namespace GestionIntegral.CapaNegocio
 
         public void InsertarDireccion(Direccion dir)
         {
+         
             Comando.Connection = Conexion;
             Conexion.Open();
             Comando.CommandText = "DireccionCreate";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idLocalidad", dir.IdLocalidad);
             Comando.Parameters.AddWithValue("@calle", dir.Calle);
             Comando.Parameters.AddWithValue("@numero", dir.Numero);
             Comando.Parameters.AddWithValue("@depto", dir.Depto);
             Comando.Parameters.AddWithValue("@piso", dir.Piso);
-
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+          
             Conexion.Close();
+          
         }
 
         public void EditarDireccion(Direccion dir)
@@ -91,7 +94,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-        public Direccion CrearDireccion(string id)//metodo para crear un objeto con los datos rellenados y asi poder leerlos
+        public Direccion CrearDireccion(int id)//metodo para crear un objeto con los datos rellenados y asi poder leerlos
         {
             Direccion dir = new Direccion();
 
@@ -99,7 +102,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandText = "DireccionRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
-            Comando.Parameters.AddWithValue("@condicion", id);
+            Comando.Parameters.AddWithValue("@idDireccion", id);
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
 
@@ -111,14 +114,37 @@ namespace GestionIntegral.CapaNegocio
                 dir.Numero = LeerFilas.GetString(3);
                 dir.Depto = LeerFilas.GetString(4);
                 dir.Piso = LeerFilas.GetString(5);
+                dir.IdLocalidad = LeerFilas.GetInt32(6);
+                dir.IdProvincia = LeerFilas.GetInt32(7);
                 dir.NombreLocalidad = LeerFilas.GetString(8);
-                dir.CodigoPostal = LeerFilas.GetString(9);
-                dir.NombreProvincia = LeerFilas.GetString(10);
+                dir.CodigoPostal = Convert.ToString(LeerFilas.GetInt32(9));
+                dir.NombreProvincia = LeerFilas.GetString(11);
             }
             LeerFilas.Close();
             Conexion.Close();
 
             return dir;
+        }
+
+        public int UltimoIdDireccion()
+        {
+            DataTable Tabla = new DataTable();
+            int ultimoId = 0;
+
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.Parameters.Clear();
+            Comando.CommandText = "DireccionSeleccionarUltimoId";
+            Comando.CommandType = CommandType.StoredProcedure;
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            foreach (DataRow fila in Tabla.Rows)
+            {
+                ultimoId = Convert.ToInt32(fila[0]);
+            }
+            LeerFilas.Close();
+            Conexion.Close();
+            return ultimoId;
         }
 
         public void ListarCodigoPostal(TextBox tx, int idLocalidad)

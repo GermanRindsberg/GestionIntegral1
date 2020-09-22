@@ -315,18 +315,9 @@ namespace GestionIntegral.CapaPresentacion
         private void DiseñoTabla()
         {
             gridStock.DataSource = metStock.ListarStock();
+
             gridStock.Columns[0].Visible = false;//idProducto
-            gridStock.Columns[10].DisplayIndex = 0;
-            gridStock.Columns[1].HeaderText = "Almacen";
-            gridStock.Columns[2].HeaderText = "Taller 1";
-            gridStock.Columns[3].HeaderText = "Taller 2";
-            gridStock.Columns[4].HeaderText = "Taller 3";
-            gridStock.Columns[5].HeaderText = "Taller 4";
-            gridStock.Columns[6].HeaderText = "Cant Stock";
-            gridStock.Columns[7].HeaderText = "Potencial Stock";
-            gridStock.Columns[8].HeaderText = "Pedidos";
-            gridStock.Columns[9].HeaderText = "Requerido";
-            gridStock.Columns[10].HeaderText = "Descripcion del producto";
+
             devolverPedidosParaStock();
             devolverRequeridosParaStock();
 
@@ -379,32 +370,32 @@ namespace GestionIntegral.CapaPresentacion
             {
                 case 1://sumar al almacen
                     valor = Convert.ToInt32(gridStock.CurrentRow.Cells[1].Value.ToString());
-                  metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[1].Value.ToString()), "almacen");
+                  metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[1].Value.ToString()), "almacen", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
 
                     break;
                 case 2://sumar al taller1
                     valor = Convert.ToInt32(gridStock.CurrentRow.Cells[2].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[2].Value.ToString()), "taller1");
+                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[2].Value.ToString()), "taller1", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
 
                     break;
                 case 3://sumar al taller2
                     valor = Convert.ToInt32(gridStock.CurrentRow.Cells[3].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[3].Value.ToString()), "taller2");
+                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[3].Value.ToString()), "taller2", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
 
                     break;
                 case 4://sumar al taller3
                     valor = Convert.ToInt32(gridStock.CurrentRow.Cells[4].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[4].Value.ToString()), "taller3");
+                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[4].Value.ToString()), "taller3", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
 
                     break;
                 case 5://sumar al taller4
                     valor = Convert.ToInt32(gridStock.CurrentRow.Cells[5].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[5].Value.ToString()), "taller4");
+                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[5].Value.ToString()), "taller4", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
 
                     break;
                 case 6://sumar al stock
                     valor = Convert.ToInt32(gridStock.CurrentRow.Cells[6].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[6].Value.ToString()), "stockCant");
+                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[6].Value.ToString()), "stockCant", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
 
                     break;
 
@@ -422,7 +413,7 @@ namespace GestionIntegral.CapaPresentacion
             potencial = almacen + taller1 + taller2 + taller3 + taller4;
 
             gridStock.CurrentRow.Cells[7].Value = potencial;
-            metStock.AgregarStock(Convert.ToInt32(gridStock.CurrentRow.Cells[7].Value.ToString()), "potencialStock");
+            metStock.AgregarStock(Convert.ToInt32(gridStock.CurrentRow.Cells[7].Value.ToString()), "potencialStock", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
             devolverRequeridosParaStock();
 
         }

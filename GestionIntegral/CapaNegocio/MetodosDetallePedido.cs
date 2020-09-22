@@ -13,7 +13,7 @@ namespace GestionIntegral.CapaNegocio
     {
         
         private SqlCommand Comando = new SqlCommand();
-        private SqlDataReader leerFilas;
+        private SqlDataReader LeerFilas;
 
         public void InsertarDetallePedido(DetallePedido de)
         {
@@ -43,37 +43,36 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idPedido", de.IdDetallePedido);
             Comando.CommandType = CommandType.StoredProcedure;
-            leerFilas = Comando.ExecuteReader();
-            Tabla.Load(leerFilas);
-            leerFilas.Close();
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            LeerFilas.Close();
             Conexion.Close();
             return Tabla;
         }
 
-        public DataTable ListarDetallePedidoPorId(DetallePedido de)
+        public DataTable ListarDetallePedidoPorId(int idDetalle)
         {
             DataTable Tabla = new DataTable();
-            Producto pr = new Producto();
 
             Comando.Connection = Conexion;
             Conexion.Open();
             Comando.CommandText = "ListarDetallePedido";
             Comando.Parameters.Clear();
-            Comando.Parameters.AddWithValue("@idPedido", de.IdDetallePedido);
+            Comando.Parameters.AddWithValue("@idPedido", idDetalle);
             Comando.CommandType = CommandType.StoredProcedure;
-            leerFilas = Comando.ExecuteReader();
+            LeerFilas = Comando.ExecuteReader();
 
-            Tabla.Load(leerFilas);
+            Tabla.Load(LeerFilas);
             
-            foreach (DataRow fila in Tabla.Rows)
-            {
-                pr.IdProducto = Convert.ToInt32(fila[0]);
-                pr.DescripcionProducto = fila[1].ToString();
-                de.PrecioUnitario = float.Parse(fila[2].ToString());
-                de.Cantidad = Convert.ToInt32(fila[3]);
-                de.Subtotal = float.Parse(fila[4].ToString());
-            }
-            leerFilas.Close();
+            //foreach (DataRow fila in Tabla.Rows)
+            //{
+            //    pr.IdProducto = Convert.ToInt32(fila[0]);
+            //    pr.DescripcionProducto = fila[1].ToString();
+            //    de.PrecioUnitario = float.Parse(fila[2].ToString());
+            //    de.Cantidad = Convert.ToInt32(fila[3]);
+            //    de.Subtotal = float.Parse(fila[4].ToString());
+            //}
+            LeerFilas.Close();
             Conexion.Close();
             return Tabla;
 
@@ -86,15 +85,15 @@ namespace GestionIntegral.CapaNegocio
 
             Comando.Connection = Conexion;
             Conexion.Open();
-            Comando.CommandText = "UltimoIdPedido";
+            Comando.CommandText = "DetalleSeleccionarUltimoId";
             Comando.CommandType = CommandType.StoredProcedure;
-            leerFilas = Comando.ExecuteReader();
-            Tabla.Load(leerFilas);
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
             foreach (DataRow fila in Tabla.Rows)
             {
-              ultimoId = Convert.ToInt32(fila[0]);
+              ultimoId = Convert.ToInt32(fila[0])+1;
             }
-            leerFilas.Close();
+            LeerFilas.Close();
             Conexion.Close();
             return ultimoId;
         }
@@ -116,16 +115,18 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-        public void EliminarDetallePedido(DetallePedido de)
+        public void EliminarDetallePedido(int idDetallePedido)
         {
             Comando.Connection = Conexion;
             Conexion.Open();
-            Comando.CommandText = "EliminarDetalle";
+            Comando.CommandText = "DetallePedidoEliminar";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
-            Comando.Parameters.AddWithValue("@idDetallePedido", de.IdDetallePedido);
+            Comando.Parameters.AddWithValue("@idDetallePedido", idDetallePedido);
             Comando.ExecuteNonQuery();
             Conexion.Close();
         }
+
+      
     }
 }

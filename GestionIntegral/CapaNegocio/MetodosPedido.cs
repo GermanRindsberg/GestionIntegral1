@@ -14,7 +14,7 @@ namespace GestionIntegral.CapaNegocio
     {
    
         private SqlCommand Comando = new SqlCommand();
-        private SqlDataReader leerFilas;
+        private SqlDataReader LeerFilas;
 
 
         public void InsertarPedido(Pedido pe)
@@ -92,15 +92,15 @@ namespace GestionIntegral.CapaNegocio
             Comando.Connection = Conexion;
             Conexion.Open();
             Comando.Parameters.Clear();
-            Comando.CommandText = "PedidosRead";
+            Comando.CommandText = "PedidoRead";
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idEstado", estado);
             Comando.Parameters.AddWithValue("@fechaDesde", fechaDesde);
             Comando.Parameters.AddWithValue("@fechaHasta", fechaHasta);
             Comando.CommandType = CommandType.StoredProcedure;
-            leerFilas = Comando.ExecuteReader();
-            Tabla.Load(leerFilas);
-            leerFilas.Close();
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            LeerFilas.Close();
             Conexion.Close();
             return Tabla;
         }
@@ -141,9 +141,9 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idEstado", estado);
             Comando.CommandType = CommandType.StoredProcedure;
-            leerFilas = Comando.ExecuteReader();
-            Tabla.Load(leerFilas);
-            leerFilas.Close();
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            LeerFilas.Close();
             Conexion.Close();
             return Tabla;
         }
@@ -158,6 +158,36 @@ namespace GestionIntegral.CapaNegocio
             Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
             Conexion.Close();
+        }
+
+        public Pedido CrearPedido(int id)
+        {
+            Pedido pe = new Pedido();
+
+            Comando.Connection = Conexion;
+            Comando.CommandText = "PedidoReadPorID";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idPedido", id);
+
+            Conexion.Open();
+            LeerFilas = Comando.ExecuteReader();
+            while (LeerFilas.Read())
+            {
+                pe.IdPedido = LeerFilas.GetInt32(0);
+                pe.IdCliente = LeerFilas.GetInt32(1);
+                pe.Total = LeerFilas.GetInt32(2);
+                pe.IdEstado = LeerFilas.GetInt32(3);
+                pe.IdDetallePedido = LeerFilas.GetInt32(4);
+                pe.Fecha = LeerFilas.GetDateTime(5);
+                pe.NumGuia = LeerFilas.GetString(6);
+                pe.FechaPago = LeerFilas.GetDateTime(7);
+                pe.MedioPago = LeerFilas.GetString(8);
+                pe.FechaEnvio = LeerFilas.GetDateTime(9);
+            }
+            LeerFilas.Close();
+            Conexion.Close();
+            return pe;
         }
 
     }

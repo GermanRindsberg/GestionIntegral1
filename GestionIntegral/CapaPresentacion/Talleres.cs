@@ -142,7 +142,7 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "editar")
             {
                 Taller objTaller = mtta.CrearTaller(Convert.ToString(idTaller));//traigo el cliente y su direccion por id
-                Direccion dir = mtDir.CrearDireccion(Convert.ToString(objTaller.IdDireccion));
+                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objTaller.IdDireccion));
                 Boolean activo = true;
 
                 //creo una direccion

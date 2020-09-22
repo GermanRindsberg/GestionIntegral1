@@ -31,6 +31,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Transportes));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioInactivos = new System.Windows.Forms.RadioButton();
+            this.radioActivos = new System.Windows.Forms.RadioButton();
+            this.checkActivo = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.btnBorrar = new System.Windows.Forms.Button();
@@ -57,9 +60,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtCalle = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkActivo = new System.Windows.Forms.CheckBox();
-            this.radioInactivos = new System.Windows.Forms.RadioButton();
-            this.radioActivos = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridTransporte)).BeginInit();
             this.SuspendLayout();
@@ -103,6 +103,43 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Transporte";
+            // 
+            // radioInactivos
+            // 
+            this.radioInactivos.AutoSize = true;
+            this.radioInactivos.Location = new System.Drawing.Point(941, 27);
+            this.radioInactivos.Name = "radioInactivos";
+            this.radioInactivos.Size = new System.Drawing.Size(99, 24);
+            this.radioInactivos.TabIndex = 58;
+            this.radioInactivos.Text = "Inactivos";
+            this.radioInactivos.UseVisualStyleBackColor = true;
+            this.radioInactivos.CheckedChanged += new System.EventHandler(this.radioInactivos_CheckedChanged);
+            // 
+            // radioActivos
+            // 
+            this.radioActivos.AutoSize = true;
+            this.radioActivos.Checked = true;
+            this.radioActivos.Location = new System.Drawing.Point(857, 27);
+            this.radioActivos.Name = "radioActivos";
+            this.radioActivos.Size = new System.Drawing.Size(85, 24);
+            this.radioActivos.TabIndex = 57;
+            this.radioActivos.TabStop = true;
+            this.radioActivos.Text = "Activos";
+            this.radioActivos.UseVisualStyleBackColor = true;
+            this.radioActivos.CheckedChanged += new System.EventHandler(this.radioActivos_CheckedChanged);
+            // 
+            // checkActivo
+            // 
+            this.checkActivo.AutoSize = true;
+            this.checkActivo.Checked = true;
+            this.checkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkActivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkActivo.Location = new System.Drawing.Point(274, 251);
+            this.checkActivo.Name = "checkActivo";
+            this.checkActivo.Size = new System.Drawing.Size(137, 20);
+            this.checkActivo.TabIndex = 56;
+            this.checkActivo.Text = "Activo / Inactivo";
+            this.checkActivo.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
@@ -365,41 +402,6 @@
             this.label1.Size = new System.Drawing.Size(92, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "Razon Social";
-            // 
-            // checkActivo
-            // 
-            this.checkActivo.AutoSize = true;
-            this.checkActivo.Checked = true;
-            this.checkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkActivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkActivo.Location = new System.Drawing.Point(274, 251);
-            this.checkActivo.Name = "checkActivo";
-            this.checkActivo.Size = new System.Drawing.Size(137, 20);
-            this.checkActivo.TabIndex = 56;
-            this.checkActivo.Text = "Activo / Inactivo";
-            this.checkActivo.UseVisualStyleBackColor = true;
-            // 
-            // radioInactivos
-            // 
-            this.radioInactivos.AutoSize = true;
-            this.radioInactivos.Location = new System.Drawing.Point(941, 27);
-            this.radioInactivos.Name = "radioInactivos";
-            this.radioInactivos.Size = new System.Drawing.Size(99, 24);
-            this.radioInactivos.TabIndex = 58;
-            this.radioInactivos.Text = "Inactivos";
-            this.radioInactivos.UseVisualStyleBackColor = true;
-            // 
-            // radioActivos
-            // 
-            this.radioActivos.AutoSize = true;
-            this.radioActivos.Checked = true;
-            this.radioActivos.Location = new System.Drawing.Point(857, 27);
-            this.radioActivos.Name = "radioActivos";
-            this.radioActivos.Size = new System.Drawing.Size(85, 24);
-            this.radioActivos.TabIndex = 57;
-            this.radioActivos.TabStop = true;
-            this.radioActivos.Text = "Activos";
-            this.radioActivos.UseVisualStyleBackColor = true;
             // 
             // Transportes
             // 

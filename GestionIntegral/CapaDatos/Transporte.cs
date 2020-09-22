@@ -34,5 +34,15 @@ namespace GestionIntegral.CapaDatos
             Activo = activo;
         }
         public Transporte() { }
+
+        public Transporte(int idTransporte, string razonSocial, int idDireccion, string tel, string observaciones, bool activo)
+        {
+            IdTransporte = idTransporte;
+            RazonSocial = razonSocial;
+            IdDireccion = idDireccion;
+            Tel = tel;
+            Observaciones = observaciones;
+            Activo = activo;
+        }
     }
 }

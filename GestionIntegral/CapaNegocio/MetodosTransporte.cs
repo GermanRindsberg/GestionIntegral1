@@ -21,15 +21,13 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "TransporteCreate";
             Comando.CommandType = CommandType.StoredProcedure;
-
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@razonSocial", tr.RazonSocial);
             Comando.Parameters.AddWithValue("@idDireccion", tr.IdDireccion);
             Comando.Parameters.AddWithValue("@tel1", tr.Tel);
             Comando.Parameters.AddWithValue("@activo", tr.Activo);
             Comando.Parameters.AddWithValue("@observaciones", tr.Observaciones);
-
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
             Conexion.Close();
         }
 
@@ -51,7 +49,8 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "TransporteUpdate";
             Comando.CommandType = CommandType.StoredProcedure;
-            
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idTransporte", tr.IdTransporte);
             Comando.Parameters.AddWithValue("@razonSocial", tr.RazonSocial);
             Comando.Parameters.AddWithValue("@idDireccion", tr.IdDireccion);
             Comando.Parameters.AddWithValue("@tel1", tr.Tel);
@@ -63,34 +62,21 @@ namespace GestionIntegral.CapaNegocio
 
         }
 
-        public List<Transporte> ListarTransporte(string condicion, string activo)
+        public DataTable ListarTransporte(string condicion, string activo)
         {
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "TransporteRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", activo);
             Comando.Parameters.AddWithValue("@condicion", condicion);
-
-            Conexion.Open();
-            LeerFilas = Comando.ExecuteReader();
-            List<Transporte> ListaGenerica = new List<Transporte>();
-            while (LeerFilas.Read())
-            {
-                ListaGenerica.Add(new Transporte
-                {
-                    IdTransporte = LeerFilas.GetInt32(0),
-                    RazonSocial = LeerFilas.GetString(1),
-                    IdDireccion = LeerFilas.GetInt32(2),
-                    Tel = LeerFilas.GetString(3),
-                    Activo = LeerFilas.GetBoolean(4),
-                    Observaciones = LeerFilas.GetString(5),
-                }); ;
-            }
-            LeerFilas.Close();
+            DataTable ListaGenerica = new DataTable();
+            ListaGenerica.Load(Comando.ExecuteReader());
             Conexion.Close();
             return ListaGenerica;
         }
+
 
         public Transporte CrearTransporte(string id)
         {
@@ -112,8 +98,9 @@ namespace GestionIntegral.CapaNegocio
                 tr.RazonSocial = LeerFilas.GetString(1);
                 tr.IdDireccion = LeerFilas.GetInt32(2);
                 tr.Tel = LeerFilas.GetString(3);
-                tr.Activo = LeerFilas.GetBoolean(4);
-                tr.Observaciones = LeerFilas.GetString(5);
+                tr.Observaciones = LeerFilas.GetString(4);
+                tr.Activo = LeerFilas.GetBoolean(5);
+              
              
             }
             LeerFilas.Close();

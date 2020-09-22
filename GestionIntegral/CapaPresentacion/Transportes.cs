@@ -17,8 +17,23 @@ namespace GestionIntegral.CapaPresentacion
         MetodosGenericos mg = new MetodosGenericos();
         MetodosTransporte mttr = new MetodosTransporte();
         MetodosDireccion mtDir = new MetodosDireccion();
-        int idTransporte;
+        
+    
+
         string operacion = "insertar";
+
+        int idTransporte;
+        int idLocalidad;
+        string calle;
+        String numero;
+        String piso;
+        string depto;
+        int idDireccion;
+        string razonSocial;
+        string tel1;
+        string observaciones;
+        Boolean activo;
+
 
         public Transportes()
         {
@@ -37,34 +52,10 @@ namespace GestionIntegral.CapaPresentacion
         }
 
         #region METODOS
-
-        private void diseñoTabla()
-        {
-            gridTransporte.ClearSelection();
-
-            this.gridTransporte.Columns[0].Visible = false;//idTransporte
-            this.gridTransporte.Columns[1].HeaderText = "Razon Social";//RazonSOcial
-            this.gridTransporte.Columns[2].Visible = false;//idDireccion
-            this.gridTransporte.Columns[3].HeaderText = "Telefono 1";//Telefono
-            this.gridTransporte.Columns[4].HeaderText = "Observaciones";//Observaciones
-            this.gridTransporte.Columns[5].Visible = false;//Activo
-            this.gridTransporte.Columns[6].Visible = false;//idDIreccion
-            this.gridTransporte.Columns[7].Visible = false;//idLocalidad
-            this.gridTransporte.Columns[8].HeaderText = "Calle";//calle
-            this.gridTransporte.Columns[9].HeaderText = "Nro";//numero
-            this.gridTransporte.Columns[10].HeaderText = "Depto";//depto
-            this.gridTransporte.Columns[11].HeaderText = "Piso";//piso
-            this.gridTransporte.Columns[12].Visible=false;//idlocalidad
-            this.gridTransporte.Columns[13].HeaderText = "Localidad"; ;//nomre
-            this.gridTransporte.Columns[14].Visible = false;//cp
-            this.gridTransporte.Columns[15].Visible = false;//idprovincia
-            this.gridTransporte.Columns[16].HeaderText = "Provincia";//nombre
-        }
-
+      
         private void ListarTransporteEnGrid(string condicion, string activo)
         {
             gridTransporte.DataSource = mttr.ListarTransporte(condicion, activo);
-            diseñoTabla();
         }
 
         private void limpiarCampos()
@@ -109,45 +100,46 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 //creo una direccion
-                int idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                string calle = txtCalle.Text;
-                String numero = txtNro.Text;
-                String piso = txtPiso.Text;
-                string depto = txtDepto.Text;
+                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                calle = txtCalle.Text;
+                numero = txtNro.Text;
+                piso = txtPiso.Text;
+                depto = txtDepto.Text;
+
                 Direccion dir = new Direccion(idLocalidad, calle, numero, piso, depto);//creo el objeto direccion 
+
                 mtDir.InsertarDireccion(dir);//inserto la direccion
 
-                //creo un cliente
-                string razonSocial = cbRazonSocial.Text.ToString();
-                int idDireccion = dir.IdDireccion;
-                string tel1 = txtTel1.Text;
-                string observaciones = txtObservaciones.Text;
+                idDireccion = mtDir.UltimoIdDireccion();
+
+                //creo un transporte
+                razonSocial = cbRazonSocial.Text.ToString();
+                tel1 = txtTel1.Text;
+                observaciones = txtObservaciones.Text;
 
                 Transporte objtransporte = new Transporte(razonSocial, idDireccion, tel1, observaciones, true);//creo el objeto cliente
 
-                mttr.InsertarTransportes(objtransporte);//inserto el cliente
+                mttr.InsertarTransportes(objtransporte);//inserto el transporte
 
                 MessageBox.Show("Insertado con exito");
                 limpiarCampos();
                 ListarTransporteEnGrid("", "1");
                 ListarTransporteEnComboBox();
-
-                diseñoTabla();
-
+                operacion = "insertar";
             }
             if (operacion == "editar")
             {
-                Transporte objTransporte = mttr.CrearTransporte(Convert.ToString(idTransporte));//traigo el cliente y su direccion por id
-                Direccion dir = mtDir.CrearDireccion(Convert.ToString(objTransporte.IdDireccion));
-                Boolean activo = true;
-
-                //creo una direccion
-                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                dir.Calle = txtCalle.Text;
-                dir.Numero = txtNro.Text;
-                dir.Piso = txtPiso.Text;
-                dir.Depto = txtDepto.Text;
+               
+                //edito la direccion
+                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                calle = txtCalle.Text;
+                numero = txtNro.Text;
+                piso = txtPiso.Text;
+                depto = txtDepto.Text;
+                Direccion dir = new Direccion(idDireccion, idLocalidad, calle, numero, depto, piso);
                 mtDir.EditarDireccion(dir);//edito la direccion
+
+
                 if (checkActivo.Checked == true)
                 {
                     activo = true;
@@ -156,20 +148,19 @@ namespace GestionIntegral.CapaPresentacion
                 {
                     activo = false;
                 }
-
-                objTransporte.Activo = activo;
-               
-                objTransporte.Observaciones = txtObservaciones.Text;
-
-                mttr.EditarTransporte(objTransporte);
+                razonSocial = cbRazonSocial.Text;
+                tel1 = txtTel1.Text;
+                observaciones = txtObservaciones.Text;
+                
+                Transporte tran = new Transporte(idTransporte,razonSocial,idDireccion, tel1,observaciones,activo);
+                mttr.EditarTransporte(tran);
 
                 MessageBox.Show("Editado con exito");
-                operacion = "insertar";
+                operacion = "editar";
                 limpiarCampos();
                 ListarTransporteEnGrid("", "1");
                 ListarTransporteEnComboBox();
                 cbProvincia.SelectedIndex = 0;
-                diseñoTabla();
             }
         }
 
@@ -177,11 +168,12 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
             {
-                string idTransporte = cbRazonSocial.SelectedValue.ToString(); //COn esto le mando al cliente cual es la id
+                idTransporte =Convert.ToInt32( cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
 
-                Transporte tr = mttr.CrearTransporte(idTransporte);
-
-                Direccion dir = mtDir.CrearDireccion(Convert.ToString(tr.IdDireccion));
+                Transporte tr = mttr.CrearTransporte(idTransporte.ToString());
+                
+                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(tr.IdDireccion));
+                idDireccion = dir.IdDireccion;
                 txtCalle.Text = dir.Calle;
                 txtNro.Text = dir.Numero;
                 txtDepto.Text = dir.Depto;
@@ -195,9 +187,7 @@ namespace GestionIntegral.CapaPresentacion
                 txtObservaciones.Text = tr.Observaciones;
                 operacion = "editar";
 
-
             }
-
         }
 
         private void txtBuscar_KeyUp(object sender, KeyEventArgs e)
@@ -212,9 +202,7 @@ namespace GestionIntegral.CapaPresentacion
                 ListarTransporteEnGrid(txtBuscar.Text, "2");
             }
 
-            diseñoTabla();
         }
-
 
         private void cbProvincia_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -248,14 +236,10 @@ namespace GestionIntegral.CapaPresentacion
 
         private void gridTransporte_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (gridTransporte.SelectedRows.Count > 0)
+            if (checkActivo.Checked == true)
             {
                 cbRazonSocial.SelectedValue = int.Parse(gridTransporte.CurrentRow.Cells[0].Value.ToString());
-
-                operacion = "editar";
             }
-            else
-                MessageBox.Show("Debe seleccionar una fila");
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -265,7 +249,7 @@ namespace GestionIntegral.CapaPresentacion
                 if (MessageBox.Show("¿Desea eliminar el Transporte, pasara a ser inactivo?", "ELIMINAR TRANSPORTE", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Transporte objTransporte = mttr.CrearTransporte(Convert.ToString(idTransporte));//traigo el cliente y su direccion por id
-                    Direccion dir = mtDir.CrearDireccion(Convert.ToString(objTransporte.IdDireccion));
+                    Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objTransporte.IdDireccion));
                     Boolean activo = false;
 
                     //creo una direccion
@@ -290,13 +274,21 @@ namespace GestionIntegral.CapaPresentacion
                     ListarTransporteEnGrid("", "1");
                     ListarTransporteEnComboBox();
                     cbProvincia.SelectedIndex = 0;
-                    diseñoTabla();
 
                 }
             }
         }
 
-            
-        
+        private void radioInactivos_CheckedChanged(object sender, EventArgs e)
+        {
+            ListarTransporteEnGrid("","0");
+        }
+
+        private void radioActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            ListarTransporteEnGrid("", "1");
+        }
+
+       
     }
 }

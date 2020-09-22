@@ -14,15 +14,13 @@ namespace GestionIntegral.CapaNegocio
         MetodosDetallePedido metDetalle = new MetodosDetallePedido();
 
         Producto pr = new Producto();
-        DataTable Tabla = new DataTable();
+       public DataTable Tabla = new DataTable();
 
-   
+        
 
         public void CrearTabla(int id)
         {
-            DetallePedido de = new DetallePedido(id);
-
-            Tabla = metDetalle.ListarDetallePedidoPorId(de);
+            Tabla= metDetalle.ListarDetallePedidoPorId(id);
             
         }
 

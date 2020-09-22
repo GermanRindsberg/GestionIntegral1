@@ -28,5 +28,13 @@ namespace GestionIntegral.CapaDatos
         {
             IdDetallePedido = idDetallePedido;
         }
+
+        public DetallePedido(int idDetallePedido, int idProducto, float precioUnitario, int cantidad, float subtotal) : this(idDetallePedido)
+        {
+            IdProducto = idProducto;
+            PrecioUnitario = precioUnitario;
+            Cantidad = cantidad;
+            Subtotal = subtotal;
+        }
     }
 }

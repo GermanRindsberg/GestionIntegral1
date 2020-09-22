@@ -42,5 +42,15 @@ namespace GestionIntegral.CapaDatos
 
         public Direccion()
         { }
+
+        public Direccion(int idDireccion, int idLocalidad, string calle, string numero, string depto, string piso)
+        {
+            IdDireccion = idDireccion;
+            IdLocalidad = idLocalidad;
+            Calle = calle;
+            Numero = numero;
+            Depto = depto;
+            Piso = piso;
+        }
     }
 }

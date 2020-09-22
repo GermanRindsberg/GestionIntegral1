@@ -46,39 +46,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void diseñoTabla()
         {
-            gridClientes.ClearSelection();
-
-            this.gridClientes.Columns[0].Visible = false;
-            this.gridClientes.Columns[1].HeaderText = "Razon Social";
-            this.gridClientes.Columns[2].Visible = false;
-            this.gridClientes.Columns[3].HeaderText = "Telefono 1";
-            this.gridClientes.Columns[4].HeaderText = "Telefono 2";
-            this.gridClientes.Columns[5].Visible = false;
-            this.gridClientes.Columns[6].HeaderText = "Email";
-            this.gridClientes.Columns[7].HeaderText = "CUIT";
-            this.gridClientes.Columns[8].Visible = false;
-            this.gridClientes.Columns[9].Visible = false;
-            this.gridClientes.Columns[10].HeaderText = "Observ.";
-            this.gridClientes.Columns[11].Visible = false;
-            this.gridClientes.Columns[12].Visible = false;
-            this.gridClientes.Columns[13].Visible = false;
-            this.gridClientes.Columns[14].HeaderText = "Calle";
-            this.gridClientes.Columns[15].HeaderText = "Nro";
-            this.gridClientes.Columns[16].HeaderText = "Depto";
-            this.gridClientes.Columns[17].HeaderText = "Piso";
-            this.gridClientes.Columns[18].Visible = false;
-            this.gridClientes.Columns[19].Visible = false;
-            this.gridClientes.Columns[20].HeaderText = "Localidad";
-            this.gridClientes.Columns[21].Visible = false;
-            this.gridClientes.Columns[22].Visible = false;
-            this.gridClientes.Columns[23].HeaderText = "Provincia";
-
-            gridClientes.Columns[15].Width = 50;
-            gridClientes.Columns[16].Width = 50;
-            gridClientes.Columns[17].Width = 50;
-            gridClientes.Columns[18].Width = 50;
-            gridClientes.Columns[23].Width = 100;
-            gridClientes.Columns[1].Width = 140;
+          
         }
 
         private void ListarClientesEnGrid(string condicion, string activo)
@@ -174,7 +142,7 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "editar")
             {
                 Cliente objCliente = mtcl.CrearCliente(Convert.ToString(idCliente));//traigo el cliente y su direccion por id
-                Direccion dir = mtDir.CrearDireccion(Convert.ToString(objCliente.IdDireccion));
+                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objCliente.IdDireccion));
                 Boolean activo = true;
 
                 //creo una direccion
@@ -220,7 +188,7 @@ namespace GestionIntegral.CapaPresentacion
                 string idCliente =  cbRazonSocial.SelectedValue.ToString(); //COn esto le mando al cliente cual es la id
 
                 Cliente cl = mtcl.CrearCliente(idCliente);
-                Direccion dir = mtDir.CrearDireccion(Convert.ToString(cl.IdDireccion));
+                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(cl.IdDireccion));
                 txtCalle.Text = dir.Calle;
                 txtNro.Text = dir.Numero;
                 txtDepto.Text = dir.Depto;
@@ -314,7 +282,7 @@ namespace GestionIntegral.CapaPresentacion
                 if (MessageBox.Show("¿Desea eliminar el Cliente, pasara a ser inactivo?", "ELIMINAR CLIENTE", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Cliente objCliente = mtcl.CrearCliente(Convert.ToString(idCliente));//traigo el cliente y su direccion por id
-                    Direccion dir = mtDir.CrearDireccion(Convert.ToString(objCliente.IdDireccion));
+                    Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objCliente.IdDireccion));
                     Boolean activo = false;
 
                     //creo una direccion

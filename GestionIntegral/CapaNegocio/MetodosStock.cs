@@ -50,7 +50,6 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-
         public void AgregarStock(int valor, string columna, int idProducto)
         {
             Comando.Connection = Conexion;

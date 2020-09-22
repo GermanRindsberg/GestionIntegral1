@@ -29,6 +29,9 @@ namespace GestionIntegral.CapaPresentacion
         MetodosGenericos mg = new MetodosGenericos();
         MetodosDetallePedido metDetalle = new MetodosDetallePedido();
         MetodosProductos metProductos = new MetodosProductos();
+        MetodosCliente metCliente = new MetodosCliente();
+        MetodosPedido metPedido = new MetodosPedido();
+
 
 
         public int idPedido;
@@ -56,15 +59,12 @@ namespace GestionIntegral.CapaPresentacion
 
             if (operacion == "editar")
             {
-
-                
-                ListarProductos();//cargo combobox de productos
-                ListarTransporte(); //cargo combobox de transportes
-                ListarClientes(); //cargo combobox de clientes
-
-                pedido.IdPedido = idPedido;  //le paso al objeto detalle pedido la id del pedido a traer datos
-
-                pedido.ListarPedidoPorId(cl, tr); //traigo todos los datos de la tabla por id
+                ListarTransporteEncomboBox(); //cargo combobox de transportes
+                ListarProductosEnComboBox();//cargo combobox de productos
+                ListarClientesEnComboBox(); //cargo combobox de clientes
+            
+                #region CREO Y TRAIGO DATOS DE PEDIDO
+                Pedido pedido = metPedido.CrearPedido(idPedido);
 
                 lblTotal.Text = pedido.Total.ToString();//le paso el total al lbltotal
 
@@ -72,7 +72,7 @@ namespace GestionIntegral.CapaPresentacion
 
                 if (pedido.FechaPago != null)//si el valor de fecha de pago es distinto a nulo le paso ese valor al datetimepiker de pago, sino toma el actual
                 {
-                    dateTimePicker2.Value = Convert.ToDateTime(pedido.FechaPago);
+                    dateFechaPago.Value = Convert.ToDateTime(pedido.FechaPago);
                 }
                 if (pedido.MedioPago != "")//si tiene pago pone los valores
                 {
@@ -98,7 +98,9 @@ namespace GestionIntegral.CapaPresentacion
                         checkOtro.Checked = true;
                         tipoDePago = "Otro";
                     }
-                    
+
+                    txtNroGuia.Text = pedido.NumGuia; //le paso el numero de guia al txtnumguia
+                    cbCliente.SelectedValue = pedido.IdCliente;//selecciona el id del cliente a traer
 
                 }
                 else
@@ -110,26 +112,20 @@ namespace GestionIntegral.CapaPresentacion
                     checkEnviado.Checked = true;
                 }
 
-                detalle.IdDetallePedido = pedido.IdDetallePedido;//le paso a detalle pedido el id a traer, que es el de pedido.idDetallePedido
-
-                cbCliente.SelectedValue = cl.IdCliente;//selecciona el id del cliente a traer
-
-                
-         
-                ElegirProducto();//usa este metodo para que el usuario pueda elegir productos a agregar
-
-                txtNroGuia.Text = pedido.NumGuia; //le paso el numero de guia al txtnumguia
-
-                cbTransporte.SelectedValue = cl.IdTransporte;//selecciona el id del transporte a traer*
-            
                 if (pedido.FechaEnvio != null)
                 {
                     txtFechaEnvio.Text = pedido.FechaEnvio.Value.ToString("dd MMMM, yyyy");
                 }
+                #endregion
 
-                ta.CrearTabla(detalle.IdDetallePedido);
+                #region CREO Y TRAIGO DATOS DE DETALLE PEDIDO
+                ta.CrearTabla(pedido.IdDetallePedido);
                 gridPedidoNuevo.DataSource = ta.Tabla;
                 gridPedidoNuevo.Columns[0].Visible = false;
+
+                #endregion
+         
+                ElegirProducto();//usa este metodo para que el usuario pueda elegir productos a agregar
             }
         }
 
@@ -138,71 +134,69 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (operacion == "insertar")
             {
-                ultimoId = pedido.SeleccionarUltimoIdYSumarleUno() + 1;
+                DateTime fecha = dtFechaPedido.Value;
+                int idEstado = 0;
+                string numGuia = txtNroGuia.Text;
+                //tipoPago
+                DateTime? fechaPago;
+                float totalPedido = float.Parse(lblTotal.Text);
+                DateTime? fechaEnvio;
+                ultimoId = metDetalle.UltimoIdDetallePedido();
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
-                    detalle.IdDetallePedido = ultimoId;
-                    detalle.IdProducto = Convert.ToInt32(row.Cells[0].Value);
-                    detalle.PrecioUnitario = float.Parse(row.Cells[2].Value.ToString());
-                    detalle.Cantidad = Convert.ToInt32(row.Cells[3].Value);
-                    detalle.Subtotal = Convert.ToInt32(row.Cells[4].Value);
-                    pedido.Total =float.Parse(lblTotal.Text);
-                    detalle.InsertarDetallePedido();
-                }
+                    int idDetallePedido = ultimoId;
+                    int idProducto = Convert.ToInt32(row.Cells[0].Value);
+                    float precioUnitario = float.Parse(row.Cells[2].Value.ToString());
+                    int cantidad = Convert.ToInt32(row.Cells[3].Value);
+                    float subtotal = Convert.ToInt32(row.Cells[4].Value);
 
+                    DetallePedido detalle = new DetallePedido(idDetallePedido, idProducto, precioUnitario, cantidad, subtotal);
+                    metDetalle.InsertarDetallePedido(detalle);
+                }
+                
+               
+                
                 if (checkPagado.Checked == true)
                 {
-                    pedido.IdCliente = idCliente;
-                    pedido.Fecha = dtFechaPedido.Value;
+                    fechaPago = dateFechaPago.Value;
 
                     if (txtFechaEnvio.Text=="")
                     {
-                        pedido.IdEstado = 1;
-                        pedido.FechaEnvio = null;
+                       idEstado = 1;
+                       fechaEnvio = null;
                     }
                     else
                     {
-                        pedido.IdEstado = 2;
-                        pedido.FechaEnvio = Convert.ToDateTime(txtFechaEnvio.Text);
+                        idEstado = 2;
+                        fechaEnvio = Convert.ToDateTime(txtFechaEnvio.Text);
                     }
-                    
-                    pedido.FechaPago = dtFechaPedido.Value;
-                    pedido.MedioPago = tipoDePago;
-                    pedido.IdDetallePedido = ultimoId;
-                    pedido.Total = float.Parse(lblTotal.Text);
-                    pedido.NumGuia = txtNroGuia.Text;
 
-                    pedido.InsertarPedido();
+                    Pedido pe = new Pedido(ultimoId,fecha,idCliente,idEstado,numGuia,tipoDePago,fechaPago, totalPedido, fechaEnvio);
+                    metPedido.InsertarPedido(pe);
 
                     MessageBox.Show("Insertado con exito");
-
                     limpiarCamposPedido();
                 }
                 else
                 {
                     if (MessageBox.Show("¿Pedido no pagado, ingresar igualmente?", "FALTA PAGO", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        pedido.IdCliente = idCliente;
-                        pedido.Fecha = dtFechaPedido.Value;
-
+                        fechaPago = null;
                         if (txtFechaEnvio.Text == "")
                         {
-                            pedido.IdEstado = 1;
-                            pedido.FechaEnvio = null;
-
+                            idEstado = 1;
+                            fechaEnvio = null;
                         }
                         else
                         {
-                            pedido.IdEstado = 2;
-                            pedido.FechaEnvio = dateFechaEnvio.Value;
+                            idEstado = 2;
+                            fechaEnvio = Convert.ToDateTime(txtFechaEnvio.Text);
                         }
-                        pedido.NumGuia = txtNroGuia.Text;
-                        pedido.MedioPago = tipoDePago;
-                        pedido.IdDetallePedido = ultimoId;
-                        pedido.Total = float.Parse(lblTotal.Text);
 
-                        pedido.InsertarPedido();
+                        Pedido pe = new Pedido(ultimoId, fecha, idCliente, idEstado, numGuia, tipoDePago, fechaPago, totalPedido, fechaEnvio);
+                        metPedido.InsertarPedido(pe);
+
                         MessageBox.Show("Insertado con exito");
                         limpiarCamposPedido();
                     }
@@ -214,47 +208,60 @@ namespace GestionIntegral.CapaPresentacion
                 
             }
 
-
             if (operacion == "editar")
             {
-                pedido.IdCliente = idCliente;
-                detalle.IdDetallePedido = pedido.IdDetallePedido;//id Detalle pedido
-                detalle.EliminarDetallePedido();
-                ultimoId = pedido.SeleccionarUltimoIdYSumarleUno() + 1;
+                DateTime fecha = dtFechaPedido.Value;
+                int idEstado = 0;
+                string numGuia = txtNroGuia.Text;
+                //tipoPago
+                DateTime? fechaPago;
+                float totalPedido = float.Parse(lblTotal.Text);
+                DateTime? fechaEnvio;
+
+                Pedido pedidoAeditar = metPedido.CrearPedido(idPedido);
+
+                //elimino el detallePedido para luego insertar uno nuevo, debo investigar para editarlo y no tener que borrarlo
+                metDetalle.EliminarDetallePedido(pedidoAeditar.IdDetallePedido);
+
+                ultimoId = metDetalle.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
-                    detalle.IdDetallePedido = ultimoId;
-                    detalle.IdProducto = Convert.ToInt32(row.Cells[0].Value);
-                    detalle.PrecioUnitario = float.Parse(row.Cells[2].Value.ToString());
-                    detalle.Cantidad = Convert.ToInt32(row.Cells[3].Value);
-                    detalle.Subtotal = Convert.ToInt32(row.Cells[4].Value);
-                    pedido.Total = float.Parse(lblTotal.Text);
-                    detalle.InsertarDetallePedido();
+                    int idDetallePedido = ultimoId;
+                    int idProducto = Convert.ToInt32(row.Cells[0].Value);
+                    float precioUnitario = float.Parse(row.Cells[2].Value.ToString());
+                    int cantidad = Convert.ToInt32(row.Cells[3].Value);
+                    float subtotal = Convert.ToInt32(row.Cells[4].Value);
+
+                    DetallePedido detalle = new DetallePedido(idDetallePedido, idProducto, precioUnitario, cantidad, subtotal);
+                    metDetalle.InsertarDetallePedido(detalle);
                 }
-                
+
                 if (checkPagado.Checked == true)
                 {
-                    if (checkEnviado.Checked!=true)
-                    {
-                        pedido.IdEstado = 1;
-                        pedido.FechaEnvio = null;
+                    fechaPago = dateFechaPago.Value;
 
+                    if (txtFechaEnvio.Text == "")
+                    {
+                        idEstado = 1;
+                        fechaEnvio = null;
                     }
                     else
                     {
-                        pedido.IdEstado = 2;
-                        pedido.FechaEnvio =Convert.ToDateTime(txtFechaEnvio.Text);
+                        idEstado = 2;
+                        fechaEnvio = Convert.ToDateTime(txtFechaEnvio.Text);
                     }
-                    pedido.MedioPago = tipoDePago;
-                    pedido.Total = float.Parse(lblTotal.Text);
-                    pedido.NumGuia = txtNroGuia.Text;
-                    pedido.IdDetallePedido = detalle.IdDetallePedido;
-                    pedido.FechaPago = dateTimePicker2.Value;
-                    pedido.EditarPedido();
+                    pedidoAeditar.IdCliente = idCliente;
+                    pedidoAeditar.Total = totalPedido;
+                    pedidoAeditar.IdEstado = idEstado;
+                    pedidoAeditar.IdDetallePedido = ultimoId;
+                    pedidoAeditar.NumGuia = numGuia;
+                    pedidoAeditar.FechaPago = fechaPago;
+                    pedidoAeditar.MedioPago = tipoDePago;
+                    pedidoAeditar.FechaEnvio = fechaEnvio;
 
+                    metPedido.EditarPedido(pedidoAeditar);
                     MessageBox.Show("Editado con exito");
-
                     limpiarCamposPedido();
                 }
                
@@ -264,21 +271,26 @@ namespace GestionIntegral.CapaPresentacion
                     {
                         if (checkEnviado.Checked != true)
                         {
-                            pedido.IdEstado = 1;
-                            pedido.FechaEnvio = null;
+                            idEstado = 1;
+                            fechaEnvio = null;
 
                         }
                         else
                         {
-                            pedido.IdEstado = 2;
-                            pedido.FechaEnvio = dateFechaEnvio.Value;
+                            idEstado = 2;
+                            fechaEnvio = Convert.ToDateTime(txtFechaEnvio.Text);
                         }
-                        pedido.MedioPago = tipoDePago;
-                        pedido.NumGuia = txtNroGuia.Text;
-                        pedido.Total = float.Parse(lblTotal.Text);
-                        pedido.IdDetallePedido = detalle.IdDetallePedido;
-                        pedido.FechaPago = null;
-                        pedido.EditarPedido();
+                        pedidoAeditar.IdCliente = idCliente;
+                        pedidoAeditar.Total = totalPedido;
+                        pedidoAeditar.IdEstado = idEstado;
+                        pedidoAeditar.IdDetallePedido = ultimoId;
+                        pedidoAeditar.NumGuia = numGuia;
+                        pedidoAeditar.FechaPago = null;
+                        pedidoAeditar.MedioPago = tipoDePago;
+                        pedidoAeditar.FechaEnvio = fechaEnvio;
+
+                        metPedido.EditarPedido(pedidoAeditar);
+                        
                         MessageBox.Show("Editado con exito");
                         limpiarCamposPedido();
                     }
@@ -340,7 +352,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnQuitarProducto_Click(object sender, EventArgs e)
         {
-            //no me deja borrar elemento
+           
             if (gridPedidoNuevo.SelectedRows.Count > 0)
             {
                 if (gridPedidoNuevo.SelectedRows.Count != null)
@@ -377,10 +389,10 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (operacion == "insertar")
             {
-                ListarTransporte();
-                ListarClientes();
+                ListarTransporteEncomboBox();
+                ListarClientesEnComboBox();
             }
-            ListarProductos();
+            ListarProductosEnComboBox();
         }
 
         private void dateFechaEnvio_ValueChanged(object sender, EventArgs e)
@@ -391,7 +403,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
-            txtFechaPago.Text = dateTimePicker2.Value.ToString("dd MMMM, yyyy");
+            txtFechaPago.Text = dateFechaPago.Value.ToString("dd MMMM, yyyy");
 
         }
 
@@ -423,7 +435,7 @@ namespace GestionIntegral.CapaPresentacion
                     txtFechaEnvio.Enabled = false;
                     txtFechaEnvio.Text = "";
                     cbTransporte.Enabled = false;
-                    ListarTransporte();
+                    ListarTransporteEncomboBox();
                     txtNroGuia.Enabled = false;
                     txtNroGuia.Text = "";
                 }
@@ -509,11 +521,9 @@ namespace GestionIntegral.CapaPresentacion
           
                 if (cbCliente.SelectedIndex > 0 && cbCliente.Text != default)
                 {
-                    idCliente = (Convert.ToInt32(cbCliente.SelectedValue.ToString())); //COn esto le mando al cliente cual es la id
-                    cl.IdCliente = idCliente;
-
-                    cl.ListarClientePorId();//con la id que le mande aca traigo todos los datos de ese objeto cliente
-                                            //empiezo a setear todos los campos
+                    
+                    Cliente cl = metCliente.CrearCliente(cbCliente.SelectedValue.ToString());
+                    
                     tipoLista = cl.TipoLista;
                     if (tipoLista == 0)
                     {
@@ -548,7 +558,7 @@ namespace GestionIntegral.CapaPresentacion
                 checkEfectivo.Enabled = true;
                 checkEfectivo.Checked = true;
                 checkOtro.Enabled = true;
-                txtFechaPago.Text = dateTimePicker2.Value.ToString("dd MMMM, yyyy");
+                txtFechaPago.Text = dateFechaPago.Value.ToString("dd MMMM, yyyy");
             }
             else
             {
