@@ -34,7 +34,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void ListarDiseñoEnComboBox()
         {
-            mg.LlenarComboBox(cbDiseño, "Diseños");
+            mg.LlenarComboBox(cbDiseño, "Diseño");
         }
         
         private void ListarFamiliaEnComboBox()
@@ -44,10 +44,11 @@ namespace GestionIntegral.CapaPresentacion
 
         private void diseñoTabla()
         {
-            this.gridProducto.Columns[0].Visible = false;//idProducto
-            this.gridProducto.Columns[1].Visible = false;//idProducto
-            this.gridProducto.Columns[2].Visible = false;//idProducto
-            this.gridProducto.Columns[3].Visible = false;//idProducto
+            gridProducto.Columns[0].Visible = false;
+            gridProducto.Columns[1].Visible = false;
+            gridProducto.Columns[2].Visible = false;
+            gridProducto.Columns[3].Visible = false;
+            gridProducto.Columns[8].Visible = false;
         }
 
         private void limpiarCampos()
@@ -71,20 +72,14 @@ namespace GestionIntegral.CapaPresentacion
 
         private Boolean encuentraValorUnico()
         {
-            if (gridProducto.RowCount > 0)
+            foreach (DataGridViewRow row in gridProducto.Rows)
             {
-                for (int i = 0; i < gridProducto.RowCount; i++)
-                {
-                    if (Convert.ToInt32(gridProducto.Rows[i].Cells[3].Value) == idUnico)
-                    {
-                        MessageBox.Show("El producto ya ha sido ingresado");
-                        return true;
-                    }
-                    else
-                        return false;
+                if (Convert.ToInt32( row.Cells["valorUnico"].Value.ToString()) == idUnico){ 
+                    MessageBox.Show("El producto ya ha sido ingresado");
+                    return true;
                 }
             }
-            return false;
+                return false;
         }
 
         #endregion
@@ -188,8 +183,8 @@ namespace GestionIntegral.CapaPresentacion
 
                     Familia fa = mfa.CrearFamilia(idFamilia);
 
-                    txtDescripcionFamilia.Text = fa.DescripcionFamilia;
-                    operacion = "editar";
+                    txtFami.Text = fa.DescripcionFamilia;
+                   
                 }
             }
         }
@@ -202,8 +197,8 @@ namespace GestionIntegral.CapaPresentacion
 
                 Diseño di = mDi.CrearDiseño(idDiseño);
 
-                txtDescripcionDiseño.Text = di.DescripcionDiseño;
-                operacion = "editar";
+                txtDise.Text = di.DescripcionDiseño;
+           
             }
         }
 
@@ -220,9 +215,9 @@ namespace GestionIntegral.CapaPresentacion
         private void gridProducto_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (gridProducto.SelectedRows.Count > 0)
-            {
-                cbFamilia.SelectedValue = int.Parse(gridProducto.CurrentRow.Cells[1].Value.ToString());
-                cbDiseño.SelectedValue = int.Parse(gridProducto.CurrentRow.Cells[2].Value.ToString());
+            { 
+                cbFamilia.SelectedValue=Convert.ToInt32( gridProducto.CurrentRow.Cells[3].Value.ToString());
+                cbDiseño.SelectedValue = Convert.ToInt32(gridProducto.CurrentRow.Cells[1].Value.ToString());
                 txtLista1.Text = gridProducto.CurrentRow.Cells[5].Value.ToString();
                 txtLista2.Text = gridProducto.CurrentRow.Cells[6].Value.ToString();
                 txtLista3.Text = gridProducto.CurrentRow.Cells[7].Value.ToString();
@@ -240,22 +235,19 @@ namespace GestionIntegral.CapaPresentacion
         private void btnAgregar_Click_1(object sender, EventArgs e)
         {
             idUnico = Convert.ToInt32(idFamilia.ToString() + idDiseño.ToString());
-            string descripcionProducto = txtDescripcionDiseño.Text + " " + txtDescripcionFamilia;
-           
+
+            string descripcionProducto = txtFami.Text + " " + txtDise.Text;
 
             if (operacion == "insertar")
             {
-                Producto producto = new Producto(idDiseño, idUnico, idFamilia, descripcionProducto,
-               float.Parse(txtLista1.Text), float.Parse(txtLista2.Text), float.Parse(txtLista3.Text));
-
                 if (encuentraValorUnico() == false && operacion == "insertar" )
                 {
                     if (txtLista1.Text != ""|| txtLista2.Text != "" || txtLista3.Text != "")
                     {
-                        mpro.InsertarProducto(producto);
-
                         //pro.InsertarStock();
-
+                        Producto producto = new Producto(idDiseño, idUnico, idFamilia, descripcionProducto,
+                        float.Parse(txtLista1.Text), float.Parse(txtLista2.Text), float.Parse(txtLista3.Text));
+                        mpro.InsertarProducto(producto);
                         MessageBox.Show("Datos Insertados con exito" );
                         ListarProductosEnGrid("");
                         limpiarCampos();

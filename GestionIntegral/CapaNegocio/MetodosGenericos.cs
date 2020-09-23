@@ -74,7 +74,35 @@ namespace GestionIntegral.CapaNegocio
                 cb.AutoCompleteMode = AutoCompleteMode.Suggest;
                 cb.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
-          
+
+            if (nombreTabla == "Familia"|| nombreTabla == "Diseño")
+            {
+                DataTable Tabla = new DataTable();
+                Comando.Connection = Conexion;
+                Comando.CommandText = "RellenarComboBox";
+                Comando.CommandType = CommandType.StoredProcedure;
+                Comando.Parameters.Clear();
+                Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
+                Comando.Parameters.AddWithValue("@activo", 1);
+                Conexion.Open();
+                LeerFilas = Comando.ExecuteReader();
+                Tabla.Load(LeerFilas);
+                DataRow workRow = Tabla.NewRow();
+                workRow[0] = 0;
+                workRow[1] = "Seleccione un valor";
+                workRow[2] = 0;
+                Tabla.Rows.InsertAt(workRow, 0);
+                LeerFilas.Close();
+                Conexion.Close();
+                cb.DataSource = Tabla;
+                cb.DisplayMember = "descripcion";
+                cb.ValueMember = "id";
+                cb.AutoCompleteMode = AutoCompleteMode.Suggest;
+                cb.AutoCompleteSource = AutoCompleteSource.ListItems;
+            }
+
+
+
             if (nombreTabla!="Localidad"&& nombreTabla != "Producto")
             {
                 DataTable Tabla = new DataTable();

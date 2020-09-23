@@ -13,9 +13,9 @@ namespace GestionIntegral.CapaDatos
         int idFamilia;
         int valorUnico;
         string descripcionProducto;
-        float lista1;
-        float lista2;
-        float lista3;
+        Double lista1;
+        Double lista2;
+        Double lista3;
         bool activo;
 
        
@@ -25,9 +25,9 @@ namespace GestionIntegral.CapaDatos
         public int ValorUnico { get => valorUnico; set => valorUnico = value; }
         public int IdFamilia { get => idFamilia; set => idFamilia = value; }
         public string DescripcionProducto { get => descripcionProducto; set => descripcionProducto = value; }
-        public float Lista1 { get => lista1; set => lista1 = value; }
-        public float Lista2 { get => lista2; set => lista2 = value; }
-        public float Lista3 { get => lista3; set => lista3 = value; }
+        public Double Lista1 { get => lista1; set => lista1 = value; }
+        public Double Lista2 { get => lista2; set => lista2 = value; }
+        public Double Lista3 { get => lista3; set => lista3 = value; }
         public bool Activo { get => activo; set => activo = value; }
 
         public Producto(int idDiseño, int valorUnico, int idFamilia, string descripcionProducto, float lista1, float lista2, float lista3)

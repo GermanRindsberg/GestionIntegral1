@@ -16,11 +16,12 @@ namespace GestionIntegral.CapaNegocio
         SqlDataReader LeerFilas;
 
         public void InsertarProducto(Producto tr)
-        {
+        {//problemas con fk familia y diseño
             Comando.Connection = Conexion;
             Conexion.Open();
             Comando.CommandText = "ProductoCreate";
-            Comando.CommandType = CommandType.StoredProcedure; 
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDiseño", tr.IdDiseño);
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.Parameters.AddWithValue("@valorUnico", tr.ValorUnico);
@@ -29,7 +30,6 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@lista2", tr.Lista2);
             Comando.Parameters.AddWithValue("@lista3", tr.Lista3);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
             Conexion.Close();
         }
 
@@ -39,9 +39,10 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "ProductoDelete";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idProducto", tr.IdProducto);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+          
             Conexion.Close();
         }
 
@@ -51,7 +52,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "ProductoUpdate";
             Comando.CommandType = CommandType.StoredProcedure;
-
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDiseño", tr.IdDiseño);
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.Parameters.AddWithValue("@valorUnico", tr.ValorUnico);
@@ -61,7 +62,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@lista3", tr.Lista3);
             Comando.Parameters.AddWithValue("@idProducto", tr.IdProducto);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+     
             Conexion.Close();
 
         }
@@ -73,22 +74,25 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@condicion", condicion);
+
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             List<Producto> ListaGenerica = new List<Producto>();
+         
             while (LeerFilas.Read())
             {
                 ListaGenerica.Add(new Producto
                 {
                     IdProducto = LeerFilas.GetInt32(0),
-                    IdDiseño = LeerFilas.GetInt32(1),
-                    IdFamilia = LeerFilas.GetInt32(2),
+                    IdFamilia = LeerFilas.GetInt32(1),
+                    IdDiseño = LeerFilas.GetInt32(2),
                     ValorUnico = LeerFilas.GetInt32(3),
                     DescripcionProducto = LeerFilas.GetString(4),
-                    Lista1 = LeerFilas.GetFloat(5),
-                    Lista2 = LeerFilas.GetFloat(6),
-                    Lista3 = LeerFilas.GetFloat(7)
-            }); ;
+                    Lista1 = LeerFilas.GetDouble(5),
+                    Lista2 = LeerFilas.GetDouble(6),
+                    Lista3 = LeerFilas.GetDouble(7),
+                    Activo = LeerFilas.GetBoolean(8)
+                }); ;
             }
             LeerFilas.Close();
             Conexion.Close();
