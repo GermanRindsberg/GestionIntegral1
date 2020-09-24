@@ -159,11 +159,7 @@ namespace GestionIntegral.CapaPresentacion
             {
                 gridListaPedidos.DataSource = metPedido.ListarPedidoPorEstadoParaGrilla(estado, date20diasAntes.Value, dateTimePicker1.Value);
             }
-            if (estado == 3) 
-            {
-                gridListaPedidos.DataSource = metPedido.ListarPedidoPorEstadoParaGrilla(0, date20diasAntes.Value, dateTimePicker1.Value);
-            }
-
+            
             gridListaPedidos.Columns[0].Visible = false;
             gridListaPedidos.Columns[1].Visible = false;
             gridListaPedidos.Columns[2].HeaderText = "Fecha del pedido";
@@ -203,15 +199,6 @@ namespace GestionIntegral.CapaPresentacion
                 txtTotalImportes.Text = sumaPendientes.ToString();
             }
 
-            if (radioTodos.Checked == true)
-            {
-                float sumaPendientes = 0;
-                foreach (DataGridViewRow row in gridListaPedidos.Rows)
-                {
-                    sumaPendientes += float.Parse(row.Cells[6].Value.ToString());
-                }
-                txtTotalImportes.Text = sumaPendientes.ToString();
-            }
 
 
         }
@@ -280,14 +267,15 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            Pedido pe = new Pedido();
+         
 
             if (gridListaPedidos.SelectedRows.Count > 0)
             {
                 if (MessageBox.Show("¿Desea eliminar el Pedido? esto puede alterar el stock y balances", "ELIMINAR PEDIDO", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    pe.IdPedido = int.Parse(gridListaPedidos.CurrentRow.Cells[0].Value.ToString());
-                    metPedido.EliminarPedido(pe);
+                    int idPedido = int.Parse(gridListaPedidos.CurrentRow.Cells[0].Value.ToString());
+                    Pedido pe = new Pedido(idPedido);
+                    metPedido.EliminarPedido(pe) ;
                     MessageBox.Show("Eliminado con exito");
                     actualizarGridPedidos(1);
                 }

@@ -58,7 +58,6 @@
             this.btnFichaCliente = new System.Windows.Forms.Button();
             this.txtTotalImportes = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.radioTodos = new System.Windows.Forms.RadioButton();
             this.gridStock = new System.Windows.Forms.DataGridView();
             this.radioTodosStock = new System.Windows.Forms.RadioButton();
             this.radioPendientesStock = new System.Windows.Forms.RadioButton();
@@ -310,19 +309,6 @@
             this.label4.TabIndex = 19;
             this.label4.Text = "Total de importes";
             // 
-            // radioTodos
-            // 
-            this.radioTodos.AutoSize = true;
-            this.radioTodos.BackColor = System.Drawing.Color.Transparent;
-            this.radioTodos.Location = new System.Drawing.Point(968, 55);
-            this.radioTodos.Name = "radioTodos";
-            this.radioTodos.Size = new System.Drawing.Size(55, 17);
-            this.radioTodos.TabIndex = 13;
-            this.radioTodos.TabStop = true;
-            this.radioTodos.Text = "Todos";
-            this.radioTodos.UseVisualStyleBackColor = false;
-            this.radioTodos.CheckedChanged += new System.EventHandler(this.radioTodos_CheckedChanged);
-            // 
             // gridStock
             // 
             this.gridStock.AllowUserToAddRows = false;
@@ -496,7 +482,6 @@
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnNuevo);
-            this.Controls.Add(this.radioTodos);
             this.Controls.Add(this.radioDespachados);
             this.Controls.Add(this.radioPendiente);
             this.Controls.Add(this.label3);
@@ -549,7 +534,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem informesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
-        private System.Windows.Forms.RadioButton radioTodos;
         private System.Windows.Forms.DataGridView gridStock;
         private System.Windows.Forms.RadioButton radioTodosStock;
         private System.Windows.Forms.RadioButton radioPendientesStock;

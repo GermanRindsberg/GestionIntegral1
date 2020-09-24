@@ -48,5 +48,10 @@ namespace GestionIntegral.CapaDatos
         public Pedido()
         {
         }
+
+        public Pedido(int idPedido)
+        {
+            IdPedido = idPedido;
+        }
     }
 }

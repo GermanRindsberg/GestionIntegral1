@@ -155,7 +155,8 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "PedidoDelete";
             Comando.CommandType = CommandType.StoredProcedure;
-            Comando.Parameters.AddWithValue("@idCliente", pe.IdPedido);
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idPedido", pe.IdPedido);
             Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
             Conexion.Close();

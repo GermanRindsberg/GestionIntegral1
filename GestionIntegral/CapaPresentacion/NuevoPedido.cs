@@ -220,9 +220,10 @@ namespace GestionIntegral.CapaPresentacion
                 DateTime? fechaEnvio;
 
                 Pedido pedidoAeditar = metPedido.CrearPedido(idPedido);
+                Pedido pedidoAborrar = metPedido.CrearPedido(idPedido);
 
                 //elimino el detallePedido para luego insertar uno nuevo, debo investigar para editarlo y no tener que borrarlo
-                metDetalle.EliminarDetallePedido(pedidoAeditar.IdDetallePedido);
+                metDetalle.EliminarDetallePedido(pedidoAborrar.IdDetallePedido);
 
                 ultimoId = metDetalle.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
 
@@ -264,6 +265,7 @@ namespace GestionIntegral.CapaPresentacion
                     metPedido.EditarPedido(pedidoAeditar);
                     MessageBox.Show("Editado con exito");
                     limpiarCamposPedido();
+                    this.Close();
                 }
                
                 else
@@ -294,6 +296,7 @@ namespace GestionIntegral.CapaPresentacion
                         
                         MessageBox.Show("Editado con exito");
                         limpiarCamposPedido();
+                        this.Close();
                     }
                     else
                     {
