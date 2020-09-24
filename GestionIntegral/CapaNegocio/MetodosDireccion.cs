@@ -112,8 +112,8 @@ namespace GestionIntegral.CapaNegocio
                 dir.IdLocalidad = LeerFilas.GetInt32(1);
                 dir.Calle = LeerFilas.GetString(2);
                 dir.Numero = LeerFilas.GetString(3);
-                dir.Depto = LeerFilas.GetString(4);
-                dir.Piso = LeerFilas.GetString(5);
+                dir.Piso = LeerFilas.GetString(4);
+                dir.Depto = LeerFilas.GetString(5);
                 dir.IdLocalidad = LeerFilas.GetInt32(6);
                 dir.IdProvincia = LeerFilas.GetInt32(7);
                 dir.NombreLocalidad = LeerFilas.GetString(8);

@@ -456,6 +456,18 @@ namespace GestionIntegral.CapaPresentacion
             Productos pr = new Productos();
             pr.ShowDialog();
         }
+
+        private void talleresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Talleres ta = new Talleres();
+            ta.ShowDialog();
+        }
+
+        private void ordenesDeTrabajoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OrdenDeTrabajo ot = new OrdenDeTrabajo();
+            ot.ShowDialog();
+        }
     }
 }
 

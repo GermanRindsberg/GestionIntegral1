@@ -22,13 +22,14 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "TallerCreate";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@razonSocial", tr.RazonSocial);
             Comando.Parameters.AddWithValue("@idDireccion", tr.IdDireccion);
-            Comando.Parameters.AddWithValue("@tel1", tr.Telefono);
+            Comando.Parameters.AddWithValue("@tel", tr.Telefono);
             Comando.Parameters.AddWithValue("@activo", tr.Activo);
             Comando.Parameters.AddWithValue("@observaciones", tr.Observaciones);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+    
             Conexion.Close();
         }
 
@@ -50,44 +51,29 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "TallerUpdate";
             Comando.CommandType = CommandType.StoredProcedure;
-
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idTalleres", tr.Id);
             Comando.Parameters.AddWithValue("@razonSocial", tr.RazonSocial);
             Comando.Parameters.AddWithValue("@idDireccion", tr.IdDireccion);
-            Comando.Parameters.AddWithValue("@tel1", tr.Telefono);
+            Comando.Parameters.AddWithValue("@tel", tr.Telefono);
             Comando.Parameters.AddWithValue("@activo", tr.Activo);
             Comando.Parameters.AddWithValue("@observaciones", tr.Observaciones);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
             Conexion.Close();
 
         }
 
-        public List<Taller> ListarTaller(string condicion, string activo)
+        public DataTable ListarTaller(string condicion, string activo)
         {
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "TallerRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", activo);
             Comando.Parameters.AddWithValue("@condicion", condicion);
-
-            Conexion.Open();
-            LeerFilas = Comando.ExecuteReader();
-            List<Taller> ListaGenerica = new List<Taller>();
-            while (LeerFilas.Read())
-            {
-                ListaGenerica.Add(new Taller
-                {
-                    Id = LeerFilas.GetInt32(0),
-                    RazonSocial = LeerFilas.GetString(1),
-                    IdDireccion = LeerFilas.GetInt32(2),
-                    Observaciones = LeerFilas.GetString(3),
-                    Telefono = LeerFilas.GetString(4),
-                    Activo = LeerFilas.GetBoolean(5),
-                   
-                }); ;
-            }
-            LeerFilas.Close();
+            DataTable ListaGenerica = new DataTable();
+            ListaGenerica.Load(Comando.ExecuteReader());
             Conexion.Close();
             return ListaGenerica;
         }
@@ -111,9 +97,9 @@ namespace GestionIntegral.CapaNegocio
                 tr.Id = LeerFilas.GetInt32(0);
                 tr.RazonSocial = LeerFilas.GetString(1);
                 tr.IdDireccion = LeerFilas.GetInt32(2);
-                tr.Observaciones = LeerFilas.GetString(3);
-                tr.Telefono = LeerFilas.GetString(4);
-                tr.Activo = LeerFilas.GetBoolean(5);
+                tr.Telefono = LeerFilas.GetString(3);
+                tr.Observaciones = LeerFilas.GetString(11);
+                tr.Activo = LeerFilas.GetBoolean(12);
                 
 
             }

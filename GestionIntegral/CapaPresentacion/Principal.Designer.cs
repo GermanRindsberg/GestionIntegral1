@@ -67,6 +67,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnOt = new System.Windows.Forms.Button();
+            this.talleresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ordenesDeTrabajoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
@@ -83,7 +85,9 @@
             this.informesToolStripMenuItem,
             this.clientesToolStripMenuItem,
             this.transportesToolStripMenuItem1,
-            this.productosToolStripMenuItem});
+            this.productosToolStripMenuItem,
+            this.talleresToolStripMenuItem,
+            this.ordenesDeTrabajoToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1584, 28);
@@ -465,6 +469,24 @@
             this.btnOt.UseVisualStyleBackColor = true;
             this.btnOt.Click += new System.EventHandler(this.btnOt_Click);
             // 
+            // talleresToolStripMenuItem
+            // 
+            this.talleresToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.talleresToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.talleresToolStripMenuItem.Name = "talleresToolStripMenuItem";
+            this.talleresToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
+            this.talleresToolStripMenuItem.Text = "Talleres";
+            this.talleresToolStripMenuItem.Click += new System.EventHandler(this.talleresToolStripMenuItem_Click);
+            // 
+            // ordenesDeTrabajoToolStripMenuItem
+            // 
+            this.ordenesDeTrabajoToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.ordenesDeTrabajoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.ordenesDeTrabajoToolStripMenuItem.Name = "ordenesDeTrabajoToolStripMenuItem";
+            this.ordenesDeTrabajoToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.ordenesDeTrabajoToolStripMenuItem.Text = "Ordenes de trabajo";
+            this.ordenesDeTrabajoToolStripMenuItem.Click += new System.EventHandler(this.ordenesDeTrabajoToolStripMenuItem_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -546,6 +568,8 @@
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transportesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem productosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem talleresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ordenesDeTrabajoToolStripMenuItem;
     }
 }
 

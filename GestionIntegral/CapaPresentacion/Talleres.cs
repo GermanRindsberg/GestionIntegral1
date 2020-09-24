@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GestionIntegral.CapaDatos;
 using GestionIntegral.CapaNegocio;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -11,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GestionIntegral.CapaDatos;
 
 namespace GestionIntegral.CapaPresentacion
 {
@@ -19,7 +17,20 @@ namespace GestionIntegral.CapaPresentacion
         MetodosGenericos mg = new MetodosGenericos();
         MetodosTaller mtta = new MetodosTaller();
         MetodosDireccion mtDir = new MetodosDireccion();
+
+        
+        int idLocalidad;
+        string calle;
+        String numero;
+        String piso;
+        string depto;
+        int idDireccion;
+
         int idTaller;
+        string razonSocial;
+        string observaciones;
+        string telefono;
+        bool activo;
 
         string operacion = "insertar";
 
@@ -31,8 +42,11 @@ namespace GestionIntegral.CapaPresentacion
         private void Talleres_Load_1(object sender, EventArgs e)
         {
             ListarTallerEnGrid("", "1");
+
             ListarTallerEnComboBox();
+
             ListarProvinciaEnComboBox();
+
             if (idTaller != null)
             {
                 cbRazonSocial.SelectedValue = idTaller;
@@ -41,33 +55,20 @@ namespace GestionIntegral.CapaPresentacion
 
         #region METODOS
 
-        private void diseñoTabla()
-        {
-            gridTaller.ClearSelection();
-
-            this.gridTaller.Columns[0].Visible = false;//idTransporte
-            this.gridTaller.Columns[1].HeaderText = "Razon Social";//RazonSOcial
-            this.gridTaller.Columns[2].Visible = false;//idDireccion
-            this.gridTaller.Columns[4].HeaderText = "Telefono";//Telefono
-            this.gridTaller.Columns[3].HeaderText = "Observaciones";//Observaciones
-            this.gridTaller.Columns[5].Visible = false;//Activo
-            this.gridTaller.Columns[6].Visible = false;//idDIreccion
-            this.gridTaller.Columns[7].Visible = false;//idLocalidad
-            this.gridTaller.Columns[8].HeaderText = "Calle";//calle
-            this.gridTaller.Columns[9].HeaderText = "Nro";//numero
-            this.gridTaller.Columns[10].HeaderText = "Depto";//depto
-            this.gridTaller.Columns[11].HeaderText = "Piso";//piso
-            this.gridTaller.Columns[12].Visible = false;//idlocalidad
-            this.gridTaller.Columns[13].HeaderText = "Localidad"; ;//nomre
-            this.gridTaller.Columns[14].Visible = false;//cp
-            this.gridTaller.Columns[15].Visible = false;//idprovincia
-            this.gridTaller.Columns[16].HeaderText = "Provincia";//nombre
-        }
-
         private void ListarTallerEnGrid(string condicion, string activo)
         {
             gridTaller.DataSource = mtta.ListarTaller(condicion, activo);
-            diseñoTabla();
+            gridTaller.Columns[0].Visible = false;
+            gridTaller.Columns[2].Visible = false;
+            gridTaller.Columns[12].Visible = false;
+
+            gridTaller.Columns[1].Width = 150 ;
+            gridTaller.Columns[5].Width = 60 ;
+            gridTaller.Columns[6].Width = 60;
+            gridTaller.Columns[7].Width = 60;
+            gridTaller.Columns[10].Width = 70;
+
+
         }
 
         private void limpiarCampos()
@@ -106,52 +107,51 @@ namespace GestionIntegral.CapaPresentacion
 
         #endregion
 
-        
-
         private void btnAgregarTransporte_Click(object sender, EventArgs e)
         {
             if (operacion == "insertar")
             {
                 //creo una direccion
-                int idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                string calle = txtCalle.Text;
-                String numero = txtNro.Text;
-                String piso = txtPiso.Text;
-                string depto = txtDepto.Text;
+                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                calle = txtCalle.Text;
+                numero = txtNro.Text;
+                piso = txtPiso.Text;
+                depto = txtDepto.Text;
+
                 Direccion dir = new Direccion(idLocalidad, calle, numero, piso, depto);//creo el objeto direccion 
+
                 mtDir.InsertarDireccion(dir);//inserto la direccion
 
+                idDireccion = mtDir.UltimoIdDireccion();
+
                 //creo un taller
-                string razonSocial = cbRazonSocial.Text.ToString();
-                int idDireccion = dir.IdDireccion;
-                string tel1 = txtTel1.Text;
-                string observaciones = txtObservaciones.Text;
+                razonSocial = cbRazonSocial.Text.ToString();
+                telefono = txtTel1.Text;
+                observaciones = txtObservaciones.Text;
 
-                Taller objtransporte = new Taller(idDireccion, observaciones,tel1,razonSocial, true);//creo el objeto taller
+                Taller taller = new Taller(idDireccion,observaciones, telefono, razonSocial, true);//creo el objeto taller
 
-                mtta.InsertarTaller(objtransporte);//inserto el Taller
+                mtta.InsertarTaller(taller);//inserto el taller
 
                 MessageBox.Show("Insertado con exito");
                 limpiarCampos();
                 ListarTallerEnGrid("", "1");
                 ListarTallerEnComboBox();
 
-                diseñoTabla();
-
             }
             if (operacion == "editar")
             {
-                Taller objTaller = mtta.CrearTaller(Convert.ToString(idTaller));//traigo el cliente y su direccion por id
-                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objTaller.IdDireccion));
-                Boolean activo = true;
+                //edito la direccion
+                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                calle = txtCalle.Text;
+                numero = txtNro.Text;
+                piso = txtPiso.Text;
+                depto = txtDepto.Text;
+                Direccion dir = new Direccion(idDireccion, idLocalidad, calle, numero, piso, depto);
 
-                //creo una direccion
-                dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                dir.Calle = txtCalle.Text;
-                dir.Numero = txtNro.Text;
-                dir.Piso = txtPiso.Text;
-                dir.Depto = txtDepto.Text;
                 mtDir.EditarDireccion(dir);//edito la direccion
+
+
                 if (checkActivo.Checked == true)
                 {
                     activo = true;
@@ -160,27 +160,132 @@ namespace GestionIntegral.CapaPresentacion
                 {
                     activo = false;
                 }
+                razonSocial = cbRazonSocial.Text;
+                telefono = txtTel1.Text;
+                observaciones = txtObservaciones.Text;
 
-                objTaller.Activo = activo;
-
-                objTaller.Observaciones = txtObservaciones.Text;
-
-                mtta.EditarTaller(objTaller);
+                Taller taller = new Taller(idTaller, idDireccion, observaciones, telefono, razonSocial, true);//creo el objeto taller
+                mtta.EditarTaller(taller);
 
                 MessageBox.Show("Editado con exito");
-                operacion = "insertar";
+                operacion = "editar";
                 limpiarCampos();
                 ListarTallerEnGrid("", "1");
                 ListarTallerEnComboBox();
                 cbProvincia.SelectedIndex = 0;
-                diseñoTabla();
             }
-
         }
 
         private void cbRazonSocial_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
+            {
+                idTaller = Convert.ToInt32(cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
 
+                Taller cl = mtta.CrearTaller(Convert.ToString(idTaller));
+                Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(cl.IdDireccion));
+
+                idDireccion = cl.IdDireccion;
+                txtCalle.Text = dir.Calle;
+                txtNro.Text = dir.Numero;
+                txtDepto.Text = dir.Depto;
+                txtPiso.Text = dir.Piso;
+
+                cbProvincia.SelectedValue = dir.IdProvincia;
+                cbLocalidad.SelectedValue = dir.IdLocalidad;
+
+                txtCodigoPostal.Text = dir.CodigoPostal;
+                txtTel1.Text = cl.Telefono;
+                checkActivo.Checked = cl.Activo;
+                txtObservaciones.Text = cl.Observaciones;
+                operacion = "editar";
+            }
+        }
+
+        private void cbProvincia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbProvincia.SelectedIndex > 0)
+            {
+                mg.idProvincia = Convert.ToInt32(cbProvincia.SelectedValue.ToString());
+                ListarLocalidadEnComboBox();
+            }
+        }
+
+        private void cbLocalidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbLocalidad.SelectedIndex > 0)
+            {
+                int idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+
+                mtDir.ListarCodigoPostal(txtCodigoPostal, idLocalidad);
+            }
+        }
+
+        private void radioActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            ListarTallerEnGrid("", "1");
+        }
+
+        private void radioInactivos_CheckedChanged(object sender, EventArgs e)
+        {
+            ListarTallerEnGrid("", "0");
+        }
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            if (gridTaller.SelectedRows.Count > 0)
+            {
+                if (MessageBox.Show("¿Desea eliminar el Taller, pasara a ser inactivo?", "ELIMINAR TALLER", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Taller taller = mtta.CrearTaller(Convert.ToString(idTaller));//traigo el taller y su direccion por id
+                    Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(taller.IdDireccion));
+                    Boolean activo = false;
+
+                    //creo una direccion
+                    dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                    dir.Calle = txtCalle.Text;
+                    dir.Numero = txtNro.Text;
+                    dir.Piso = txtPiso.Text;
+                    dir.Depto = txtDepto.Text;
+                    mtDir.EditarDireccion(dir);//edito la direccion
+
+
+                    taller.Activo = activo;
+
+                    taller.Observaciones = txtObservaciones.Text;
+
+                    mtta.EditarTaller(taller);
+
+
+                    MessageBox.Show("Borrado con exito");
+                    operacion = "insertar";
+                    limpiarCampos();
+                    ListarTallerEnGrid("", "1");
+                    ListarTallerEnComboBox();
+                    cbProvincia.SelectedIndex = 0;
+
+                }
+            }
+        }
+
+        private void gridTaller_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (checkActivo.Checked == true)
+            {
+                cbRazonSocial.SelectedValue = int.Parse(gridTaller.CurrentRow.Cells[0].Value.ToString());
+            }
+        }
+
+        private void txtBuscar_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (radioActivos.Checked == true)
+            {
+                ListarTallerEnGrid(txtBuscar.Text, "1");
+            }
+            else
+            {
+                ListarTallerEnGrid(txtBuscar.Text, "0");
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ namespace GestionIntegral.CapaPresentacion
         String numero;
         String piso;
         string depto;
+       
         //variables Cliente
         string razonSocial;
         private string tel1;

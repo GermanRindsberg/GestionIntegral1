@@ -99,7 +99,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(5, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1562, 416);
+            this.groupBox1.Size = new System.Drawing.Size(1567, 416);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Taller";
@@ -113,6 +113,7 @@
             this.radioInactivos.TabIndex = 60;
             this.radioInactivos.Text = "Inactivos";
             this.radioInactivos.UseVisualStyleBackColor = true;
+            this.radioInactivos.CheckedChanged += new System.EventHandler(this.radioInactivos_CheckedChanged);
             // 
             // radioActivos
             // 
@@ -125,6 +126,7 @@
             this.radioActivos.TabStop = true;
             this.radioActivos.Text = "Activos";
             this.radioActivos.UseVisualStyleBackColor = true;
+            this.radioActivos.CheckedChanged += new System.EventHandler(this.radioActivos_CheckedChanged);
             // 
             // checkActivo
             // 
@@ -168,6 +170,7 @@
             this.btnBorrar.TabIndex = 14;
             this.btnBorrar.Text = "Borrar Taller";
             this.btnBorrar.UseVisualStyleBackColor = false;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
             // 
             // cbLocalidad
             // 
@@ -176,6 +179,7 @@
             this.cbLocalidad.Name = "cbLocalidad";
             this.cbLocalidad.Size = new System.Drawing.Size(215, 28);
             this.cbLocalidad.TabIndex = 7;
+            this.cbLocalidad.SelectedIndexChanged += new System.EventHandler(this.cbLocalidad_SelectedIndexChanged);
             // 
             // label21
             // 
@@ -195,6 +199,7 @@
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(259, 23);
             this.txtBuscar.TabIndex = 15;
+            this.txtBuscar.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtBuscar_KeyUp);
             // 
             // cbProvincia
             // 
@@ -203,6 +208,7 @@
             this.cbProvincia.Name = "cbProvincia";
             this.cbProvincia.Size = new System.Drawing.Size(175, 28);
             this.cbProvincia.TabIndex = 6;
+            this.cbProvincia.SelectedIndexChanged += new System.EventHandler(this.cbProvincia_SelectedIndexChanged);
             // 
             // gridTaller
             // 
@@ -228,8 +234,9 @@
             this.gridTaller.ShowCellToolTips = false;
             this.gridTaller.ShowEditingIcon = false;
             this.gridTaller.ShowRowErrors = false;
-            this.gridTaller.Size = new System.Drawing.Size(1115, 350);
+            this.gridTaller.Size = new System.Drawing.Size(1144, 350);
             this.gridTaller.TabIndex = 16;
+            this.gridTaller.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridTaller_CellContentClick);
             // 
             // btnLimpiar
             // 
@@ -400,11 +407,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1549, 430);
+            this.ClientSize = new System.Drawing.Size(1584, 430);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Talleres";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Talleres";
             this.Load += new System.EventHandler(this.Talleres_Load_1);
             this.groupBox1.ResumeLayout(false);

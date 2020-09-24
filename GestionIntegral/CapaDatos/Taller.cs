@@ -34,5 +34,15 @@ namespace GestionIntegral.CapaDatos
         public Taller()
         {
         }
+
+        public Taller(int id, int idDireccion, string observaciones, string telefono, string razonSocial, bool activo)
+        {
+            Id = id;
+            IdDireccion = idDireccion;
+            Observaciones = observaciones;
+            Telefono = telefono;
+            RazonSocial = razonSocial;
+            Activo = activo;
+        }
     }
 }
