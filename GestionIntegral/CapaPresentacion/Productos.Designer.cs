@@ -141,7 +141,7 @@
             this.gridProducto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProducto.ShowCellErrors = false;
             this.gridProducto.ShowCellToolTips = false;
-            this.gridProducto.Size = new System.Drawing.Size(495, 460);
+            this.gridProducto.Size = new System.Drawing.Size(784, 460);
             this.gridProducto.TabIndex = 47;
             this.gridProducto.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridProducto_CellClick);
             // 
@@ -396,7 +396,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(897, 519);
+            this.ClientSize = new System.Drawing.Size(1185, 519);
             this.Controls.Add(this.btnBorrar);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtBuscar);

@@ -32,8 +32,6 @@ namespace GestionIntegral.CapaPresentacion
         MetodosCliente metCliente = new MetodosCliente();
         MetodosPedido metPedido = new MetodosPedido();
 
-
-
         public int idPedido;
         public string operacion = "insertar";
 
@@ -64,16 +62,25 @@ namespace GestionIntegral.CapaPresentacion
                 ListarClientesEnComboBox(); //cargo combobox de clientes
             
                 #region CREO Y TRAIGO DATOS DE PEDIDO
+
                 Pedido pedido = metPedido.CrearPedido(idPedido);
+                dtFechaPedido.Value = pedido.Fecha;
+                cbCliente.SelectedValue = pedido.IdCliente;
+                //creo la tabla
 
+                ta.CrearTabla(pedido.IdDetallePedido);
+                gridPedidoNuevo.DataSource = ta.Tabla;
+                gridPedidoNuevo.Columns[0].Visible = false;
+
+                
                 lblTotal.Text = pedido.Total.ToString();//le paso el total al lbltotal
-
-                dtFechaPedido.Value = pedido.Fecha;//le paso la fecha del pedido al datetimepicker
 
                 if (pedido.FechaPago != null)//si el valor de fecha de pago es distinto a nulo le paso ese valor al datetimepiker de pago, sino toma el actual
                 {
                     dateFechaPago.Value = Convert.ToDateTime(pedido.FechaPago);
                 }
+                
+                
                 if (pedido.MedioPago != "")//si tiene pago pone los valores
                 {
                     checkPagado.Checked = true;
@@ -118,12 +125,7 @@ namespace GestionIntegral.CapaPresentacion
                 }
                 #endregion
 
-                #region CREO Y TRAIGO DATOS DE DETALLE PEDIDO
-                ta.CrearTabla(pedido.IdDetallePedido);
-                gridPedidoNuevo.DataSource = ta.Tabla;
-                gridPedidoNuevo.Columns[0].Visible = false;
-
-                #endregion
+                
          
                 ElegirProducto();//usa este metodo para que el usuario pueda elegir productos a agregar
             }
@@ -154,13 +156,11 @@ namespace GestionIntegral.CapaPresentacion
                     DetallePedido detalle = new DetallePedido(idDetallePedido, idProducto, precioUnitario, cantidad, subtotal);
                     metDetalle.InsertarDetallePedido(detalle);
                 }
-                
                
-                
                 if (checkPagado.Checked == true)
                 {
                     fechaPago = dateFechaPago.Value;
-
+                    
                     if (txtFechaEnvio.Text=="")
                     {
                        idEstado = 1;
@@ -178,6 +178,7 @@ namespace GestionIntegral.CapaPresentacion
                     MessageBox.Show("Insertado con exito");
                     limpiarCamposPedido();
                 }
+               
                 else
                 {
                     if (MessageBox.Show("¿Pedido no pagado, ingresar igualmente?", "FALTA PAGO", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -518,11 +519,10 @@ namespace GestionIntegral.CapaPresentacion
 
         private void ElegirCliente()
         {
-          
                 if (cbCliente.SelectedIndex > 0 && cbCliente.Text != default)
                 {
-                    
-                    Cliente cl = metCliente.CrearCliente(cbCliente.SelectedValue.ToString());
+                idCliente = Convert.ToInt32(cbCliente.SelectedValue.ToString());
+                Cliente cl = metCliente.CrearCliente(cbCliente.SelectedValue.ToString());
                     
                     tipoLista = cl.TipoLista;
                     if (tipoLista == 0)
@@ -580,8 +580,7 @@ namespace GestionIntegral.CapaPresentacion
                 checkCheque.Checked = false;
                 checkOtro.Checked = false;
             }
-            else
-                tipoDePago = "";
+           
         }
 
         private void checkCheque_CheckedChanged(object sender, EventArgs e)
@@ -593,8 +592,7 @@ namespace GestionIntegral.CapaPresentacion
                 checkEfectivo.Checked = false;
                 checkOtro.Checked = false;
             }
-            else
-                tipoDePago = "";
+  
         }
 
         private void checkDeposito_CheckedChanged(object sender, EventArgs e)
@@ -607,8 +605,7 @@ namespace GestionIntegral.CapaPresentacion
                 checkOtro.Checked = false;
 
             }
-            else
-                tipoDePago = "";
+          
         }
 
         private void checkOtro_CheckedChanged(object sender, EventArgs e)
@@ -622,8 +619,7 @@ namespace GestionIntegral.CapaPresentacion
                 checkDeposito.Checked = false;
 
             }
-            else
-                tipoDePago = "";
+            
         }
         #endregion
 

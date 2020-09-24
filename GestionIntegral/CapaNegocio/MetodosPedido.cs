@@ -25,10 +25,11 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDetallePedido", pe.IdDetallePedido);
+
             Comando.Parameters.AddWithValue("@idCliente", pe.IdCliente);
             Comando.Parameters.AddWithValue("@idEstado", pe.IdEstado);
-            Comando.Parameters.AddWithValue("@fecha", pe.Fecha);
-            Comando.Parameters.AddWithValue("@nroDeGuia", pe.NumGuia);
+            Comando.Parameters.AddWithValue("@fechaPedido", pe.Fecha);
+            Comando.Parameters.AddWithValue("@nroGuia", pe.NumGuia);
             if (pe.FechaPago == null)
             {
                 Comando.Parameters.AddWithValue("@fechaPago", DBNull.Value);
@@ -63,7 +64,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idDetallePedido", pe.IdDetallePedido);
             Comando.Parameters.AddWithValue("@idCliente", pe.IdCliente);
             Comando.Parameters.AddWithValue("@idEstado", pe.IdEstado);
-            Comando.Parameters.AddWithValue("@nroDeGuia", pe.NumGuia);
+            Comando.Parameters.AddWithValue("@nroGuia", pe.NumGuia);
             if (pe.FechaPago == null)
             {
                 Comando.Parameters.AddWithValue("@fechaPago", DBNull.Value);
@@ -169,21 +170,26 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idPedido", id);
-
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             while (LeerFilas.Read())
             {
                 pe.IdPedido = LeerFilas.GetInt32(0);
                 pe.IdCliente = LeerFilas.GetInt32(1);
-                pe.Total = LeerFilas.GetInt32(2);
+                pe.Total = LeerFilas.GetDouble(2);
                 pe.IdEstado = LeerFilas.GetInt32(3);
                 pe.IdDetallePedido = LeerFilas.GetInt32(4);
                 pe.Fecha = LeerFilas.GetDateTime(5);
                 pe.NumGuia = LeerFilas.GetString(6);
-                pe.FechaPago = LeerFilas.GetDateTime(7);
+                if (!LeerFilas.IsDBNull(7))
+                {
+                    pe.FechaPago = LeerFilas.GetDateTime(7);
+                }
                 pe.MedioPago = LeerFilas.GetString(8);
-                pe.FechaEnvio = LeerFilas.GetDateTime(9);
+                if (!LeerFilas.IsDBNull(9))
+                {
+                    pe.FechaEnvio = LeerFilas.GetDateTime(9);
+                }
             }
             LeerFilas.Close();
             Conexion.Close();

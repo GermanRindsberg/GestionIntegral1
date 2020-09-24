@@ -9,7 +9,7 @@ namespace GestionIntegral.CapaDatos
     {
         int idDetallePedido;
         int idPedido;
-        float total;
+        Double total;
 
         DateTime fecha;
         int idCliente ;
@@ -29,7 +29,7 @@ namespace GestionIntegral.CapaDatos
         public string NumGuia { get => numGuia; set => numGuia = value; }
         public string MedioPago { get => medioPago; set => medioPago = value; }
         public DateTime? FechaPago { get => fechaPago; set => fechaPago = value; }
-        public float Total { get => total; set => total = value; }
+        public Double Total { get => total; set => total = value; }
         public DateTime? FechaEnvio { get => fechaEnvio; set => fechaEnvio = value; }
 
         public Pedido(int idDetallePedido, DateTime fecha, int idCliente, int idEstado, string numGuia, string medioPago, DateTime? fechaPago, float total, DateTime? fechaEnvio)

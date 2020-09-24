@@ -119,9 +119,9 @@ namespace GestionIntegral.CapaNegocio
                 tr.IdFamilia = LeerFilas.GetInt32(2);
                 tr.ValorUnico = LeerFilas.GetInt32(3);
                 tr.DescripcionProducto = LeerFilas.GetString(4);
-                tr.Lista1 = LeerFilas.GetFloat(5);
-                tr.Lista2 = LeerFilas.GetFloat(6);
-                tr.Lista3 = LeerFilas.GetFloat(7);
+                tr.Lista1 = LeerFilas.GetDouble(5);
+                tr.Lista2 = LeerFilas.GetDouble(6);
+                tr.Lista3 = LeerFilas.GetDouble(7);
             }
             LeerFilas.Close();
             Conexion.Close();

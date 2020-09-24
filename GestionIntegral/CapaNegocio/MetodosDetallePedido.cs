@@ -63,15 +63,6 @@ namespace GestionIntegral.CapaNegocio
             LeerFilas = Comando.ExecuteReader();
 
             Tabla.Load(LeerFilas);
-            
-            //foreach (DataRow fila in Tabla.Rows)
-            //{
-            //    pr.IdProducto = Convert.ToInt32(fila[0]);
-            //    pr.DescripcionProducto = fila[1].ToString();
-            //    de.PrecioUnitario = float.Parse(fila[2].ToString());
-            //    de.Cantidad = Convert.ToInt32(fila[3]);
-            //    de.Subtotal = float.Parse(fila[4].ToString());
-            //}
             LeerFilas.Close();
             Conexion.Close();
             return Tabla;
@@ -87,6 +78,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "DetalleSeleccionarUltimoId";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             LeerFilas = Comando.ExecuteReader();
             Tabla.Load(LeerFilas);
             foreach (DataRow fila in Tabla.Rows)
