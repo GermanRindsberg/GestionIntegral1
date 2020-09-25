@@ -30,7 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dtFechaEnvio = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.btnNuevosTaller = new System.Windows.Forms.Button();
             this.cbTaller = new System.Windows.Forms.ComboBox();
@@ -46,25 +45,17 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dtFechaRetiroEstimada = new System.Windows.Forms.DateTimePicker();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnInsertar = new System.Windows.Forms.Button();
             this.dtFechaRetirado = new System.Windows.Forms.DateTimePicker();
             this.checkRetirado = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.date10diasDespues = new System.Windows.Forms.DateTimePicker();
+            this.dateHoy = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.gridOT)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dtFechaEnvio
-            // 
-            this.dtFechaEnvio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.dtFechaEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFechaEnvio.Location = new System.Drawing.Point(196, 12);
-            this.dtFechaEnvio.Name = "dtFechaEnvio";
-            this.dtFechaEnvio.Size = new System.Drawing.Size(161, 26);
-            this.dtFechaEnvio.TabIndex = 37;
             // 
             // label7
             // 
@@ -176,6 +167,7 @@
             this.cbProducto.Name = "cbProducto";
             this.cbProducto.Size = new System.Drawing.Size(308, 24);
             this.cbProducto.TabIndex = 90;
+            this.cbProducto.SelectedIndexChanged += new System.EventHandler(this.cbProducto_SelectedIndexChanged);
             // 
             // btnSumarProducto
             // 
@@ -262,15 +254,6 @@
             this.label2.TabIndex = 98;
             this.label2.Text = "Fecha de retiro estimada";
             // 
-            // dtFechaRetiroEstimada
-            // 
-            this.dtFechaRetiroEstimada.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.dtFechaRetiroEstimada.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFechaRetiroEstimada.Location = new System.Drawing.Point(196, 44);
-            this.dtFechaRetiroEstimada.Name = "dtFechaRetiroEstimada";
-            this.dtFechaRetiroEstimada.Size = new System.Drawing.Size(161, 26);
-            this.dtFechaRetiroEstimada.TabIndex = 97;
-            // 
             // btnCancelar
             // 
             this.btnCancelar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -344,17 +327,32 @@
             this.groupBox1.TabIndex = 104;
             this.groupBox1.TabStop = false;
             // 
+            // date10diasDespues
+            // 
+            this.date10diasDespues.Location = new System.Drawing.Point(194, 52);
+            this.date10diasDespues.Name = "date10diasDespues";
+            this.date10diasDespues.Size = new System.Drawing.Size(161, 20);
+            this.date10diasDespues.TabIndex = 105;
+            // 
+            // dateHoy
+            // 
+            this.dateHoy.Location = new System.Drawing.Point(194, 20);
+            this.dateHoy.Name = "dateHoy";
+            this.dateHoy.Size = new System.Drawing.Size(161, 20);
+            this.dateHoy.TabIndex = 106;
+            // 
             // OrdenDeTrabajo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(367, 602);
+            this.Controls.Add(this.dateHoy);
+            this.Controls.Add(this.date10diasDespues);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnInsertar);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dtFechaRetiroEstimada);
             this.Controls.Add(this.btnMenosCantidad);
             this.Controls.Add(this.btnMasCantidad);
             this.Controls.Add(this.btnQuitarProducto);
@@ -369,11 +367,11 @@
             this.Controls.Add(this.cbTaller);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.dtFechaEnvio);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "OrdenDeTrabajo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OrdenDeTrabajo";
+            this.Activated += new System.EventHandler(this.OrdenDeTrabajo_Activated);
             this.Load += new System.EventHandler(this.OrdenDeTrabajo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridOT)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -384,8 +382,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DateTimePicker dtFechaEnvio;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnNuevosTaller;
         private System.Windows.Forms.ComboBox cbTaller;
@@ -401,12 +397,13 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dtFechaRetiroEstimada;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnInsertar;
         private System.Windows.Forms.DateTimePicker dtFechaRetirado;
         private System.Windows.Forms.CheckBox checkRetirado;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DateTimePicker date10diasDespues;
+        private System.Windows.Forms.DateTimePicker dateHoy;
     }
 }

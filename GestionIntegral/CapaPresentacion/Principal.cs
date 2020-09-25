@@ -131,7 +131,9 @@ namespace GestionIntegral.CapaPresentacion
         private void Principal_Load(object sender, EventArgs e)
         {
             actualizarGridPedidos(estadoPedido);
+
             date20diasAntes.Value = DateTime.Now.AddDays(-20);
+
             DiseñoTabla();
             LlenarGrillaResumen();
             radioPendiente.Checked = true;

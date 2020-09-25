@@ -1,6 +1,7 @@
 ﻿using GestionIntegral.CapaDatos;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,82 @@ using System.Threading.Tasks;
 
 namespace GestionIntegral.CapaNegocio
 {
-    class MetodosOT
+    class MetodosOT: ConexionBBDD
     {
-        OrdenDeTrabajo ot = new OrdenDeTrabajo();
-        
-        private ConexionBBDD Conexion = new ConexionBBDD();
         private SqlCommand Comando = new SqlCommand();
-        private SqlDataReader leerFilas;
+        private SqlDataReader LeerFilas;
+
+
+        public void InsertarOT(OrdenDeTrabajo or)
+        {
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.CommandText = "OTCreate";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idDetalleOT", or.IdDetalleOT);
+            Comando.Parameters.AddWithValue("@idTaller", or.IdTaller);
+            Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
+            Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
+            Comando.ExecuteNonQuery();
+            Conexion.Close();
+        }
+
+        public void EditarOT(OrdenDeTrabajo or)
+        {
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.CommandText = "OTUpdate";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idOT", or.IdOT);
+            Comando.Parameters.AddWithValue("@idDetalleOT", or.IdDetalleOT);
+            Comando.Parameters.AddWithValue("@idTaller", or.IdTaller);
+            Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
+            Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
+            Comando.Parameters.AddWithValue("@activo", or.Activo);
+            Comando.ExecuteNonQuery();
+            Conexion.Close();
+        }
+
+        public void EliminarOT(OrdenDeTrabajo or)
+        {
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.CommandText = "OTDelete";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idOT", or.IdOT);
+            Comando.ExecuteNonQuery();
+            Comando.Parameters.Clear();
+            Conexion.Close();
+        }
+
+        public Pedido CrearOT(int id)
+        {
+            OrdenDeTrabajo or = new OrdenDeTrabajo();
+
+            Comando.Connection = Conexion;
+            Comando.CommandText = "OTReadPorID";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idOT", id);
+            Conexion.Open();
+            LeerFilas = Comando.ExecuteReader();
+            while (LeerFilas.Read())
+            {
+                or.IdOT = LeerFilas.GetInt32(0);
+                or.IdDetalleOT = LeerFilas.GetInt32(1);
+                or.IdTaller = LeerFilas.GetInt32(2);
+                or.FechaEnvio = LeerFilas.GetDateTime(3);
+                or.FechaRetiro = LeerFilas.GetDateTime(4);
+                or.Activo = LeerFilas.GetBoolean(5);
+
+            }
+            LeerFilas.Close();
+            Conexion.Close();
+            return or;
+        }
+
     }
 }

@@ -12,6 +12,7 @@ namespace GestionIntegral.CapaNegocio
     class TablaParaPedido
     {
         MetodosDetallePedido metDetalle = new MetodosDetallePedido();
+        MetodosOT metOt = new MetodosOT();
 
         Producto pr = new Producto();
        public DataTable Tabla = new DataTable();
@@ -22,6 +23,12 @@ namespace GestionIntegral.CapaNegocio
         {
             Tabla= metDetalle.ListarDetallePedidoPorId(id);
             
+        }
+
+        public void CrearTablaOt(int id)
+        {
+       //    Tabla = metOt.Listar(id);
+
         }
 
         public void InsertarFila(int id, string detalle, float precioUnitario, int cantidad, float subTotal)
@@ -39,7 +46,15 @@ namespace GestionIntegral.CapaNegocio
 
             
         }
-       
+        public void InsertarFilaOt(int id, string detalle,int cantidad)
+        {
+            DataRow fila = Tabla.NewRow();
+            fila[0] = id;
+            fila[1] = detalle;
+            fila[2] = cantidad;
+            Tabla.Rows.Add(fila);
+        }
+
         public void AgregarDatos(int idProducto, string detalle, float precioUnitario, int cantidad)
         {
             float subtotal = precioUnitario * cantidad;
@@ -68,6 +83,35 @@ namespace GestionIntegral.CapaNegocio
             if (bandera == 0)
             {
                 InsertarFila(idProducto, detalle, precioUnitario, cantidad, subtotal);
+                bandera = 1;
+            }
+        }
+
+        public void AgregarDatosOT(int idProducto, string detalle, int cantidad)
+        {
+            int bandera = 0;
+
+            if (Tabla.Rows.Count == 0)//si la tabla no tiene datos insertar una fila nueva con los datos pasados por parametro
+            {
+                InsertarFilaOt(idProducto, detalle, cantidad);
+                return;
+            }
+
+
+            foreach (DataRow row in Tabla.Rows)//si tiene datos que vaya comparando el idProducto, si es igual que lo sume y no lo ponga en fila nueva
+            {
+                if (int.Parse(row[0].ToString()) == idProducto)
+                {
+                    row[0] = idProducto;
+                    row[1] = detalle;
+                    row[2] = int.Parse(row[3].ToString()) + cantidad;
+                    bandera = 1;
+                }
+
+            }
+            if (bandera == 0)
+            {
+                InsertarFilaOt(idProducto, detalle, cantidad);
                 bandera = 1;
             }
         }

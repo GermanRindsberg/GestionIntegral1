@@ -18,7 +18,10 @@ namespace GestionIntegral.CapaPresentacion
         MetodosTaller mt = new MetodosTaller();
         MetodosProductos mp = new MetodosProductos();
         MetodosGenericos mg = new MetodosGenericos();
-            
+
+        int idProducto;
+        string detalleProducto;//cuando selecciona el comboBox producto trae a esta variable el texto
+
 
         public OrdenDeTrabajo()
         {
@@ -50,11 +53,26 @@ namespace GestionIntegral.CapaPresentacion
         private void OrdenDeTrabajo_Load(object sender, EventArgs e)
         {
             ListarTalleresEnComboBox();
+            ListarProductosEnComboBox();
+            date10diasDespues.Value= DateTime.Now.AddDays(10);
+            
         }
 
         private void ListarTalleresEnComboBox()
         {
             mg.LlenarComboBox(cbTaller, "Talleres");
+        }
+        private void ElegirProducto()
+        {
+            if (cbProducto.SelectedIndex > 0)
+            {
+                detalleProducto = cbProducto.Text;
+                Producto pro = mp.CrearProducto(cbProducto.SelectedValue.ToString());
+                txtCant.Text = "1";
+
+                idProducto = pro.IdProducto;
+
+            }
         }
 
         private void ListarProductosEnComboBox()
@@ -80,6 +98,25 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnSumarProducto_Click(object sender, EventArgs e)
         {
+            if (cbProducto.SelectedIndex > 0)
+            {
+                ta.AgregarDatosOT(Convert.ToInt32(cbProducto.SelectedValue.ToString()), cbProducto.Text, int.Parse(txtCant.Text));
+                gridOT.DataSource = ta.Tabla;
+                gridOT.Columns[0].Visible = false;
+            }
+        }
+
+        private void OrdenDeTrabajo_Activated(object sender, EventArgs e)
+        {
+            ListarTalleresEnComboBox();
+        }
+
+        private void cbProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ElegirProducto();
+            
+
+
 
         }
     }
