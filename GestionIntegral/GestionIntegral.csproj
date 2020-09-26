@@ -81,14 +81,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CapaDatos\Cliente.cs" />
+    <Compile Include="CapaDatos\DetalleOrdenTrabajo.cs" />
     <Compile Include="CapaNegocio\ConexionBBDD.cs" />
     <Compile Include="CapaDatos\DetallePedido.cs" />
     <Compile Include="CapaDatos\Direccion.cs" />
     <Compile Include="CapaDatos\Diseño.cs" />
-    <Compile Include="CapaDatos\OrdenDeTrabajo.cs" />
+    <Compile Include="CapaDatos\OrdenDeTrabajos.cs" />
     <Compile Include="CapaDatos\Pedido.cs" />
     <Compile Include="CapaDatos\Producto.cs" />
     <Compile Include="CapaDatos\Stock.cs" />
+    <Compile Include="CapaNegocio\MetodosDetalleOrdenTrabajo.cs" />
     <Compile Include="CapaNegocio\MetodosDetallePedido.cs" />
     <Compile Include="CapaNegocio\MetodosDireccion.cs" />
     <Compile Include="CapaNegocio\MetodosDiseño.cs" />

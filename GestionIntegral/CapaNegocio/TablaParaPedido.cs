@@ -12,10 +12,11 @@ namespace GestionIntegral.CapaNegocio
     class TablaParaPedido
     {
         MetodosDetallePedido metDetalle = new MetodosDetallePedido();
+        MetodosDetalleOrdenTrabajo metOdT = new MetodosDetalleOrdenTrabajo();
         MetodosOT metOt = new MetodosOT();
 
         Producto pr = new Producto();
-       public DataTable Tabla = new DataTable();
+        public DataTable Tabla = new DataTable();
 
         
 
@@ -27,7 +28,7 @@ namespace GestionIntegral.CapaNegocio
 
         public void CrearTablaOt(int id)
         {
-       //    Tabla = metOt.Listar(id);
+             Tabla = metOdT.ListarDetallePedidoPorId(id);
 
         }
 
@@ -46,12 +47,14 @@ namespace GestionIntegral.CapaNegocio
 
             
         }
+   
         public void InsertarFilaOt(int id, string detalle,int cantidad)
         {
             DataRow fila = Tabla.NewRow();
             fila[0] = id;
             fila[1] = detalle;
             fila[2] = cantidad;
+
             Tabla.Rows.Add(fila);
         }
 
@@ -104,7 +107,7 @@ namespace GestionIntegral.CapaNegocio
                 {
                     row[0] = idProducto;
                     row[1] = detalle;
-                    row[2] = int.Parse(row[3].ToString()) + cantidad;
+                    row[2] = int.Parse(row[2].ToString()) + cantidad;
                     bandera = 1;
                 }
 

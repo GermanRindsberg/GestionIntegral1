@@ -15,9 +15,7 @@ namespace GestionIntegral.CapaPresentacion
     public partial class NuevoPedido : Form
     {
         #region VARIABLES
-
-        int banderaFechaDeEnvio = 0;
-
+       
         int ultimoId;//id para crear el ultimo idDetallePedido y agregarle datos
         int idProducto;//cambia cuando se selecciona el comboBox, sirve para no repetir en el pedido 2 productos iguales
         int idCliente;//Se usa para saber que tipo de lista se usa
@@ -495,7 +493,7 @@ namespace GestionIntegral.CapaPresentacion
                 }
                 else
 
-                detalleProducto = cbProducto.Text;
+               detalleProducto = cbProducto.Text;
                 
                Producto pro = metProductos.CrearProducto(cbProducto.SelectedValue.ToString());
 

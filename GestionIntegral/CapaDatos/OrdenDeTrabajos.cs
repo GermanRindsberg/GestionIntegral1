@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace GestionIntegral.CapaDatos
 {
-    class OrdenDeTrabajo
+    class OrdenDeTrabajos
     {
         int idOT;
         int idDetalleOT;
@@ -20,5 +20,18 @@ namespace GestionIntegral.CapaDatos
         public DateTime FechaEnvio { get => fechaEnvio; set => fechaEnvio = value; }
         public DateTime FechaRetiro { get => fechaRetiro; set => fechaRetiro = value; }
         public bool Activo { get => activo; set => activo = value; }
+
+        public OrdenDeTrabajos(int idDetalleOT, int idTaller, DateTime fechaEnvio, DateTime fechaRetiro, bool activo)
+        {
+            IdDetalleOT = idDetalleOT;
+            IdTaller = idTaller;
+            FechaEnvio = fechaEnvio;
+            FechaRetiro = fechaRetiro;
+            Activo = activo;
+        }
+
+        public OrdenDeTrabajos()
+        {
+        }
     }
 }

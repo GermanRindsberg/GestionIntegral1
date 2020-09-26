@@ -35,6 +35,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +45,8 @@
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transportesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.productosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.talleresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ordenesDeTrabajoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.gridListaPedidos = new System.Windows.Forms.DataGridView();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -66,15 +70,18 @@
             this.radioFamilia = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnOt = new System.Windows.Forms.Button();
-            this.talleresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ordenesDeTrabajoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.gridOT = new System.Windows.Forms.DataGridView();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridResumen)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOT)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -145,6 +152,24 @@
             this.productosToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
+            // 
+            // talleresToolStripMenuItem
+            // 
+            this.talleresToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.talleresToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.talleresToolStripMenuItem.Name = "talleresToolStripMenuItem";
+            this.talleresToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
+            this.talleresToolStripMenuItem.Text = "Talleres";
+            this.talleresToolStripMenuItem.Click += new System.EventHandler(this.talleresToolStripMenuItem_Click);
+            // 
+            // ordenesDeTrabajoToolStripMenuItem
+            // 
+            this.ordenesDeTrabajoToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.ordenesDeTrabajoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.ordenesDeTrabajoToolStripMenuItem.Name = "ordenesDeTrabajoToolStripMenuItem";
+            this.ordenesDeTrabajoToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.ordenesDeTrabajoToolStripMenuItem.Text = "Ordenes de trabajo";
+            this.ordenesDeTrabajoToolStripMenuItem.Click += new System.EventHandler(this.ordenesDeTrabajoToolStripMenuItem_Click);
             // 
             // gridListaPedidos
             // 
@@ -343,7 +368,7 @@
             this.gridStock.ShowCellToolTips = false;
             this.gridStock.ShowEditingIcon = false;
             this.gridStock.ShowRowErrors = false;
-            this.gridStock.Size = new System.Drawing.Size(1031, 297);
+            this.gridStock.Size = new System.Drawing.Size(1031, 334);
             this.gridStock.TabIndex = 20;
             this.gridStock.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellEndEdit);
             // 
@@ -396,7 +421,7 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridResumen.DefaultCellStyle = dataGridViewCellStyle6;
             this.gridResumen.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridResumen.Location = new System.Drawing.Point(1067, 86);
+            this.gridResumen.Location = new System.Drawing.Point(1071, 85);
             this.gridResumen.Name = "gridResumen";
             this.gridResumen.RowHeadersVisible = false;
             this.gridResumen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -404,7 +429,7 @@
             this.gridResumen.ShowCellToolTips = false;
             this.gridResumen.ShowEditingIcon = false;
             this.gridResumen.ShowRowErrors = false;
-            this.gridResumen.Size = new System.Drawing.Size(501, 760);
+            this.gridResumen.Size = new System.Drawing.Size(501, 358);
             this.gridResumen.TabIndex = 25;
             // 
             // radioDiseño
@@ -440,7 +465,7 @@
             this.groupBox1.Controls.Add(this.radioFamilia);
             this.groupBox1.Controls.Add(this.radioDiseño);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.groupBox1.Location = new System.Drawing.Point(1067, 30);
+            this.groupBox1.Location = new System.Drawing.Point(1071, 29);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(501, 60);
             this.groupBox1.TabIndex = 29;
@@ -459,33 +484,77 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Disponibilidad";
             // 
-            // btnOt
+            // groupBox3
             // 
-            this.btnOt.Location = new System.Drawing.Point(926, 818);
-            this.btnOt.Name = "btnOt";
-            this.btnOt.Size = new System.Drawing.Size(117, 40);
-            this.btnOt.TabIndex = 31;
-            this.btnOt.Text = "Ordenes de trabajo";
-            this.btnOt.UseVisualStyleBackColor = true;
-            this.btnOt.Click += new System.EventHandler(this.btnOt_Click);
+            this.groupBox3.Controls.Add(this.radioButton1);
+            this.groupBox3.Controls.Add(this.radioButton2);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.groupBox3.Location = new System.Drawing.Point(1071, 455);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(501, 60);
+            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ordenes de trabajo";
             // 
-            // talleresToolStripMenuItem
+            // radioButton1
             // 
-            this.talleresToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.talleresToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.talleresToolStripMenuItem.Name = "talleresToolStripMenuItem";
-            this.talleresToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
-            this.talleresToolStripMenuItem.Text = "Talleres";
-            this.talleresToolStripMenuItem.Click += new System.EventHandler(this.talleresToolStripMenuItem_Click);
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.BackColor = System.Drawing.Color.Transparent;
+            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.radioButton1.Location = new System.Drawing.Point(10, 38);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(123, 21);
+            this.radioButton1.TabIndex = 27;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Ver en proceso";
+            this.radioButton1.UseVisualStyleBackColor = false;
             // 
-            // ordenesDeTrabajoToolStripMenuItem
+            // radioButton2
             // 
-            this.ordenesDeTrabajoToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.ordenesDeTrabajoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.ordenesDeTrabajoToolStripMenuItem.Name = "ordenesDeTrabajoToolStripMenuItem";
-            this.ordenesDeTrabajoToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
-            this.ordenesDeTrabajoToolStripMenuItem.Text = "Ordenes de trabajo";
-            this.ordenesDeTrabajoToolStripMenuItem.Click += new System.EventHandler(this.ordenesDeTrabajoToolStripMenuItem_Click);
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.BackColor = System.Drawing.Color.Transparent;
+            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.radioButton2.Location = new System.Drawing.Point(172, 38);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(108, 21);
+            this.radioButton2.TabIndex = 28;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Ver retiradas";
+            this.radioButton2.UseVisualStyleBackColor = false;
+            // 
+            // gridOT
+            // 
+            this.gridOT.AllowUserToAddRows = false;
+            this.gridOT.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridOT.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOT.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.gridOT.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridOT.DefaultCellStyle = dataGridViewCellStyle8;
+            this.gridOT.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.gridOT.Location = new System.Drawing.Point(1071, 515);
+            this.gridOT.Name = "gridOT";
+            this.gridOT.RowHeadersVisible = false;
+            this.gridOT.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridOT.ShowCellErrors = false;
+            this.gridOT.ShowCellToolTips = false;
+            this.gridOT.ShowEditingIcon = false;
+            this.gridOT.ShowRowErrors = false;
+            this.gridOT.Size = new System.Drawing.Size(501, 334);
+            this.gridOT.TabIndex = 30;
             // 
             // Principal
             // 
@@ -493,7 +562,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1584, 861);
-            this.Controls.Add(this.btnOt);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.gridOT);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gridResumen);
@@ -530,6 +600,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOT)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -564,12 +637,15 @@
         private System.Windows.Forms.RadioButton radioFamilia;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnOt;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transportesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem productosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem talleresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordenesDeTrabajoToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.DataGridView gridOT;
     }
 }
 

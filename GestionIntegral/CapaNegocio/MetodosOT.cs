@@ -14,8 +14,7 @@ namespace GestionIntegral.CapaNegocio
         private SqlCommand Comando = new SqlCommand();
         private SqlDataReader LeerFilas;
 
-
-        public void InsertarOT(OrdenDeTrabajo or)
+        public void InsertarOT(OrdenDeTrabajos or)
         {
             Comando.Connection = Conexion;
             Conexion.Open();
@@ -30,7 +29,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-        public void EditarOT(OrdenDeTrabajo or)
+        public void EditarOT(OrdenDeTrabajos or)
         {
             Comando.Connection = Conexion;
             Conexion.Open();
@@ -47,7 +46,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-        public void EliminarOT(OrdenDeTrabajo or)
+        public void EliminarOT(OrdenDeTrabajos or)
         {
             Comando.Connection = Conexion;
             Conexion.Open();
@@ -60,9 +59,9 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-        public Pedido CrearOT(int id)
+        public OrdenDeTrabajos CrearOT(int id)
         {
-            OrdenDeTrabajo or = new OrdenDeTrabajo();
+            OrdenDeTrabajos or = new OrdenDeTrabajos();
 
             Comando.Connection = Conexion;
             Comando.CommandText = "OTReadPorID";
