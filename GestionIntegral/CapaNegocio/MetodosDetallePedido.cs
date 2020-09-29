@@ -83,7 +83,7 @@ namespace GestionIntegral.CapaNegocio
             Tabla.Load(LeerFilas);
             foreach (DataRow fila in Tabla.Rows)
             {
-              ultimoId = Convert.ToInt32(fila[0])+1;
+              ultimoId = Convert.ToInt32(fila[0]);
             }
             LeerFilas.Close();
             Conexion.Close();

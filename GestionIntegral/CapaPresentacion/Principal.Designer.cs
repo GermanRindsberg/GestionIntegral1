@@ -71,9 +71,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioProcesoOT = new System.Windows.Forms.RadioButton();
+            this.radioRetirado = new System.Windows.Forms.RadioButton();
             this.gridOT = new System.Windows.Forms.DataGridView();
+            this.btnNvaOT = new System.Windows.Forms.Button();
+            this.btnEditarOT = new System.Windows.Forms.Button();
+            this.btnBorrarOT = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
@@ -292,7 +295,7 @@
             // btnEditar
             // 
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.Location = new System.Drawing.Point(449, 416);
+            this.btnEditar.Location = new System.Drawing.Point(452, 416);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(188, 34);
             this.btnEditar.TabIndex = 15;
@@ -302,19 +305,20 @@
             // 
             // btnEliminar
             // 
+            this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(647, 416);
+            this.btnEliminar.Location = new System.Drawing.Point(854, 416);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(188, 34);
             this.btnEliminar.TabIndex = 16;
             this.btnEliminar.Text = "Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnFichaCliente
             // 
             this.btnFichaCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFichaCliente.Location = new System.Drawing.Point(845, 416);
+            this.btnFichaCliente.Location = new System.Drawing.Point(653, 416);
             this.btnFichaCliente.Name = "btnFichaCliente";
             this.btnFichaCliente.Size = new System.Drawing.Size(188, 34);
             this.btnFichaCliente.TabIndex = 17;
@@ -429,7 +433,7 @@
             this.gridResumen.ShowCellToolTips = false;
             this.gridResumen.ShowEditingIcon = false;
             this.gridResumen.ShowRowErrors = false;
-            this.gridResumen.Size = new System.Drawing.Size(501, 358);
+            this.gridResumen.Size = new System.Drawing.Size(501, 316);
             this.gridResumen.TabIndex = 25;
             // 
             // radioDiseño
@@ -486,41 +490,43 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.radioButton1);
-            this.groupBox3.Controls.Add(this.radioButton2);
+            this.groupBox3.Controls.Add(this.radioProcesoOT);
+            this.groupBox3.Controls.Add(this.radioRetirado);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.groupBox3.Location = new System.Drawing.Point(1071, 455);
+            this.groupBox3.Location = new System.Drawing.Point(1071, 407);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(501, 60);
+            this.groupBox3.Size = new System.Drawing.Size(501, 65);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ordenes de trabajo";
             // 
-            // radioButton1
+            // radioProcesoOT
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.radioButton1.Location = new System.Drawing.Point(10, 38);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(123, 21);
-            this.radioButton1.TabIndex = 27;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Ver en proceso";
-            this.radioButton1.UseVisualStyleBackColor = false;
+            this.radioProcesoOT.AutoSize = true;
+            this.radioProcesoOT.BackColor = System.Drawing.Color.Transparent;
+            this.radioProcesoOT.Checked = true;
+            this.radioProcesoOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.radioProcesoOT.Location = new System.Drawing.Point(10, 38);
+            this.radioProcesoOT.Name = "radioProcesoOT";
+            this.radioProcesoOT.Size = new System.Drawing.Size(123, 21);
+            this.radioProcesoOT.TabIndex = 27;
+            this.radioProcesoOT.TabStop = true;
+            this.radioProcesoOT.Text = "Ver en proceso";
+            this.radioProcesoOT.UseVisualStyleBackColor = false;
+            this.radioProcesoOT.CheckedChanged += new System.EventHandler(this.radioProcesoOT_CheckedChanged);
             // 
-            // radioButton2
+            // radioRetirado
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.radioButton2.Location = new System.Drawing.Point(172, 38);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(108, 21);
-            this.radioButton2.TabIndex = 28;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Ver retiradas";
-            this.radioButton2.UseVisualStyleBackColor = false;
+            this.radioRetirado.AutoSize = true;
+            this.radioRetirado.BackColor = System.Drawing.Color.Transparent;
+            this.radioRetirado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.radioRetirado.Location = new System.Drawing.Point(172, 38);
+            this.radioRetirado.Name = "radioRetirado";
+            this.radioRetirado.Size = new System.Drawing.Size(108, 21);
+            this.radioRetirado.TabIndex = 28;
+            this.radioRetirado.Text = "Ver retiradas";
+            this.radioRetirado.UseVisualStyleBackColor = false;
+            this.radioRetirado.CheckedChanged += new System.EventHandler(this.radioRetirado_CheckedChanged);
             // 
             // gridOT
             // 
@@ -545,7 +551,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridOT.DefaultCellStyle = dataGridViewCellStyle8;
             this.gridOT.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridOT.Location = new System.Drawing.Point(1071, 515);
+            this.gridOT.Location = new System.Drawing.Point(1071, 480);
             this.gridOT.Name = "gridOT";
             this.gridOT.RowHeadersVisible = false;
             this.gridOT.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -553,8 +559,41 @@
             this.gridOT.ShowCellToolTips = false;
             this.gridOT.ShowEditingIcon = false;
             this.gridOT.ShowRowErrors = false;
-            this.gridOT.Size = new System.Drawing.Size(501, 334);
+            this.gridOT.Size = new System.Drawing.Size(501, 333);
             this.gridOT.TabIndex = 30;
+            // 
+            // btnNvaOT
+            // 
+            this.btnNvaOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnNvaOT.Location = new System.Drawing.Point(1071, 819);
+            this.btnNvaOT.Name = "btnNvaOT";
+            this.btnNvaOT.Size = new System.Drawing.Size(130, 42);
+            this.btnNvaOT.TabIndex = 29;
+            this.btnNvaOT.Text = "Nueva Or. de trabajo";
+            this.btnNvaOT.UseVisualStyleBackColor = true;
+            this.btnNvaOT.Click += new System.EventHandler(this.btnNvaOT_Click);
+            // 
+            // btnEditarOT
+            // 
+            this.btnEditarOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnEditarOT.Location = new System.Drawing.Point(1256, 819);
+            this.btnEditarOT.Name = "btnEditarOT";
+            this.btnEditarOT.Size = new System.Drawing.Size(130, 42);
+            this.btnEditarOT.TabIndex = 32;
+            this.btnEditarOT.Text = "Editar Or. de trabajo";
+            this.btnEditarOT.UseVisualStyleBackColor = true;
+            this.btnEditarOT.Click += new System.EventHandler(this.btnEditarOT_Click);
+            // 
+            // btnBorrarOT
+            // 
+            this.btnBorrarOT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnBorrarOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnBorrarOT.Location = new System.Drawing.Point(1441, 819);
+            this.btnBorrarOT.Name = "btnBorrarOT";
+            this.btnBorrarOT.Size = new System.Drawing.Size(130, 42);
+            this.btnBorrarOT.TabIndex = 33;
+            this.btnBorrarOT.Text = "Borrar Orden de trabajo";
+            this.btnBorrarOT.UseVisualStyleBackColor = false;
             // 
             // Principal
             // 
@@ -562,6 +601,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1584, 861);
+            this.Controls.Add(this.btnBorrarOT);
+            this.Controls.Add(this.btnEditarOT);
+            this.Controls.Add(this.btnNvaOT);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.gridOT);
             this.Controls.Add(this.groupBox2);
@@ -643,9 +685,12 @@
         private System.Windows.Forms.ToolStripMenuItem talleresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordenesDeTrabajoToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioProcesoOT;
+        private System.Windows.Forms.RadioButton radioRetirado;
         private System.Windows.Forms.DataGridView gridOT;
+        private System.Windows.Forms.Button btnNvaOT;
+        private System.Windows.Forms.Button btnEditarOT;
+        private System.Windows.Forms.Button btnBorrarOT;
     }
 }
 

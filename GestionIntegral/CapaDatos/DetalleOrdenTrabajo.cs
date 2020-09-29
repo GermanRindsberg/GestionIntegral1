@@ -23,7 +23,7 @@ namespace GestionIntegral.CapaDatos
         {
         }
 
-        public DetalleOrdenTrabajo(int idProducto, int cantidad, int idDetalleOT)
+        public DetalleOrdenTrabajo(int idDetalleOT, int idProducto, int cantidad)
         {
             IdProducto = idProducto;
             Cantidad = cantidad;

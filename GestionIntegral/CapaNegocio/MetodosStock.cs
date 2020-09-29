@@ -21,8 +21,8 @@ namespace GestionIntegral.CapaNegocio
             DataTable Tabla = new DataTable();
 
             Comando.Connection = Conexion;
-            Comando.CommandText = "ListarStock";
             Conexion.Open();
+            Comando.CommandText = "ListarStock";
             Comando.CommandType = CommandType.StoredProcedure;
             leerFilas = Comando.ExecuteReader();
             Tabla.Load(leerFilas);

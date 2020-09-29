@@ -18,6 +18,7 @@ namespace GestionIntegral.CapaPresentacion
         MetodosStock metStock = new MetodosStock();
 
         MetodosPedido metPedido = new MetodosPedido();
+        MetodosOT metOT = new MetodosOT();
 
         private int childFormNumber = 0;
 
@@ -29,6 +30,13 @@ namespace GestionIntegral.CapaPresentacion
         }
 
         #region MDIFORM
+
+        private void btnNvaOT_Click(object sender, EventArgs e)
+        {
+            OrdenDeTrabajo ot = new OrdenDeTrabajo();
+            ot.ShowDialog();
+        }
+
         private void ShowNewForm(object sender, EventArgs e)
         {
             Form childForm = new Form();
@@ -126,6 +134,42 @@ namespace GestionIntegral.CapaPresentacion
             Transportes tr = new Transportes();
             tr.ShowDialog();
         }
+
+        private void btnOt_Click(object sender, EventArgs e)
+        {
+            OrdenDeTrabajo ot = new OrdenDeTrabajo();
+            ot.ShowDialog();
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clientes cl = new Clientes();
+            cl.ShowDialog();
+        }
+
+        private void transportesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Transportes tr = new Transportes();
+            tr.ShowDialog();
+        }
+
+        private void productosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Productos pr = new Productos();
+            pr.ShowDialog();
+        }
+
+        private void talleresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Talleres ta = new Talleres();
+            ta.ShowDialog();
+        }
+
+        private void ordenesDeTrabajoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OrdenDeTrabajo ot = new OrdenDeTrabajo();
+            ot.ShowDialog();
+        }
         #endregion
 
         private void Principal_Load(object sender, EventArgs e)
@@ -139,6 +183,8 @@ namespace GestionIntegral.CapaPresentacion
             radioPendiente.Checked = true;
             actualizarTotalImportes();
             radioPendientesStock.Checked = true;
+            LlenarGridOT();
+
         }
 
         private void Principal_Activated(object sender, EventArgs e)
@@ -149,19 +195,18 @@ namespace GestionIntegral.CapaPresentacion
             radioFamilia.Checked = true;
             LlenarGrillaResumen();
             actualizarTotalImportes();
+            LlenarGridOT();
 
         }
-       
+
         #region METODOS PEDIDOS
 
         private void actualizarGridPedidos(int estado)
         {
-            Pedido pe = new Pedido();
             if (estado == 1 || estado == 2)
             {
                 gridListaPedidos.DataSource = metPedido.ListarPedidoPorEstadoParaGrilla(estado, date20diasAntes.Value, dateTimePicker1.Value);
             }
-            
             gridListaPedidos.Columns[0].Visible = false;
             gridListaPedidos.Columns[1].Visible = false;
             gridListaPedidos.Columns[2].HeaderText = "Fecha del pedido";
@@ -411,9 +456,9 @@ namespace GestionIntegral.CapaPresentacion
         #endregion
 
         #region METODOS RESUMEN VENTAS
+       
         private void LlenarGrillaResumen()
         {
-            Pedido pe = new Pedido();
             if (radioFamilia.Checked==true)
             {
               gridResumen.DataSource = metPedido.ListarResumenDePedidos(1);
@@ -425,6 +470,8 @@ namespace GestionIntegral.CapaPresentacion
 
         #endregion
 
+        #region EVENTOS RESUMEN DE VENTAS
+       
         private void radioFamilia_CheckedChanged(object sender, EventArgs e)
         {
             LlenarGrillaResumen();
@@ -435,40 +482,50 @@ namespace GestionIntegral.CapaPresentacion
             LlenarGrillaResumen();
         }
 
-        private void btnOt_Click(object sender, EventArgs e)
+        #endregion
+
+        #region METODOS ORDEN DE TRABAJO
+
+        private void LlenarGridOT()
         {
-            OrdenDeTrabajo ot = new OrdenDeTrabajo();
-            ot.ShowDialog();
+            if (radioProcesoOT.Checked == true)
+            {
+                gridOT.DataSource = metOT.ListarOTParaGrilla(1);
+            }
+            else 
+                gridOT.DataSource = metOT.ListarOTParaGrilla(0);
+
         }
 
-        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+
+
+        #endregion
+
+        private void radioProcesoOT_CheckedChanged(object sender, EventArgs e)
         {
-            Clientes cl = new Clientes();
-            cl.ShowDialog();
+            LlenarGridOT();
         }
 
-        private void transportesToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void radioRetirado_CheckedChanged(object sender, EventArgs e)
         {
-            Transportes tr = new Transportes();
-            tr.ShowDialog();
+            LlenarGridOT();
         }
 
-        private void productosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnEditarOT_Click(object sender, EventArgs e)
         {
-            Productos pr = new Productos();
-            pr.ShowDialog();
-        }
+            if (gridOT.SelectedRows.Count > 0)
+            {
+                OrdenDeTrabajo ot = new OrdenDeTrabajo();
+                ot.idOrdenTrabajo = int.Parse(gridOT.CurrentRow.Cells[0].Value.ToString());
+                ot.idDetalleAborrar= int.Parse(gridOT.CurrentRow.Cells[1].Value.ToString());
+                ot.operacion = "editar";
 
-        private void talleresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Talleres ta = new Talleres();
-            ta.ShowDialog();
-        }
-
-        private void ordenesDeTrabajoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OrdenDeTrabajo ot = new OrdenDeTrabajo();
-            ot.ShowDialog();
+                ot.ShowDialog();
+            }
+            else
+                MessageBox.Show("Debe seleccionar una fila");
         }
     }
 }

@@ -83,13 +83,12 @@ namespace GestionIntegral.CapaNegocio
             Taller tr = new Taller();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "TallerRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", 1);
             Comando.Parameters.AddWithValue("@condicion", id);
-
-            Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             List<Taller> ListaGenerica = new List<Taller>();
             while (LeerFilas.Read())
@@ -100,13 +99,9 @@ namespace GestionIntegral.CapaNegocio
                 tr.Telefono = LeerFilas.GetString(3);
                 tr.Observaciones = LeerFilas.GetString(11);
                 tr.Activo = LeerFilas.GetBoolean(12);
-                
-
             }
             LeerFilas.Close();
             Conexion.Close();
-
-
             return tr;
         }
 

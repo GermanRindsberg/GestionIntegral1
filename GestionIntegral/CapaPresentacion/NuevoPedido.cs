@@ -494,8 +494,9 @@ namespace GestionIntegral.CapaPresentacion
                 else
 
                detalleProducto = cbProducto.Text;
-                
-               Producto pro = metProductos.CrearProducto(cbProducto.SelectedValue.ToString());
+               idProducto =Convert.ToInt32( cbProducto.SelectedValue.ToString());
+            
+                Producto pro = metProductos.CrearProducto(idProducto);
 
 
                 if (tipoListaColumna == "lista1")
@@ -512,8 +513,6 @@ namespace GestionIntegral.CapaPresentacion
                 }
 
                 txtCant.Text= "1";
-
-                idProducto = pro.IdProducto;
 
             }
         }

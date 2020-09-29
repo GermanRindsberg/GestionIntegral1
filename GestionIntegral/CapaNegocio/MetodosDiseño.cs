@@ -55,12 +55,13 @@ namespace GestionIntegral.CapaNegocio
         public List<Diseño> ListarDiseño(string condicion)
         {
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "DiseñoRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@condicion", condicion);
 
-            Conexion.Open();
+           
             LeerFilas = Comando.ExecuteReader();
             List<Diseño> ListaGenerica = new List<Diseño>();
             while (LeerFilas.Read())
@@ -81,12 +82,13 @@ namespace GestionIntegral.CapaNegocio
             Diseño tr = new Diseño();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "DiseñoRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@condicion",Convert.ToString(id));
 
-            Conexion.Open();
+        
             LeerFilas = Comando.ExecuteReader();
             List<Diseño> ListaGenerica = new List<Diseño>();
             while (LeerFilas.Read())

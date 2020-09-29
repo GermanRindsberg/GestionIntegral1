@@ -17,11 +17,12 @@ namespace GestionIntegral.CapaNegocio
         public List<Direccion> ListarDireccion(string condicion)//la condicion seria la id en este caso
         {
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "DireccionRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDireccion", condicion);
-            Conexion.Open();
+         
             LeerFilas = Comando.ExecuteReader();
             List<Direccion> ListaGenerica = new List<Direccion>();
             while (LeerFilas.Read())
@@ -77,7 +78,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@departamento", dir.Depto);
             Comando.Parameters.AddWithValue("@piso", dir.Piso);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+    
             Conexion.Close();
 
         }
@@ -99,11 +100,12 @@ namespace GestionIntegral.CapaNegocio
             Direccion dir = new Direccion();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "DireccionRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDireccion", id);
-            Conexion.Open();
+
             LeerFilas = Comando.ExecuteReader();
 
             while (LeerFilas.Read())

@@ -57,12 +57,12 @@ namespace GestionIntegral.CapaNegocio
         public List<Familia> ListarFamilia(string condicion)
         {
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "FamiliaRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@condicion", condicion);
-
-            Conexion.Open();
+          
             LeerFilas = Comando.ExecuteReader();
             List<Familia> ListaGenerica = new List<Familia>();
             while (LeerFilas.Read())
@@ -83,11 +83,12 @@ namespace GestionIntegral.CapaNegocio
             Familia tr = new Familia();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "FamiliaRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@condicion",Convert.ToString(id));
-            Conexion.Open();
+         
             LeerFilas = Comando.ExecuteReader();
             List<Familia> ListaGenerica = new List<Familia>();
             while (LeerFilas.Read())

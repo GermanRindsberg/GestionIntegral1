@@ -21,10 +21,13 @@ namespace GestionIntegral.CapaPresentacion
         int ultimoId;//id para crear el ultimo idDetallePedido y agregarle datos
         int idTaller;
         DateTime fechaEnvio;
-        DateTime fechaRetiro;
+        DateTime? fechaRetiro;
+        int estado;
+      
         Boolean activo;
 
         public int idOrdenTrabajo;
+        public int idDetalleAborrar;
         public string operacion = "insertar";
         #endregion
 
@@ -39,12 +42,18 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 fechaEnvio = dateHoy.Value;
-                fechaRetiro = date10diasDespues.Value;
                 ultimoId = metDetOT.UltimoIdDetallePedido();
+                int idDetalleOT = ultimoId;
+                if (checkRetirado.Checked == false)
+                {
+                    fechaRetiro = null;
+                }
+                else
+                    fechaRetiro = dtFechaRetirado.Value;
 
                 foreach (DataGridViewRow row in gridOT.Rows)
                 {
-                    int idDetalleOT = ultimoId;
+
                     idProducto = Convert.ToInt32(row.Cells[0].Value);
                     int cantidad = Convert.ToInt32(row.Cells[2].Value);
 
@@ -52,47 +61,52 @@ namespace GestionIntegral.CapaPresentacion
                     metDetOT.InsertarDetalleOT(detalle);
                 }
 
-                OrdenDeTrabajos ot = new OrdenDeTrabajos(ultimoId, idTaller, fechaEnvio, fechaRetiro, activo);
+                OrdenDeTrabajos ot = new OrdenDeTrabajos(idDetalleOT, idTaller, fechaEnvio, fechaRetiro, activo);
                 metTO.InsertarOT(ot);
 
                 MessageBox.Show("Insertado con exito");
                 limpiarCamposPedido();
+                this.Close();
             }
 
             if (operacion == "editar")
             {
-                OrdenDeTrabajos otAeditar = metTO.CrearOT(idOrdenTrabajo);
-
-                OrdenDeTrabajos otABorrar = metTO.CrearOT(idOrdenTrabajo);
-
+                if (checkRetirado.Checked == false)
+                {
+                    fechaRetiro = null;
+                    estado = 1;
+                }
+                else
+                {
+                    fechaRetiro = dtFechaRetirado.Value;
+                    estado = 0;
+                }
                 
-                metDetOT.EliminarDetalleOt(otABorrar.IdDetalleOT);
-
-                ultimoId = metDetOT.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
+                metDetOT.EliminarDetalleOt(idDetalleAborrar);//borro detalle pedido para ingresar uno nuevo.
+                //empiezo a crear un nuevo detalle
+                ultimoId = metDetOT.UltimoIdDetallePedido();
 
                 foreach (DataGridViewRow row in gridOT.Rows)
                 {
                     int idDetallePedido = ultimoId;
-                    int idProducto = Convert.ToInt32(row.Cells[1].Value);
+                    int idProducto = Convert.ToInt32(row.Cells[0].Value);
                     int cantidad = Convert.ToInt32(row.Cells[2].Value);
 
                     DetalleOrdenTrabajo detalle = new DetalleOrdenTrabajo(idDetallePedido, idProducto, cantidad);
                     metDetOT.InsertarDetalleOT(detalle);
                 }
 
-                
-                otAeditar.IdOT = idOrdenTrabajo;
-                otAeditar.IdDetalleOT = ultimoId;
-                otAeditar.FechaEnvio = fechaEnvio;
-                otAeditar.FechaRetiro = fechaEnvio;
-                metTO.EditarOT(otAeditar);
+
+
+                OrdenDeTrabajos ot = new OrdenDeTrabajos(idOrdenTrabajo,ultimoId, idTaller, fechaEnvio, fechaRetiro, activo, estado);
+
+                metTO.EditarOT(ot);
                     
                 MessageBox.Show("Editado con exito");
                     
                 limpiarCamposPedido();
-                    
                 this.Close();
-                
+
             }
             
         }
@@ -118,8 +132,35 @@ namespace GestionIntegral.CapaPresentacion
         {
             ListarTalleresEnComboBox();
             ListarProductosEnComboBox();
-            date10diasDespues.Value = DateTime.Now.AddDays(10);
             ta.CrearTablaOt(0);
+         
+
+            if (operacion == "editar")
+            {
+                ListarTalleresEnComboBox(); //cargo combobox de Talleres
+                ListarProductosEnComboBox();//cargo combobox de productos
+
+                #region CREO Y TRAIGO DATOS DE OT
+
+                OrdenDeTrabajos oT = metTO.CrearOT(idOrdenTrabajo);
+                dateHoy.Value = oT.FechaEnvio;
+                cbTaller.SelectedValue = oT.IdTaller;
+                //creo la tabla
+
+                ta.CrearTablaOt(oT.IdDetalleOT);
+
+                gridOT.DataSource = ta.Tabla;
+                gridOT.Columns[0].Visible = false;
+
+                if (oT.FechaRetiro != null)
+                {
+                    checkRetirado.Checked = true;
+                }
+
+                #endregion
+
+                ElegirProducto();//usa este metodo para que el usuario pueda elegir productos a agregar
+            }
 
         }
 
@@ -160,10 +201,16 @@ namespace GestionIntegral.CapaPresentacion
             ElegirProducto();
 
         }
-    #endregion
+        
+        private void cbTaller_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cbTaller.SelectedIndex>0)
+            idTaller = int.Parse(cbTaller.SelectedValue.ToString());
+        }
+        #endregion
 
 
-         #region METODOS
+        #region METODOS
 
         private void limpiarCamposPedido()
     {
@@ -188,7 +235,7 @@ namespace GestionIntegral.CapaPresentacion
                 else
                 {
                     detalleProducto = cbProducto.Text;
-                    Producto pro = mp.CrearProducto(cbProducto.SelectedValue.ToString());
+                    Producto pro = mp.CrearProducto(Convert.ToInt32(cbProducto.SelectedValue.ToString()));
                     txtCant.Text = "1";
 
                     idProducto =int.Parse(cbProducto.SelectedValue.ToString());
@@ -208,8 +255,9 @@ namespace GestionIntegral.CapaPresentacion
         }
 
 
+
         #endregion
 
-
+     
     }
 }

@@ -83,12 +83,12 @@ namespace GestionIntegral.CapaNegocio
             Transporte tr = new Transporte();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "TransporteRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", 1);
             Comando.Parameters.AddWithValue("@condicion", id);
-            Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             List<Transporte> ListaGenerica = new List<Transporte>();
             while (LeerFilas.Read())
@@ -104,8 +104,6 @@ namespace GestionIntegral.CapaNegocio
             }
             LeerFilas.Close();
             Conexion.Close();
-          
-
             return tr;
         }
     }

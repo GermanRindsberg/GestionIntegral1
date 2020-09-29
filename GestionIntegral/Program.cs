@@ -17,7 +17,7 @@ namespace GestionIntegral
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new OrdenDeTrabajo());
+            Application.Run(new Principal());
         }
     }
 }

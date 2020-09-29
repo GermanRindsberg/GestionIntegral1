@@ -18,7 +18,7 @@ namespace GestionIntegral.CapaNegocio
         public void InsertarDetalleOT(DetalleOrdenTrabajo ot)
         {
             Comando.Connection = Conexion;
-         // Conexion.Open();
+            Conexion.Open();
             Comando.CommandText = "DetalleOTCreate";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
@@ -84,7 +84,7 @@ namespace GestionIntegral.CapaNegocio
             }
             foreach (DataRow fila in Tabla.Rows)
             {
-                ultimoId = Convert.ToInt32(fila[0]) + 1;
+                ultimoId = Convert.ToInt32(fila[0]);
             }
             LeerFilas.Close();
             Conexion.Close();

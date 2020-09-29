@@ -25,7 +25,6 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDetallePedido", pe.IdDetallePedido);
-
             Comando.Parameters.AddWithValue("@idCliente", pe.IdCliente);
             Comando.Parameters.AddWithValue("@idEstado", pe.IdEstado);
             Comando.Parameters.AddWithValue("@fechaPedido", pe.Fecha);
@@ -167,11 +166,11 @@ namespace GestionIntegral.CapaNegocio
             Pedido pe = new Pedido();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "PedidoReadPorID";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idPedido", id);
-            Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             while (LeerFilas.Read())
             {

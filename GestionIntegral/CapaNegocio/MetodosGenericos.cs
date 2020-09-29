@@ -20,11 +20,11 @@ namespace GestionIntegral.CapaNegocio
             {
                 DataTable Tabla = new DataTable();
                 Comando.Connection = Conexion;
+                Conexion.Open();
                 Comando.CommandText = "ListarLocalidad";
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.Parameters.Clear();
                 Comando.Parameters.AddWithValue("@idProvincia", idProvincia);
-                Conexion.Open();
                 LeerFilas = Comando.ExecuteReader();
                 Tabla.Load(LeerFilas);
                 DataRow workRow = Tabla.NewRow();
@@ -40,19 +40,20 @@ namespace GestionIntegral.CapaNegocio
                 cb.ValueMember = "id";
                 cb.AutoCompleteMode = AutoCompleteMode.Suggest;
                 cb.AutoCompleteSource = AutoCompleteSource.ListItems;
-
+               
             }
            
             if (nombreTabla == "Producto")
             {
                 DataTable Tabla = new DataTable();
                 Comando.Connection = Conexion;
+                Conexion.Open();
                 Comando.CommandText = "RellenarComboBox";
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.Parameters.Clear();
                 Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
                 Comando.Parameters.AddWithValue("@activo", 1);
-                Conexion.Open();
+              
                 LeerFilas = Comando.ExecuteReader();
                 Tabla.Load(LeerFilas);
                 DataRow workRow = Tabla.NewRow();
@@ -79,12 +80,13 @@ namespace GestionIntegral.CapaNegocio
             {
                 DataTable Tabla = new DataTable();
                 Comando.Connection = Conexion;
+                Conexion.Open();
                 Comando.CommandText = "RellenarComboBox";
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.Parameters.Clear();
                 Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
                 Comando.Parameters.AddWithValue("@activo", 1);
-                Conexion.Open();
+              
                 LeerFilas = Comando.ExecuteReader();
                 Tabla.Load(LeerFilas);
                 DataRow workRow = Tabla.NewRow();
@@ -108,12 +110,13 @@ namespace GestionIntegral.CapaNegocio
             {
                 DataTable Tabla = new DataTable();
                 Comando.Connection = Conexion;
+                Conexion.Open();
                 Comando.CommandText = "RellenarComboBox";
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.Parameters.Clear();
                 Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
                 Comando.Parameters.AddWithValue("@activo", 1);
-                Conexion.Open();
+                
                 LeerFilas = Comando.ExecuteReader();
                 Tabla.Load(LeerFilas);
                 DataRow workRow = Tabla.NewRow();
@@ -134,12 +137,13 @@ namespace GestionIntegral.CapaNegocio
             {
                 DataTable Tabla = new DataTable();
                 Comando.Connection = Conexion;
+                Conexion.Open();
                 Comando.CommandText = "RellenarComboBox";
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.Parameters.Clear();
                 Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
                 Comando.Parameters.AddWithValue("@activo", 1);
-                Conexion.Open();
+                
                 LeerFilas = Comando.ExecuteReader();
                 Tabla.Load(LeerFilas);
                 DataRow workRow = Tabla.NewRow();
@@ -159,12 +163,13 @@ namespace GestionIntegral.CapaNegocio
             {
                 DataTable Tabla = new DataTable();
                 Comando.Connection = Conexion;
+                Conexion.Open();
                 Comando.CommandText = "RellenarComboBox";
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.Parameters.Clear();
                 Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
                 Comando.Parameters.AddWithValue("@activo", 1);
-                Conexion.Open();
+                
                 LeerFilas = Comando.ExecuteReader();
                 Tabla.Load(LeerFilas);
                 DataRow workRow = Tabla.NewRow();

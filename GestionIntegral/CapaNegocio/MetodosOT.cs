@@ -24,7 +24,14 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idDetalleOT", or.IdDetalleOT);
             Comando.Parameters.AddWithValue("@idTaller", or.IdTaller);
             Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
-            Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
+            if (or.FechaRetiro == null)
+            {
+                Comando.Parameters.AddWithValue("@fechaRetiro", DBNull.Value);
+            }
+            else
+            {
+                Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
+            }
             Comando.ExecuteNonQuery();
             Conexion.Close();
         }
@@ -42,6 +49,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
             Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
             Comando.Parameters.AddWithValue("@activo", or.Activo);
+            Comando.Parameters.AddWithValue("@estado", or.Estado);
             Comando.ExecuteNonQuery();
             Conexion.Close();
         }
@@ -64,11 +72,11 @@ namespace GestionIntegral.CapaNegocio
             OrdenDeTrabajos or = new OrdenDeTrabajos();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "OTReadPorID";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idOT", id);
-            Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             while (LeerFilas.Read())
             {
@@ -76,13 +84,34 @@ namespace GestionIntegral.CapaNegocio
                 or.IdDetalleOT = LeerFilas.GetInt32(1);
                 or.IdTaller = LeerFilas.GetInt32(2);
                 or.FechaEnvio = LeerFilas.GetDateTime(3);
-                or.FechaRetiro = LeerFilas.GetDateTime(4);
+                if (!LeerFilas.IsDBNull(4))
+                {
+                    or.FechaRetiro = LeerFilas.GetDateTime(4);
+                }
+             
                 or.Activo = LeerFilas.GetBoolean(5);
 
             }
             LeerFilas.Close();
             Conexion.Close();
             return or;
+        }
+
+        public DataTable ListarOTParaGrilla(int estado)
+        {
+            DataTable Tabla = new DataTable();
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.CommandText = "OTRead";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@estado", estado);
+            
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            LeerFilas.Close();
+            Conexion.Close();
+            return Tabla;
         }
 
     }

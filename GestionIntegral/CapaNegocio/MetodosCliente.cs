@@ -78,13 +78,14 @@ namespace GestionIntegral.CapaNegocio
         public List<Cliente> ListarClientes(string condicion, string activo)
         {
             Comando.Connection = Conexion;
+
+            Conexion.Open();
             Comando.CommandText = "ClientesRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", activo);
             Comando.Parameters.AddWithValue("@condicion", condicion);
 
-            Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             List<Cliente> ListaGenerica = new List<Cliente>();
             while (LeerFilas.Read())
@@ -115,12 +116,13 @@ namespace GestionIntegral.CapaNegocio
             Cliente cl = new Cliente();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "ClientesRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", 1);
             Comando.Parameters.AddWithValue("@condicion", id);
-            Conexion.Open();
+            
             LeerFilas = Comando.ExecuteReader();
             
             while (LeerFilas.Read())

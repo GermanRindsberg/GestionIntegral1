@@ -99,17 +99,16 @@ namespace GestionIntegral.CapaNegocio
             return ListaGenerica;
         }
 
-        public Producto CrearProducto(string id)
+        public Producto CrearProducto(int id)
         {
             Producto tr = new Producto();
 
             Comando.Connection = Conexion;
+            Conexion.Open();
             Comando.CommandText = "ProductoRead";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@condicion", id);
-
-            Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
             List<Producto> ListaGenerica = new List<Producto>();
             while (LeerFilas.Read())
