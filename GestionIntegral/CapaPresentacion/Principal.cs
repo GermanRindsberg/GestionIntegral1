@@ -314,8 +314,6 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-         
-
             if (gridListaPedidos.SelectedRows.Count > 0)
             {
                 if (MessageBox.Show("¿Desea eliminar el Pedido? esto puede alterar el stock y balances", "ELIMINAR PEDIDO", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -492,8 +490,20 @@ namespace GestionIntegral.CapaPresentacion
             {
                 gridOT.DataSource = metOT.ListarOTParaGrilla(1);
             }
-            else 
+            else
+            {
                 gridOT.DataSource = metOT.ListarOTParaGrilla(0);
+            }
+
+            gridOT.Columns[0].Visible = false;//idOt
+            gridOT.Columns[1].Visible = false;//idDetalle
+            gridOT.Columns[2].Visible = false;//idTaller
+            gridOT.Columns[5].Visible = false;//activo
+            gridOT.Columns[6].Visible = false;//estado
+            gridOT.Columns[7].DisplayIndex = 0;
+
+            gridOT.Columns[3].HeaderText = "Fecha de envio";
+            gridOT.Columns[4].HeaderText = "Fecha de retiro";
 
         }
 
@@ -526,6 +536,26 @@ namespace GestionIntegral.CapaPresentacion
             }
             else
                 MessageBox.Show("Debe seleccionar una fila");
+        }
+
+        private void btnBorrarOT_Click(object sender, EventArgs e)
+        {
+            if (gridOT.SelectedRows.Count > 0)
+            {
+                if (MessageBox.Show("¿Desea eliminar esta orden de trabajo? ", "ELIMINAR ORDEN DE TRABAJO", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    int idOT = int.Parse(gridOT.CurrentRow.Cells[0].Value.ToString());
+                    OrdenDeTrabajos ot = new OrdenDeTrabajos(idOT);
+                    metOT.EliminarOT(ot);
+                    MessageBox.Show("Eliminado con exito");
+                    LlenarGridOT();
+                }
+                else
+                    return;
+            }
+            else
+                MessageBox.Show("Debe seleccionar una fila");
+
         }
     }
 }

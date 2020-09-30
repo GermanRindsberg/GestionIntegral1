@@ -46,5 +46,10 @@ namespace GestionIntegral.CapaDatos
         public OrdenDeTrabajos()
         {
         }
+
+        public OrdenDeTrabajos(int idOT)
+        {
+            IdOT = idOT;
+        }
     }
 }

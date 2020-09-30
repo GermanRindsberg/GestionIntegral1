@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data;
+using System.Data.SqlClient;
 
 namespace GestionIntegral.CapaDatos
 {
@@ -9,6 +10,23 @@ namespace GestionIntegral.CapaDatos
         static private string CadenaConexion = "Server=(local);Database=Alejandro; integrated security=true";
 
         protected SqlConnection Conexion = new SqlConnection(CadenaConexion);
+
+        protected void Conectar()
+        {
+            if (Conexion.State == ConnectionState.Closed)
+            {
+                Conexion.Open();
+            }
+    
+        }
+        protected void Desconectar()
+        {
+            if (Conexion.State == ConnectionState.Open)
+            {
+                Conexion.Close();
+            }
+
+        }
 
     }
 

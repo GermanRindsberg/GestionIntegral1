@@ -594,6 +594,7 @@
             this.btnBorrarOT.TabIndex = 33;
             this.btnBorrarOT.Text = "Borrar Orden de trabajo";
             this.btnBorrarOT.UseVisualStyleBackColor = false;
+            this.btnBorrarOT.Click += new System.EventHandler(this.btnBorrarOT_Click);
             // 
             // Principal
             // 

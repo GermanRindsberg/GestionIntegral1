@@ -47,7 +47,14 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idDetalleOT", or.IdDetalleOT);
             Comando.Parameters.AddWithValue("@idTaller", or.IdTaller);
             Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
-            Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
+            if (or.FechaRetiro == null)
+            {
+                Comando.Parameters.AddWithValue("@fechaRetiro", DBNull.Value);
+            }
+            else
+            {
+                Comando.Parameters.AddWithValue("@fechaRetiro", or.FechaRetiro);
+            }
             Comando.Parameters.AddWithValue("@activo", or.Activo);
             Comando.Parameters.AddWithValue("@estado", or.Estado);
             Comando.ExecuteNonQuery();

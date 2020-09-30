@@ -69,7 +69,6 @@ namespace GestionIntegral.CapaPresentacion
                 ta.CrearTabla(pedido.IdDetallePedido);
                 gridPedidoNuevo.DataSource = ta.Tabla;
                 gridPedidoNuevo.Columns[0].Visible = false;
-
                 
                 lblTotal.Text = pedido.Total.ToString();//le paso el total al lbltotal
 
@@ -212,6 +211,7 @@ namespace GestionIntegral.CapaPresentacion
                 DateTime fecha = dtFechaPedido.Value;
                 int idEstado = 0;
                 string numGuia = txtNroGuia.Text;
+               
                 //tipoPago
                 DateTime? fechaPago;
                 float totalPedido = float.Parse(lblTotal.Text);

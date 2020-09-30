@@ -42,8 +42,11 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 fechaEnvio = dateHoy.Value;
+           
                 ultimoId = metDetOT.UltimoIdDetallePedido();
+
                 int idDetalleOT = ultimoId;
+              
                 if (checkRetirado.Checked == false)
                 {
                     fechaRetiro = null;
@@ -53,10 +56,8 @@ namespace GestionIntegral.CapaPresentacion
 
                 foreach (DataGridViewRow row in gridOT.Rows)
                 {
-
                     idProducto = Convert.ToInt32(row.Cells[0].Value);
                     int cantidad = Convert.ToInt32(row.Cells[2].Value);
-
                     DetalleOrdenTrabajo detalle = new DetalleOrdenTrabajo(idDetalleOT, idProducto, cantidad);
                     metDetOT.InsertarDetalleOT(detalle);
                 }
@@ -71,6 +72,27 @@ namespace GestionIntegral.CapaPresentacion
 
             if (operacion == "editar")
             {
+                OrdenDeTrabajos poAeditar = metTO.CrearOT(idOrdenTrabajo);
+                OrdenDeTrabajos otAborrar = metTO.CrearOT(idOrdenTrabajo);
+
+                fechaRetiro = poAeditar.FechaRetiro;
+                fechaEnvio = poAeditar.FechaEnvio;
+
+                //elimino el detallePedido para luego insertar uno nuevo, debo investigar para editarlo y no tener que borrarlo
+                metDetOT.EliminarDetalleOt(otAborrar.IdDetalleOT);//borro el detalle anterior para agregar uno nuevo
+                
+
+                ultimoId = metDetOT.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
+
+                foreach (DataGridViewRow row in gridOT.Rows)
+                {
+                    int idDetallePedido = ultimoId;
+                    int idProducto = Convert.ToInt32(row.Cells[0].Value);
+                    int cantidad = Convert.ToInt32(row.Cells[2].Value);
+                    DetalleOrdenTrabajo detalle = new DetalleOrdenTrabajo(idDetallePedido, idProducto, cantidad);
+                    metDetOT.InsertarDetalleOT(detalle);
+                }
+
                 if (checkRetirado.Checked == false)
                 {
                     fechaRetiro = null;
@@ -81,33 +103,19 @@ namespace GestionIntegral.CapaPresentacion
                     fechaRetiro = dtFechaRetirado.Value;
                     estado = 0;
                 }
-                
-                metDetOT.EliminarDetalleOt(idDetalleAborrar);//borro detalle pedido para ingresar uno nuevo.
-                //empiezo a crear un nuevo detalle
-                ultimoId = metDetOT.UltimoIdDetallePedido();
-
-                foreach (DataGridViewRow row in gridOT.Rows)
-                {
-                    int idDetallePedido = ultimoId;
-                    int idProducto = Convert.ToInt32(row.Cells[0].Value);
-                    int cantidad = Convert.ToInt32(row.Cells[2].Value);
-
-                    DetalleOrdenTrabajo detalle = new DetalleOrdenTrabajo(idDetallePedido, idProducto, cantidad);
-                    metDetOT.InsertarDetalleOT(detalle);
-                }
-
-
-
-                OrdenDeTrabajos ot = new OrdenDeTrabajos(idOrdenTrabajo,ultimoId, idTaller, fechaEnvio, fechaRetiro, activo, estado);
-
-                metTO.EditarOT(ot);
-                    
+                poAeditar.IdOT = idOrdenTrabajo;
+                poAeditar.IdTaller = idTaller;
+                poAeditar.Estado = estado;
+                poAeditar.IdDetalleOT = ultimoId;
+                poAeditar.FechaEnvio = fechaEnvio;
+                poAeditar.FechaRetiro = fechaRetiro;
+                poAeditar.Activo = activo;
+                metTO.EditarOT(poAeditar);
                 MessageBox.Show("Editado con exito");
-                    
                 limpiarCamposPedido();
                 this.Close();
 
-            }
+                }
             
         }
 
@@ -133,7 +141,13 @@ namespace GestionIntegral.CapaPresentacion
             ListarTalleresEnComboBox();
             ListarProductosEnComboBox();
             ta.CrearTablaOt(0);
-         
+            if (gridOT.Rows.Count > 0)
+            {
+                gridOT.Columns[0].Visible = false;
+            }
+            gridOT.ClearSelection();
+
+
 
             if (operacion == "editar")
             {
@@ -143,11 +157,18 @@ namespace GestionIntegral.CapaPresentacion
                 #region CREO Y TRAIGO DATOS DE OT
 
                 OrdenDeTrabajos oT = metTO.CrearOT(idOrdenTrabajo);
-                dateHoy.Value = oT.FechaEnvio;
-                cbTaller.SelectedValue = oT.IdTaller;
-                //creo la tabla
 
-                ta.CrearTablaOt(oT.IdDetalleOT);
+                idOrdenTrabajo = oT.IdOT;
+                idDetalleAborrar = oT.IdDetalleOT;
+                
+                dateHoy.Value = oT.FechaEnvio;
+
+                cbTaller.SelectedValue = oT.IdTaller;
+
+                //creo la tabla
+                int idTablaOT = oT.IdDetalleOT;
+
+                ta.CrearTablaOt(idTablaOT);
 
                 gridOT.DataSource = ta.Tabla;
                 gridOT.Columns[0].Visible = false;
@@ -156,9 +177,12 @@ namespace GestionIntegral.CapaPresentacion
                 {
                     checkRetirado.Checked = true;
                 }
-
+                fechaEnvio = oT.FechaEnvio;
+                activo = oT.Activo;
+                estado = oT.Estado;
+                gridOT.Columns[0].Visible = false;
                 #endregion
-
+                gridOT.ClearSelection();
                 ElegirProducto();//usa este metodo para que el usuario pueda elegir productos a agregar
             }
 
@@ -186,14 +210,21 @@ namespace GestionIntegral.CapaPresentacion
             {
                 ta.AgregarDatosOT(Convert.ToInt32(cbProducto.SelectedValue.ToString()), cbProducto.Text, int.Parse(txtCant.Text));
                 gridOT.DataSource = ta.Tabla;
-                //gridOT.Columns[0].Visible = false;
+                gridOT.Columns[0].Visible = false;
+               
+
             }
         }
 
         private void OrdenDeTrabajo_Activated(object sender, EventArgs e)
         {
-            ListarTalleresEnComboBox();
+            if (int.Parse(cbTaller.SelectedValue.ToString()) == 0)
+            {
+                ListarTalleresEnComboBox();
+                
+            }
             ListarProductosEnComboBox();
+
         }
 
         private void cbProducto_SelectedIndexChanged(object sender, EventArgs e)
@@ -256,8 +287,25 @@ namespace GestionIntegral.CapaPresentacion
 
 
 
+
         #endregion
 
-     
+        private void btnQuitarProducto_Click(object sender, EventArgs e)
+        {
+
+            if (gridOT.SelectedRows.Count > 0)
+            {
+                if (gridOT.SelectedRows.Count != null)
+                {
+                    int fila = Convert.ToInt32(gridOT.CurrentRow.Index.ToString());
+
+                    ta.BorrarDatos(fila);
+                    gridOT.DataSource = ta.Tabla;
+                    gridOT.Columns[0].Visible = false;
+                }
+            }
+            else
+                MessageBox.Show("Debe seleccionar una fila");
+        }
     }
 }

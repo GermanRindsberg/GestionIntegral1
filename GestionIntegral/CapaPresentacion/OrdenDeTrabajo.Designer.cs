@@ -141,6 +141,7 @@
             this.btnQuitarProducto.TabIndex = 94;
             this.btnQuitarProducto.Text = "Borrar";
             this.btnQuitarProducto.UseVisualStyleBackColor = true;
+            this.btnQuitarProducto.Click += new System.EventHandler(this.btnQuitarProducto_Click);
             // 
             // btnAgregarProductoNuevo
             // 
