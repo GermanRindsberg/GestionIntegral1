@@ -23,9 +23,16 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "FamiliaCreate";
             Comando.CommandType = CommandType.StoredProcedure;
-            Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionFamilia);
-            Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionFamilia);
+            Comando.Parameters.AddWithValue("@lista1", tr.Lista1);
+            Comando.Parameters.AddWithValue("@lista2", tr.Lista2);
+            Comando.Parameters.AddWithValue("@lista3", tr.Lista3);
+            Comando.Parameters.AddWithValue("@tizada", tr.Tizada);
+            Comando.Parameters.AddWithValue("@papel", tr.Papel);
+            Comando.Parameters.AddWithValue("@tela", tr.Tela);
+            Comando.ExecuteNonQuery();
+            
             Conexion.Close();
         }
 
@@ -33,11 +40,12 @@ namespace GestionIntegral.CapaNegocio
         {
             Comando.Connection = Conexion;
             Conexion.Open();
+            Comando.Parameters.Clear();
             Comando.CommandText = "FamiliaDelete";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+         
             Conexion.Close();
         }
 
@@ -47,10 +55,17 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "FamiliaUpdate";
             Comando.CommandType = CommandType.StoredProcedure;
-            Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionFamilia);
-            Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
-            Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
+            Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionFamilia);
+            Comando.Parameters.AddWithValue("@lista1", tr.Lista1);
+            Comando.Parameters.AddWithValue("@lista2", tr.Lista2);
+            Comando.Parameters.AddWithValue("@lista3", tr.Lista2);
+            Comando.Parameters.AddWithValue("@tizada", tr.Tizada);
+            Comando.Parameters.AddWithValue("@papel", tr.Papel);
+            Comando.Parameters.AddWithValue("@tela", tr.Tela);
+            Comando.Parameters.AddWithValue("@activo", tr.Activo);
+            Comando.ExecuteNonQuery();
             Conexion.Close();
         }
 
@@ -71,6 +86,14 @@ namespace GestionIntegral.CapaNegocio
                 {
                     IdFamilia = LeerFilas.GetInt32(0),
                     DescripcionFamilia = LeerFilas.GetString(1),
+                    Lista1 = LeerFilas.GetInt32(2),
+                    Lista2 = LeerFilas.GetInt32(3),
+                    Lista3 = LeerFilas.GetInt32(4),
+                    Tizada = LeerFilas.GetInt32(5),
+                    Papel = LeerFilas.GetInt32(6),
+                    Tela = LeerFilas.GetInt32(7),
+                    Activo = LeerFilas.GetBoolean(8)
+
                 }); ;
             }
             LeerFilas.Close();
@@ -95,6 +118,13 @@ namespace GestionIntegral.CapaNegocio
             {
                 tr.IdFamilia = LeerFilas.GetInt32(0);
                 tr.DescripcionFamilia = LeerFilas.GetString(1);
+                tr.Lista1= LeerFilas.GetInt32(2);
+                tr.Lista2 = LeerFilas.GetInt32(3);
+                tr.Lista3 = LeerFilas.GetInt32(4);
+                tr.Tizada = LeerFilas.GetInt32(5);
+                tr.Papel = LeerFilas.GetFloat(6);
+                tr.Tela = LeerFilas.GetFloat(7);
+                tr.Activo = LeerFilas.GetBoolean(8);
             }
             LeerFilas.Close();
             Conexion.Close();

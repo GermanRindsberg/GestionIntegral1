@@ -50,7 +50,6 @@ namespace GestionIntegral.CapaPresentacion
                 ListarProductosEnComboBox();
                 ListarTransporteEncomboBox();
                 CrearidDetallePedido();
-                ta.CrearTabla(0);
             }
 
             if (operacion == "editar")
@@ -140,7 +139,7 @@ namespace GestionIntegral.CapaPresentacion
                 DateTime? fechaPago;
                 float totalPedido = float.Parse(lblTotal.Text);
                 DateTime? fechaEnvio;
-                ultimoId = metDetalle.UltimoIdDetallePedido();
+                ultimoId = (metDetalle.UltimoIdDetallePedido())+1;
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
@@ -203,7 +202,7 @@ namespace GestionIntegral.CapaPresentacion
                         return;
                     }
                 }
-                
+                this.Close();
             }
 
             if (operacion == "editar")
@@ -223,7 +222,7 @@ namespace GestionIntegral.CapaPresentacion
                 //elimino el detallePedido para luego insertar uno nuevo, debo investigar para editarlo y no tener que borrarlo
                 metDetalle.EliminarDetallePedido(pedidoAborrar.IdDetallePedido);
 
-                ultimoId = metDetalle.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
+                ultimoId = (metDetalle.UltimoIdDetallePedido())+1;//empiezo a crear un nuevo detalle
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
@@ -310,7 +309,14 @@ namespace GestionIntegral.CapaPresentacion
             {
                 ta.AgregarDatos(Convert.ToInt32(cbProducto.SelectedValue.ToString()), cbProducto.Text, float.Parse(txtPrecioLista.Text), int.Parse(txtCant.Text));
                 gridPedidoNuevo.DataSource = ta.Tabla;
+                
                 gridPedidoNuevo.Columns[0].Visible = false;
+                gridPedidoNuevo.Columns[1].HeaderText = "Detalle";
+                gridPedidoNuevo.Columns[2].HeaderText = "Precio";
+                gridPedidoNuevo.Columns[3].HeaderText = "Cantidad";
+                gridPedidoNuevo.Columns[4].HeaderText = "Subtotal";
+
+
             }
         }
 
@@ -357,7 +363,7 @@ namespace GestionIntegral.CapaPresentacion
            
             if (gridPedidoNuevo.SelectedRows.Count > 0)
             {
-                if (gridPedidoNuevo.SelectedRows.Count != null)
+                if (gridPedidoNuevo.SelectedRows.Count > 0)
                 {
                     int fila = Convert.ToInt32(gridPedidoNuevo.CurrentRow.Index.ToString());
                 
@@ -391,8 +397,9 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (operacion == "insertar")
             {
-                ListarTransporteEncomboBox();
-                ListarClientesEnComboBox();
+                    ListarTransporteEncomboBox();
+                    ListarClientesEnComboBox();
+             
             }
             ListarProductosEnComboBox();
         }
@@ -497,6 +504,7 @@ namespace GestionIntegral.CapaPresentacion
                idProducto =Convert.ToInt32( cbProducto.SelectedValue.ToString());
             
                 Producto pro = metProductos.CrearProducto(idProducto);
+                
 
 
                 if (tipoListaColumna == "lista1")

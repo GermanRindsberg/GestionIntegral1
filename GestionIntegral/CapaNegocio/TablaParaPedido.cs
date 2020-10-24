@@ -34,16 +34,35 @@ namespace GestionIntegral.CapaNegocio
 
         public void InsertarFila(int id, string detalle, float precioUnitario, int cantidad, float subTotal)
         {
+            if (Tabla.Columns.Count == 0)
+            {
+                DataRow fila = Tabla.NewRow();
+                DataColumn IdProducto = Tabla.Columns.Add();
+                DataColumn DetalleProducto = Tabla.Columns.Add();
+                DataColumn PrecioUnitario = Tabla.Columns.Add();
+                DataColumn Cantidad = Tabla.Columns.Add();
+                DataColumn SubTotal = Tabla.Columns.Add();
 
-            DataRow fila = Tabla.NewRow();
+                fila[0] = id;
+                fila[1] = detalle;
+                fila[2] = precioUnitario;
+                fila[3] = cantidad;
+                fila[4] = subTotal;
 
-            fila[0] = id;
-            fila[1] = detalle;
-            fila[2] = precioUnitario;
-            fila[3] = cantidad;
-            fila[4] = subTotal;
+                Tabla.Rows.Add(fila);
+            }
+            else
+            {
 
-            Tabla.Rows.Add(fila);
+                DataRow fila = Tabla.NewRow();
+
+                fila[0] = id;
+                fila[1] = detalle;
+                fila[2] = precioUnitario;
+                fila[3] = cantidad;
+                fila[4] = subTotal;
+                Tabla.Rows.Add(fila);
+            }
 
             
         }

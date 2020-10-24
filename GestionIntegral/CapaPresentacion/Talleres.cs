@@ -198,7 +198,12 @@ namespace GestionIntegral.CapaPresentacion
                 txtTel1.Text = cl.Telefono;
                 checkActivo.Checked = cl.Activo;
                 txtObservaciones.Text = cl.Observaciones;
+
                 operacion = "editar";
+            }
+            if (cbRazonSocial.SelectedIndex == 0)
+            {
+                operacion = "insertar";
             }
         }
 

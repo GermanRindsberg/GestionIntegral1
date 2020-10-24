@@ -33,10 +33,11 @@ namespace GestionIntegral.CapaNegocio
             Comando.Connection = Conexion;
             Conexion.Open();
             Comando.CommandText = "DiseñoDelete";
+            Comando.Parameters.Clear();
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.AddWithValue("@idDiseño", tr.IdDiseño);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
+         
             Conexion.Close();
         }
 

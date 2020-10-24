@@ -96,6 +96,7 @@ namespace GestionIntegral.CapaNegocio
                 workRow[3] = 0;
                 workRow[4] = 0;
                 workRow[5] = 0;
+                workRow[6] = 0;
                 Tabla.Rows.InsertAt(workRow, 0);
                 LeerFilas.Close();
                 Conexion.Close();

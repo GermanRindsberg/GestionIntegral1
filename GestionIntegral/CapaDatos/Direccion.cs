@@ -8,7 +8,6 @@ namespace GestionIntegral.CapaDatos
     class Direccion
     {
         private int idDireccion;
-
         private int idLocalidad;
         private string calle;
         private string numero;

@@ -16,7 +16,7 @@ namespace GestionIntegral.CapaNegocio
         SqlDataReader LeerFilas;
 
         public void InsertarProducto(Producto tr)
-        {//problemas con fk familia y diseño
+        {
             Comando.Connection = Conexion;
             Conexion.Open();
             Comando.CommandText = "ProductoCreate";
@@ -26,9 +26,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.Parameters.AddWithValue("@valorUnico", tr.ValorUnico);
             Comando.Parameters.AddWithValue("@descripcionProducto", tr.DescripcionProducto);
-            Comando.Parameters.AddWithValue("@lista1", tr.Lista1);
-            Comando.Parameters.AddWithValue("@lista2", tr.Lista2);
-            Comando.Parameters.AddWithValue("@lista3", tr.Lista3);
+     
             Comando.ExecuteNonQuery();
             Conexion.Close();
         }
@@ -57,9 +55,6 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.Parameters.AddWithValue("@valorUnico", tr.ValorUnico);
             Comando.Parameters.AddWithValue("@descripcionProducto", tr.DescripcionProducto);
-            Comando.Parameters.AddWithValue("@lista1", tr.Lista1);
-            Comando.Parameters.AddWithValue("@lista2", tr.Lista2);
-            Comando.Parameters.AddWithValue("@lista3", tr.Lista3);
             Comando.Parameters.AddWithValue("@idProducto", tr.IdProducto);
             Comando.ExecuteNonQuery();
      
@@ -88,10 +83,13 @@ namespace GestionIntegral.CapaNegocio
                     IdDiseño = LeerFilas.GetInt32(2),
                     ValorUnico = LeerFilas.GetInt32(3),
                     DescripcionProducto = LeerFilas.GetString(4),
-                    Lista1 = LeerFilas.GetDouble(5),
-                    Lista2 = LeerFilas.GetDouble(6),
-                    Lista3 = LeerFilas.GetDouble(7),
-                    Activo = LeerFilas.GetBoolean(8)
+                    Activo = LeerFilas.GetBoolean(5),
+                    StockMinimo= LeerFilas.GetInt32(6),
+                    Almacen = LeerFilas.GetInt32(7),
+                    Stock = LeerFilas.GetInt32(8),
+                    PotencialStock = LeerFilas.GetInt32(9),
+                    Pedidos = LeerFilas.GetInt32(10),
+                    Requeridos = LeerFilas.GetInt32(11)
                 }); ;
             }
             LeerFilas.Close();
@@ -113,14 +111,22 @@ namespace GestionIntegral.CapaNegocio
             List<Producto> ListaGenerica = new List<Producto>();
             while (LeerFilas.Read())
             {
+
+
                 tr.IdProducto = LeerFilas.GetInt32(0);
-                tr.IdDiseño = LeerFilas.GetInt32(1);
-                tr.IdFamilia = LeerFilas.GetInt32(2);
+                tr.IdFamilia = LeerFilas.GetInt32(1);
+                tr.IdDiseño = LeerFilas.GetInt32(2);
                 tr.ValorUnico = LeerFilas.GetInt32(3);
                 tr.DescripcionProducto = LeerFilas.GetString(4);
-                tr.Lista1 = LeerFilas.GetDouble(5);
-                tr.Lista2 = LeerFilas.GetDouble(6);
-                tr.Lista3 = LeerFilas.GetDouble(7);
+                tr.Activo = LeerFilas.GetBoolean(5);
+                tr.StockMinimo = LeerFilas.GetInt32(6);
+                tr.Almacen = LeerFilas.GetInt32(7);
+                tr.Stock = LeerFilas.GetInt32(8);
+                tr.PotencialStock = LeerFilas.GetInt32(9);
+                tr.Pedidos = LeerFilas.GetInt32(10);
+                tr.Requeridos = LeerFilas.GetInt32(11);
+
+
             }
             LeerFilas.Close();
             Conexion.Close();

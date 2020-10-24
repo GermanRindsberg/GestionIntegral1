@@ -77,6 +77,15 @@
             this.btnNvaOT = new System.Windows.Forms.Button();
             this.btnEditarOT = new System.Windows.Forms.Button();
             this.btnBorrarOT = new System.Windows.Forms.Button();
+            this.txtMasAlmacen = new System.Windows.Forms.TextBox();
+            this.btnMasAlmacen = new System.Windows.Forms.Button();
+            this.btnMenosAlmacen = new System.Windows.Forms.Button();
+            this.txtMenosAlmacen = new System.Windows.Forms.TextBox();
+            this.btnMenosStock = new System.Windows.Forms.Button();
+            this.txtMenosStock = new System.Windows.Forms.TextBox();
+            this.btnMasStock = new System.Windows.Forms.Button();
+            this.txtMasStock = new System.Windows.Forms.TextBox();
+            this.lblProducto = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
@@ -364,17 +373,20 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridStock.DefaultCellStyle = dataGridViewCellStyle4;
-            this.gridStock.Location = new System.Drawing.Point(12, 515);
+            this.gridStock.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.gridStock.Location = new System.Drawing.Point(12, 483);
             this.gridStock.Name = "gridStock";
             this.gridStock.RowHeadersVisible = false;
-            this.gridStock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.gridStock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridStock.ShowCellErrors = false;
             this.gridStock.ShowCellToolTips = false;
             this.gridStock.ShowEditingIcon = false;
             this.gridStock.ShowRowErrors = false;
-            this.gridStock.Size = new System.Drawing.Size(1031, 334);
+            this.gridStock.Size = new System.Drawing.Size(1031, 320);
             this.gridStock.TabIndex = 20;
+            this.gridStock.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellClick);
             this.gridStock.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellEndEdit);
+
             // 
             // radioTodosStock
             // 
@@ -481,7 +493,7 @@
             this.groupBox2.Controls.Add(this.radioTodosStock);
             this.groupBox2.Controls.Add(this.radioPendientesStock);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.groupBox2.Location = new System.Drawing.Point(12, 480);
+            this.groupBox2.Location = new System.Drawing.Point(12, 449);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1031, 34);
             this.groupBox2.TabIndex = 30;
@@ -596,12 +608,103 @@
             this.btnBorrarOT.UseVisualStyleBackColor = false;
             this.btnBorrarOT.Click += new System.EventHandler(this.btnBorrarOT_Click);
             // 
+            // txtMasAlmacen
+            // 
+            this.txtMasAlmacen.Location = new System.Drawing.Point(276, 809);
+            this.txtMasAlmacen.Name = "txtMasAlmacen";
+            this.txtMasAlmacen.Size = new System.Drawing.Size(44, 20);
+            this.txtMasAlmacen.TabIndex = 34;
+            this.txtMasAlmacen.Text = "1";
+            // 
+            // btnMasAlmacen
+            // 
+            this.btnMasAlmacen.Location = new System.Drawing.Point(261, 835);
+            this.btnMasAlmacen.Name = "btnMasAlmacen";
+            this.btnMasAlmacen.Size = new System.Drawing.Size(75, 23);
+            this.btnMasAlmacen.TabIndex = 36;
+            this.btnMasAlmacen.Text = "+ Almacen";
+            this.btnMasAlmacen.UseVisualStyleBackColor = true;
+            this.btnMasAlmacen.Click += new System.EventHandler(this.btnMasAlmacen_Click);
+            // 
+            // btnMenosAlmacen
+            // 
+            this.btnMenosAlmacen.Location = new System.Drawing.Point(402, 835);
+            this.btnMenosAlmacen.Name = "btnMenosAlmacen";
+            this.btnMenosAlmacen.Size = new System.Drawing.Size(75, 23);
+            this.btnMenosAlmacen.TabIndex = 38;
+            this.btnMenosAlmacen.Text = "- Almacen";
+            this.btnMenosAlmacen.UseVisualStyleBackColor = true;
+            this.btnMenosAlmacen.Click += new System.EventHandler(this.btnMenosAlmacen_Click);
+            // 
+            // txtMenosAlmacen
+            // 
+            this.txtMenosAlmacen.Location = new System.Drawing.Point(417, 809);
+            this.txtMenosAlmacen.Name = "txtMenosAlmacen";
+            this.txtMenosAlmacen.Size = new System.Drawing.Size(44, 20);
+            this.txtMenosAlmacen.TabIndex = 37;
+            this.txtMenosAlmacen.Text = "1";
+            // 
+            // btnMenosStock
+            // 
+            this.btnMenosStock.Location = new System.Drawing.Point(686, 835);
+            this.btnMenosStock.Name = "btnMenosStock";
+            this.btnMenosStock.Size = new System.Drawing.Size(75, 23);
+            this.btnMenosStock.TabIndex = 42;
+            this.btnMenosStock.Text = "- Stock";
+            this.btnMenosStock.UseVisualStyleBackColor = true;
+            this.btnMenosStock.Click += new System.EventHandler(this.btnMenosStock_Click);
+            // 
+            // txtMenosStock
+            // 
+            this.txtMenosStock.Location = new System.Drawing.Point(701, 809);
+            this.txtMenosStock.Name = "txtMenosStock";
+            this.txtMenosStock.Size = new System.Drawing.Size(44, 20);
+            this.txtMenosStock.TabIndex = 41;
+            this.txtMenosStock.Text = "1";
+            // 
+            // btnMasStock
+            // 
+            this.btnMasStock.Location = new System.Drawing.Point(552, 835);
+            this.btnMasStock.Name = "btnMasStock";
+            this.btnMasStock.Size = new System.Drawing.Size(75, 23);
+            this.btnMasStock.TabIndex = 40;
+            this.btnMasStock.Text = "+ Stock";
+            this.btnMasStock.UseVisualStyleBackColor = true;
+            this.btnMasStock.Click += new System.EventHandler(this.btnMasStock_Click);
+            // 
+            // txtMasStock
+            // 
+            this.txtMasStock.Location = new System.Drawing.Point(567, 809);
+            this.txtMasStock.Name = "txtMasStock";
+            this.txtMasStock.Size = new System.Drawing.Size(44, 20);
+            this.txtMasStock.TabIndex = 39;
+            this.txtMasStock.Text = "1";
+            // 
+            // lblProducto
+            // 
+            this.lblProducto.AutoSize = true;
+            this.lblProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProducto.Location = new System.Drawing.Point(9, 828);
+            this.lblProducto.Name = "lblProducto";
+            this.lblProducto.Size = new System.Drawing.Size(74, 16);
+            this.lblProducto.TabIndex = 43;
+            this.lblProducto.Text = "Producto:";
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1584, 861);
+            this.Controls.Add(this.lblProducto);
+            this.Controls.Add(this.btnMenosStock);
+            this.Controls.Add(this.txtMenosStock);
+            this.Controls.Add(this.btnMasStock);
+            this.Controls.Add(this.txtMasStock);
+            this.Controls.Add(this.btnMenosAlmacen);
+            this.Controls.Add(this.txtMenosAlmacen);
+            this.Controls.Add(this.btnMasAlmacen);
+            this.Controls.Add(this.txtMasAlmacen);
             this.Controls.Add(this.btnBorrarOT);
             this.Controls.Add(this.btnEditarOT);
             this.Controls.Add(this.btnNvaOT);
@@ -692,6 +795,15 @@
         private System.Windows.Forms.Button btnNvaOT;
         private System.Windows.Forms.Button btnEditarOT;
         private System.Windows.Forms.Button btnBorrarOT;
+        private System.Windows.Forms.TextBox txtMasAlmacen;
+        private System.Windows.Forms.Button btnMasAlmacen;
+        private System.Windows.Forms.Button btnMenosAlmacen;
+        private System.Windows.Forms.TextBox txtMenosAlmacen;
+        private System.Windows.Forms.Button btnMenosStock;
+        private System.Windows.Forms.TextBox txtMenosStock;
+        private System.Windows.Forms.Button btnMasStock;
+        private System.Windows.Forms.TextBox txtMasStock;
+        private System.Windows.Forms.Label lblProducto;
     }
 }
 

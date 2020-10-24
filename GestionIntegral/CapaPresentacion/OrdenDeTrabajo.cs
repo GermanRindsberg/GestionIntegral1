@@ -62,12 +62,21 @@ namespace GestionIntegral.CapaPresentacion
                     metDetOT.InsertarDetalleOT(detalle);
                 }
 
-                OrdenDeTrabajos ot = new OrdenDeTrabajos(idDetalleOT, idTaller, fechaEnvio, fechaRetiro, activo);
-                metTO.InsertarOT(ot);
+                if (gridOT.RowCount == 0)
+                {
+                    MessageBox.Show("Debes ingresar algun valor");
+                }
+                else
+                {
+                    OrdenDeTrabajos ot = new OrdenDeTrabajos(idDetalleOT, idTaller, fechaEnvio, fechaRetiro, activo);
+                    metTO.InsertarOT(ot);
 
-                MessageBox.Show("Insertado con exito");
-                limpiarCamposPedido();
-                this.Close();
+                    MessageBox.Show("Insertado con exito");
+                    limpiarCamposPedido();
+                    this.Close();
+                }
+                    
+           
             }
 
             if (operacion == "editar")
@@ -103,18 +112,26 @@ namespace GestionIntegral.CapaPresentacion
                     fechaRetiro = dtFechaRetirado.Value;
                     estado = 0;
                 }
-                poAeditar.IdOT = idOrdenTrabajo;
-                poAeditar.IdTaller = idTaller;
-                poAeditar.Estado = estado;
-                poAeditar.IdDetalleOT = ultimoId;
-                poAeditar.FechaEnvio = fechaEnvio;
-                poAeditar.FechaRetiro = fechaRetiro;
-                poAeditar.Activo = activo;
-                metTO.EditarOT(poAeditar);
-                MessageBox.Show("Editado con exito");
-                limpiarCamposPedido();
-                this.Close();
 
+
+                if (gridOT.RowCount == 0)
+                {
+                    MessageBox.Show("Debes ingresar algun valor");
+                }
+                else
+                {
+                    poAeditar.IdOT = idOrdenTrabajo;
+                    poAeditar.IdTaller = idTaller;
+                    poAeditar.Estado = estado;
+                    poAeditar.IdDetalleOT = ultimoId;
+                    poAeditar.FechaEnvio = fechaEnvio;
+                    poAeditar.FechaRetiro = fechaRetiro;
+                    poAeditar.Activo = activo;
+                    metTO.EditarOT(poAeditar);
+                    MessageBox.Show("Editado con exito");
+                    limpiarCamposPedido();
+                    this.Close();
+                }
                 }
             
         }

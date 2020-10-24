@@ -19,7 +19,6 @@ namespace GestionIntegral.CapaNegocio
         {
             Comando.Connection = Conexion;
             Conexion.Open();
-            
             Comando.CommandText = "InsertarDetallePedido";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
@@ -28,7 +27,6 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@precioUnitario", de.PrecioUnitario);
             Comando.Parameters.AddWithValue("@cantidad", de.Cantidad);
             Comando.Parameters.AddWithValue("@subtotal", de.Subtotal);
-
             Comando.ExecuteNonQuery();
             Conexion.Close();
         }
@@ -87,6 +85,11 @@ namespace GestionIntegral.CapaNegocio
             }
             LeerFilas.Close();
             Conexion.Close();
+            if (ultimoId == 0)
+            {
+                ultimoId = 1;
+
+                    }
             return ultimoId;
         }
 

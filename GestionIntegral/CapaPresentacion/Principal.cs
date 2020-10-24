@@ -24,6 +24,10 @@ namespace GestionIntegral.CapaPresentacion
 
         private int estadoPedido = 1;
 
+        private int banderaGridOtBorrado=0;
+        private int banderaGridOtBorradoPedido = 0;
+        private int idProductoStock;
+
         public Principal()
         {
             InitializeComponent();
@@ -178,24 +182,34 @@ namespace GestionIntegral.CapaPresentacion
 
             date20diasAntes.Value = DateTime.Now.AddDays(-20);
 
-            DiseñoTabla();
+            LlenarGridStock();
             LlenarGrillaResumen();
             radioPendiente.Checked = true;
             actualizarTotalImportes();
             radioPendientesStock.Checked = true;
             LlenarGridOT();
+            devolverPedidosParaStock();
+            devolverRequeridosParaStock();
 
         }
 
         private void Principal_Activated(object sender, EventArgs e)
         {
-            actualizarGridPedidos(1);
+       
             radioPendiente.Checked = true;
-            DiseñoTabla();
+            LlenarGridStock();
             radioFamilia.Checked = true;
             LlenarGrillaResumen();
             actualizarTotalImportes();
-            LlenarGridOT();
+            if (banderaGridOtBorrado != 1)
+            {
+                LlenarGridOT();
+            }
+            if (banderaGridOtBorradoPedido != 1)
+            {
+                actualizarGridPedidos(1);
+            }
+            devolverRequeridosParaStock();
 
         }
 
@@ -314,6 +328,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            banderaGridOtBorradoPedido = 1;
             if (gridListaPedidos.SelectedRows.Count > 0)
             {
                 if (MessageBox.Show("¿Desea eliminar el Pedido? esto puede alterar el stock y balances", "ELIMINAR PEDIDO", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -323,6 +338,7 @@ namespace GestionIntegral.CapaPresentacion
                     metPedido.EliminarPedido(pe) ;
                     MessageBox.Show("Eliminado con exito");
                     actualizarGridPedidos(1);
+                    banderaGridOtBorradoPedido = 0;
                 }
                 else
                     return;
@@ -345,42 +361,44 @@ namespace GestionIntegral.CapaPresentacion
         #region METODOS STOCK
 
      
-        private void DiseñoTabla()
+        private void LlenarGridStock()
         {
-            gridStock.DataSource = metStock.ListarStock();
+           gridStock.DataSource = metStock.ListarStock();
+           gridStock.ClearSelection();
 
-            gridStock.Columns[0].Visible = false;//idProducto
+            gridStock.Columns[0].Visible = false;
+            gridStock.Columns[1].HeaderText = "Descripcion";
+            gridStock.Columns[2].HeaderText = "Almacen";
+            gridStock.Columns[3].HeaderText = "Stock";
+            gridStock.Columns[4].HeaderText = "Stock Potencial";
+            gridStock.Columns[5].HeaderText = "Pedidos";
+            gridStock.Columns[6].HeaderText ="Requeridos";
 
-            devolverPedidosParaStock();
-            devolverRequeridosParaStock();
 
         }
 
         public void devolverPedidosParaStock()
         {
 
-            foreach (DataGridViewRow row in gridStock.Rows)
-            {
-                row.Cells[8].Value = metPedido.DevolverPedidosPendientes(int.Parse(row.Cells[0].Value.ToString()));
-            }
+            
 
         }
 
         public void devolverRequeridosParaStock()//potencial mas stock menos pedidos
         {
-            Pedido pe = new Pedido();
 
             foreach (DataGridViewRow row in gridStock.Rows)
             {
-                int stock = int.Parse( row.Cells[6].Value.ToString());
-                int potencial = int.Parse(row.Cells[7].Value.ToString());
-                int pedidos = int.Parse(row.Cells[8].Value.ToString());
-                int resultado= pedidos-(stock + potencial) ;
-                if (resultado > 0)
-                {
-                    row.Cells[9].Value = resultado;
-                }else
-                    row.Cells[9].Value = 0;
+                //int stock = int.Parse(row.Cells[6].Value.ToString());
+                //int potencial = int.Parse(row.Cells[4].Value.ToString());
+                //int pedidos = int.Parse(row.Cells[3].Value.ToString());
+                //int resultado = pedidos - (stock + potencial);
+                //if (resultado > 0)
+                //{
+                //    row.Cells[5].Value = resultado;
+                //}
+                //else
+                //    row.Cells[5].Value = 0;
 
             }
 
@@ -389,72 +407,19 @@ namespace GestionIntegral.CapaPresentacion
         #endregion
 
         #region EVENTOS STOCK
+     
         private void gridStock_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            int potencial = 0;
-
-            int valor = 0;
-
-            int num = e.ColumnIndex;
-            Stock stock = new Stock();
-            stock.IdProducto = int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString());
-
-            switch (num)
-            {
-                case 1://sumar al almacen
-                    valor = Convert.ToInt32(gridStock.CurrentRow.Cells[1].Value.ToString());
-                  metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[1].Value.ToString()), "almacen", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-
-                    break;
-                case 2://sumar al taller1
-                    valor = Convert.ToInt32(gridStock.CurrentRow.Cells[2].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[2].Value.ToString()), "taller1", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-
-                    break;
-                case 3://sumar al taller2
-                    valor = Convert.ToInt32(gridStock.CurrentRow.Cells[3].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[3].Value.ToString()), "taller2", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-
-                    break;
-                case 4://sumar al taller3
-                    valor = Convert.ToInt32(gridStock.CurrentRow.Cells[4].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[4].Value.ToString()), "taller3", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-
-                    break;
-                case 5://sumar al taller4
-                    valor = Convert.ToInt32(gridStock.CurrentRow.Cells[5].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[5].Value.ToString()), "taller4", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-
-                    break;
-                case 6://sumar al stock
-                    valor = Convert.ToInt32(gridStock.CurrentRow.Cells[6].Value.ToString());
-                    metStock.AgregarStock(int.Parse(gridStock.CurrentRow.Cells[6].Value.ToString()), "stockCant", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-
-                    break;
-
-
-                default:
-                    break;
-            }
-
-            int almacen = Convert.ToInt32(gridStock.CurrentRow.Cells[1].Value.ToString());
-            int taller1 = Convert.ToInt32(gridStock.CurrentRow.Cells[2].Value.ToString());
-            int taller2 = Convert.ToInt32(gridStock.CurrentRow.Cells[3].Value.ToString());
-            int taller3 = Convert.ToInt32(gridStock.CurrentRow.Cells[4].Value.ToString());
-            int taller4 = Convert.ToInt32(gridStock.CurrentRow.Cells[5].Value.ToString());
-
-            potencial = almacen + taller1 + taller2 + taller3 + taller4;
-
-            gridStock.CurrentRow.Cells[7].Value = potencial;
-            metStock.AgregarStock(Convert.ToInt32(gridStock.CurrentRow.Cells[7].Value.ToString()), "potencialStock", int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString()));
-            devolverRequeridosParaStock();
+        
 
         }
 
         #endregion
+        
+       
 
         #region METODOS RESUMEN VENTAS
-       
+
         private void LlenarGrillaResumen()
         {
             if (radioFamilia.Checked==true)
@@ -540,6 +505,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnBorrarOT_Click(object sender, EventArgs e)
         {
+            banderaGridOtBorrado = 1;
             if (gridOT.SelectedRows.Count > 0)
             {
                 if (MessageBox.Show("¿Desea eliminar esta orden de trabajo? ", "ELIMINAR ORDEN DE TRABAJO", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -549,6 +515,7 @@ namespace GestionIntegral.CapaPresentacion
                     metOT.EliminarOT(ot);
                     MessageBox.Show("Eliminado con exito");
                     LlenarGridOT();
+                    banderaGridOtBorrado = 0;
                 }
                 else
                     return;
@@ -557,6 +524,75 @@ namespace GestionIntegral.CapaPresentacion
                 MessageBox.Show("Debe seleccionar una fila");
 
         }
+
+        private void btnMasAlmacen_Click(object sender, EventArgs e)
+        {
+            if (lblProducto.Text != "Producto:")
+            {
+                if (txtMasAlmacen.Text != "")
+                {
+                    metStock.AgregarStock(int.Parse(txtMasAlmacen.Text), "almacen", idProductoStock);
+                    LlenarGridStock();
+                }
+            }
+            else
+                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
+        }
+
+        private void gridStock_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+          
+                idProductoStock = int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString());
+                lblProducto.Text = "Producto: " + gridStock.CurrentRow.Cells[1].Value.ToString();
+           
+        }
+
+        private void btnMenosAlmacen_Click(object sender, EventArgs e)
+        {
+            if (lblProducto.Text != "Producto:")
+            {
+                if (txtMenosAlmacen.Text != "")
+                {
+                    metStock.RestarStock(int.Parse(txtMenosAlmacen.Text), "almacen", idProductoStock);
+                    LlenarGridStock();
+                    
+                }
+            }
+            else
+                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
+           
+        }
+
+        private void btnMasStock_Click(object sender, EventArgs e)
+        {
+
+            if (lblProducto.Text != "Producto:")
+            {
+                if (txtMasStock.Text != "")
+                {
+                    metStock.AgregarStock(int.Parse(txtMasStock.Text), "stock", idProductoStock);
+                    LlenarGridStock();
+                }
+            }
+            else
+                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
+        }
+
+        private void btnMenosStock_Click(object sender, EventArgs e)
+        {
+            if (lblProducto.Text != "Producto:")
+            {
+                if (txtMenosStock.Text != "")
+                {
+                    metStock.RestarStock(int.Parse(txtMenosStock.Text), "stock", idProductoStock);
+                    LlenarGridStock();
+                }
+            }
+            else
+                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
+        }
+
+        
     }
 }
 

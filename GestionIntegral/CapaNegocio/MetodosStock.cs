@@ -22,12 +22,13 @@ namespace GestionIntegral.CapaNegocio
 
             Comando.Connection = Conexion;
             Conexion.Open();
-            Comando.CommandText = "ListarStock";
+            Comando.CommandText = "StockRead";
             Comando.CommandType = CommandType.StoredProcedure;
             leerFilas = Comando.ExecuteReader();
             Tabla.Load(leerFilas);
             leerFilas.Close();
             Conexion.Close();
+
             return Tabla;
 
         }
@@ -50,19 +51,36 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Close();
         }
 
-        public void AgregarStock(int valor, string columna, int idProducto)
+        public void AgregarStock(int cantidad, string nombreColumna, int idProducto)
         {
             Comando.Connection = Conexion;
             Conexion.Open();
-            Comando.CommandText = "agregarStockAlmacen";
+            Comando.CommandText = "StockCreate";
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
-            Comando.Parameters.AddWithValue("@cantidad", valor);
-            Comando.Parameters.AddWithValue("@columna", columna);
+            Comando.Parameters.AddWithValue("@cantidad", cantidad);
+            Comando.Parameters.AddWithValue("@nombreColumna", nombreColumna);
             Comando.Parameters.AddWithValue("@idProducto", idProducto);
             Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
             Conexion.Close();
+
+        }
+
+        public void RestarStock(int cantidad, string nombreColumna, int idProducto)
+        {
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.CommandText = "StockDescontar";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@cantidad", cantidad);
+            Comando.Parameters.AddWithValue("@nombreColumna", nombreColumna);
+            Comando.Parameters.AddWithValue("@idProducto", idProducto);
+            Comando.ExecuteNonQuery();
+            Comando.Parameters.Clear();
+            Conexion.Close();
+
         }
     }
 }
