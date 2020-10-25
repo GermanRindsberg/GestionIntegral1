@@ -47,8 +47,11 @@
             this.txtTizada = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtLista1 = new System.Windows.Forms.TextBox();
+            this.txtDescripcionFamilia = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAgregarFamilia = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbDiseño = new System.Windows.Forms.ComboBox();
             this.txtLista2 = new System.Windows.Forms.TextBox();
@@ -56,12 +59,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtDescripcionFamilia = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtDescripcionDiseño = new System.Windows.Forms.TextBox();
             this.btnBorrar = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridProducto)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -201,7 +201,7 @@
             this.txtLista3.Location = new System.Drawing.Point(251, 137);
             this.txtLista3.Name = "txtLista3";
             this.txtLista3.Size = new System.Drawing.Size(108, 26);
-            this.txtLista3.TabIndex = 37;
+            this.txtLista3.TabIndex = 35;
             // 
             // btnBorrarFamilia
             // 
@@ -236,14 +236,14 @@
             this.txtPapel.Location = new System.Drawing.Point(251, 183);
             this.txtPapel.Name = "txtPapel";
             this.txtPapel.Size = new System.Drawing.Size(108, 26);
-            this.txtPapel.TabIndex = 33;
+            this.txtPapel.TabIndex = 38;
             // 
             // txtTela
             // 
             this.txtTela.Location = new System.Drawing.Point(134, 183);
             this.txtTela.Name = "txtTela";
             this.txtTela.Size = new System.Drawing.Size(108, 26);
-            this.txtTela.TabIndex = 33;
+            this.txtTela.TabIndex = 37;
             // 
             // label9
             // 
@@ -261,14 +261,14 @@
             this.txtTizada.Location = new System.Drawing.Point(11, 183);
             this.txtTizada.Name = "txtTizada";
             this.txtTizada.Size = new System.Drawing.Size(108, 26);
-            this.txtTizada.TabIndex = 33;
+            this.txtTizada.TabIndex = 36;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(289, 165);
+            this.label7.Location = new System.Drawing.Point(283, 165);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(44, 15);
             this.label7.TabIndex = 34;
@@ -280,6 +280,14 @@
             this.txtLista1.Name = "txtLista1";
             this.txtLista1.Size = new System.Drawing.Size(108, 26);
             this.txtLista1.TabIndex = 33;
+            // 
+            // txtDescripcionFamilia
+            // 
+            this.txtDescripcionFamilia.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtDescripcionFamilia.Location = new System.Drawing.Point(10, 91);
+            this.txtDescripcionFamilia.Name = "txtDescripcionFamilia";
+            this.txtDescripcionFamilia.Size = new System.Drawing.Size(349, 26);
+            this.txtDescripcionFamilia.TabIndex = 2;
             // 
             // label2
             // 
@@ -306,6 +314,28 @@
             this.btnAgregarFamilia.UseVisualStyleBackColor = false;
             this.btnAgregarFamilia.Click += new System.EventHandler(this.btnAgregarFamilia_Click_1);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.label11.ForeColor = System.Drawing.Color.Black;
+            this.label11.Location = new System.Drawing.Point(11, 288);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(151, 15);
+            this.label11.TabIndex = 34;
+            this.label11.Text = "Descripcion de familia";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.label10.ForeColor = System.Drawing.Color.Black;
+            this.label10.Location = new System.Drawing.Point(11, 73);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(151, 15);
+            this.label10.TabIndex = 34;
+            this.label10.Text = "Descripcion de familia";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -331,7 +361,7 @@
             this.txtLista2.Location = new System.Drawing.Point(134, 137);
             this.txtLista2.Name = "txtLista2";
             this.txtLista2.Size = new System.Drawing.Size(108, 26);
-            this.txtLista2.TabIndex = 35;
+            this.txtLista2.TabIndex = 34;
             // 
             // cbFamilia
             // 
@@ -375,14 +405,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Familia producto";
             // 
-            // txtDescripcionFamilia
-            // 
-            this.txtDescripcionFamilia.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtDescripcionFamilia.Location = new System.Drawing.Point(10, 91);
-            this.txtDescripcionFamilia.Name = "txtDescripcionFamilia";
-            this.txtDescripcionFamilia.Size = new System.Drawing.Size(349, 26);
-            this.txtDescripcionFamilia.TabIndex = 2;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -400,7 +422,7 @@
             this.txtDescripcionDiseño.Location = new System.Drawing.Point(9, 306);
             this.txtDescripcionDiseño.Name = "txtDescripcionDiseño";
             this.txtDescripcionDiseño.Size = new System.Drawing.Size(200, 26);
-            this.txtDescripcionDiseño.TabIndex = 41;
+            this.txtDescripcionDiseño.TabIndex = 39;
             // 
             // btnBorrar
             // 
@@ -413,28 +435,6 @@
             this.btnBorrar.Text = "Borrar Producto";
             this.btnBorrar.UseVisualStyleBackColor = false;
             this.btnBorrar.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(11, 73);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(151, 15);
-            this.label10.TabIndex = 34;
-            this.label10.Text = "Descripcion de familia";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(11, 288);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(151, 15);
-            this.label11.TabIndex = 34;
-            this.label11.Text = "Descripcion de familia";
             // 
             // Productos
             // 

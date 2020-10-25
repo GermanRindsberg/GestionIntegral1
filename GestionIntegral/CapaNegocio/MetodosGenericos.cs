@@ -1,4 +1,5 @@
 ﻿using GestionIntegral.CapaDatos;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -188,6 +189,27 @@ namespace GestionIntegral.CapaNegocio
 
         }
 
+        public Boolean BuscarActivo(string nombreTabla)
+        {
+            Boolean activo=false;
+            Comando.Connection = Conexion;
+            Conexion.Open();
+            Comando.CommandText = "BuscarActivo";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
+            LeerFilas = Comando.ExecuteReader();
+            
+            while (LeerFilas.Read())
+            {
+                activo = LeerFilas.GetBoolean(0);
+
+            }
+            LeerFilas.Close();
+            Conexion.Close();
+            return activo;
+
+        }
 
 
     }

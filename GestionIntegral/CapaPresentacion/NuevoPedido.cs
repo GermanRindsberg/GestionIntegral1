@@ -29,6 +29,7 @@ namespace GestionIntegral.CapaPresentacion
         MetodosProductos metProductos = new MetodosProductos();
         MetodosCliente metCliente = new MetodosCliente();
         MetodosPedido metPedido = new MetodosPedido();
+        MetodosFamilia metFam = new MetodosFamilia();
 
         public int idPedido;
         public string operacion = "insertar";
@@ -502,22 +503,23 @@ namespace GestionIntegral.CapaPresentacion
 
                detalleProducto = cbProducto.Text;
                idProducto =Convert.ToInt32( cbProducto.SelectedValue.ToString());
+               
             
                 Producto pro = metProductos.CrearProducto(idProducto);
+                Familia fam = metFam.CrearFamilia(pro.IdFamilia);
                 
-
 
                 if (tipoListaColumna == "lista1")
                 {
-                    txtPrecioLista.Text = pro.Lista1.ToString();
+                    txtPrecioLista.Text = fam.Lista1.ToString();
                 }
                 if (tipoListaColumna == "lista2")
                 {
-                    txtPrecioLista.Text = pro.Lista2.ToString();
+                    txtPrecioLista.Text = fam.Lista2.ToString();
                 }
                 if (tipoListaColumna == "lista3")
                 {
-                    txtPrecioLista.Text = pro.Lista3.ToString();
+                    txtPrecioLista.Text = fam.Lista3.ToString();
                 }
 
                 txtCant.Text= "1";

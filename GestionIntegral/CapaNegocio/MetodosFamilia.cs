@@ -43,7 +43,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.Clear();
             Comando.CommandText = "FamiliaDelete";
             Comando.CommandType = CommandType.StoredProcedure;
-            Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
+            Comando.Parameters.AddWithValue("@id", tr.IdFamilia);
             Comando.ExecuteNonQuery();
          
             Conexion.Close();
@@ -86,12 +86,12 @@ namespace GestionIntegral.CapaNegocio
                 {
                     IdFamilia = LeerFilas.GetInt32(0),
                     DescripcionFamilia = LeerFilas.GetString(1),
-                    Lista1 = LeerFilas.GetInt32(2),
-                    Lista2 = LeerFilas.GetInt32(3),
-                    Lista3 = LeerFilas.GetInt32(4),
+                    Lista1 = LeerFilas.GetDecimal(2),
+                    Lista2 = LeerFilas.GetDecimal(3),
+                    Lista3 = LeerFilas.GetDecimal(4),
                     Tizada = LeerFilas.GetInt32(5),
-                    Papel = LeerFilas.GetInt32(6),
-                    Tela = LeerFilas.GetInt32(7),
+                    Papel = LeerFilas.GetDecimal(6),
+                    Tela = LeerFilas.GetDecimal(7),
                     Activo = LeerFilas.GetBoolean(8)
 
                 }); ;
@@ -118,17 +118,43 @@ namespace GestionIntegral.CapaNegocio
             {
                 tr.IdFamilia = LeerFilas.GetInt32(0);
                 tr.DescripcionFamilia = LeerFilas.GetString(1);
-                tr.Lista1= LeerFilas.GetInt32(2);
-                tr.Lista2 = LeerFilas.GetInt32(3);
-                tr.Lista3 = LeerFilas.GetInt32(4);
+                tr.Lista1= LeerFilas.GetDecimal(2);
+                tr.Lista2 = LeerFilas.GetDecimal(3);
+                tr.Lista3 = LeerFilas.GetDecimal(4);
                 tr.Tizada = LeerFilas.GetInt32(5);
-                tr.Papel = LeerFilas.GetFloat(6);
-                tr.Tela = LeerFilas.GetFloat(7);
+                tr.Papel = LeerFilas.GetDecimal(6);
+                tr.Tela = LeerFilas.GetDecimal(7);
                 tr.Activo = LeerFilas.GetBoolean(8);
             }
             LeerFilas.Close();
             Conexion.Close();
             return tr;
+        }
+
+        public Boolean BuscarRepetidosFamilia(string valorAbuscar)
+        {
+            DataTable Tabla = new DataTable();
+            Comando.Connection = Conexion;
+
+            Conexion.Open();
+            Comando.CommandText = "BuscarExistenciaFamilia";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@valorAbuscar", valorAbuscar);
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            if (Tabla.Rows.Count > 0)
+            {
+                Conexion.Close();
+                return true;
+            }
+            else
+            {
+                Conexion.Close();
+                return false;
+            }
+
+
         }
 
     }

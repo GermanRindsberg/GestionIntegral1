@@ -83,13 +83,19 @@ namespace GestionIntegral.CapaNegocio
                     IdDiseño = LeerFilas.GetInt32(2),
                     ValorUnico = LeerFilas.GetInt32(3),
                     DescripcionProducto = LeerFilas.GetString(4),
-                    Activo = LeerFilas.GetBoolean(5),
-                    StockMinimo= LeerFilas.GetInt32(6),
-                    Almacen = LeerFilas.GetInt32(7),
-                    Stock = LeerFilas.GetInt32(8),
-                    PotencialStock = LeerFilas.GetInt32(9),
-                    Pedidos = LeerFilas.GetInt32(10),
-                    Requeridos = LeerFilas.GetInt32(11)
+                    
+                    Almacen= LeerFilas.GetInt32(5),
+                    Taller1 = LeerFilas.GetInt32(6),
+                    Taller2 = LeerFilas.GetInt32(7),
+                    Taller3 = LeerFilas.GetInt32(8),
+                    Taller4 = LeerFilas.GetInt32(9),
+                    StockMinimo = LeerFilas.GetInt32(10),
+                    Stock = LeerFilas.GetInt32(11),
+                    PotencialStock = LeerFilas.GetInt32(12),
+                    Pedidos = LeerFilas.GetInt32(13),
+                    Requeridos = LeerFilas.GetInt32(14),
+                    Activo = LeerFilas.GetBoolean(15)
+
                 }); ;
             }
             LeerFilas.Close();
@@ -133,6 +139,31 @@ namespace GestionIntegral.CapaNegocio
             return tr;
         }
 
+        public Boolean BuscarRepetidosProducto(string valorAbuscar)
+        {
+            DataTable Tabla = new DataTable();
+            Comando.Connection = Conexion;
+
+            Conexion.Open();
+            Comando.CommandText = "BuscarExistenciaProducto";
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@valorAbuscar", valorAbuscar);
+            LeerFilas = Comando.ExecuteReader();
+            Tabla.Load(LeerFilas);
+            if (Tabla.Rows.Count > 0)
+            {
+                Conexion.Close();
+                return true;
+            }
+            else
+            {
+                Conexion.Close();
+                return false;
+            }
+
+
+        }
 
 
     }

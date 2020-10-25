@@ -89,6 +89,9 @@ namespace GestionIntegral.CapaDatos
             IdProducto = idProducto;
         }
 
+        //contructor vacio para tabla de pedidos
+        public Producto() { }
+
        
     }
 }

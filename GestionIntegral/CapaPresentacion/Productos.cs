@@ -57,6 +57,7 @@ namespace GestionIntegral.CapaPresentacion
         {
             cbDiseño.Text = "Seleccione un valor";
             txtDescripcionDiseño.Text = "";
+
             cbFamilia.Text = "Seleccione un valor";
             txtDescripcionFamilia.Text = "";
             
@@ -68,22 +69,45 @@ namespace GestionIntegral.CapaPresentacion
             txtPapel.Text = "";
         }
 
+        private void limpiarCamposFamilia() 
+        {
+            txtDescripcionFamilia.Text = "";
+            txtLista1.Text = "";
+            txtLista2.Text = "";
+            txtLista3.Text = "";
+            txtTizada.Text = "";
+            txtTela.Text = "";
+            txtPapel.Text = "";
+
+        }
+
+        private void limpiarCamposDiseño() {
+
+            txtDescripcionDiseño.Text = "";
+
+        }
+
         private void ListarProductosEnGrid(string condicion)
         {
             gridProducto.DataSource = mpro.ListarProducto(condicion);
             diseñoTabla();
         }
 
-        private Boolean encuentraValorUnico()
+        private Boolean encuentraValorUnicoFamilia(string valorAbuscar)
         {
-            foreach (DataGridViewRow row in gridProducto.Rows)
-            {
-                if (Convert.ToInt32( row.Cells["valorUnico"].Value.ToString()) == idUnico){ 
-                    MessageBox.Show("El producto ya ha sido ingresado");
-                    return true;
-                }
-            }
-                return false;
+            Boolean existe = mfa.BuscarRepetidosFamilia(valorAbuscar);
+            return existe;
+        }
+
+        private Boolean encuentraValorUnicoProducto(string valorAbuscar)
+        {
+            Boolean existe = mpro.BuscarRepetidosProducto(valorAbuscar);
+            return existe;
+        }
+
+        private Boolean verificarActivo(string nombreTabla)
+        {
+            return mg.BuscarActivo(nombreTabla);
         }
 
         #endregion
@@ -103,90 +127,109 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnAgregarFamilia_Click_1(object sender, EventArgs e)
         {
-            Boolean existe = true;
+            Boolean existe = encuentraValorUnicoFamilia(txtDescripcionFamilia.Text);//busco si existe la familia
+            Boolean activo = verificarActivo("Familia");
 
-            foreach (var item in cbFamilia.Items)
+            //si la operacion es insertar y el producto no existe en la bbdd
+            if (operacion == "insertar" && existe == false)
             {
-                if (cbFamilia.Text==txtDescripcionFamilia.Text)
+                //valido que los txtbox importantes no queden vacios
+                if (txtDescripcionFamilia.Text == "" || txtLista1.Text == "" || txtLista2.Text == "" || txtLista3.Text == "")
                 {
-                    MessageBox.Show("El producto ya existe");
-                    existe = true;
-                    break;
+                    MessageBox.Show("Debes rellenar todos los campos");
                 }
+                //inserto
                 else
                 {
-                    existe = false;
+                    //creo las variables para llenar el constructor a de la familia a insertar
+                    string descripcionFamilia = txtDescripcionFamilia.Text;
+                    Decimal lista1 = Decimal.Parse((txtLista1.Text).Replace(".", ","));
+                    Decimal lista2 = Decimal.Parse((txtLista2.Text).Replace(".", ","));
+                    Decimal lista3 = Decimal.Parse((txtLista3.Text).Replace(".", ","));
+                    int tizada = int.Parse(txtTizada.Text);
+                    Decimal papel = Decimal.Parse((txtPapel.Text).Replace(".", ","));
+                    Decimal tela = Decimal.Parse((txtTela.Text).Replace(".", ","));
+                    //creo el objeto familia
+                    Familia fam = new Familia(descripcionFamilia, lista1, lista2, lista3, tizada, papel, tela);
+                    //inserto el objeto con el metodo insertar
+                    mfa.InsertarFamilia(fam);
+                    MessageBox.Show("Familia creada con exito");
+                    ListarFamiliaEnComboBox();
+                    ListarProductosEnGrid("");
+
                 }
             }
-           
-            if (operacion == "insertar")
+
+
+
+
+            //si la operacion es insertar y si existe la familia en la bbdd
+            else if (operacion == "insertar" && existe == true)
             {
-                if (existe == false)
+                //si la familia existe y esta inactiva
+                if (activo == false)
                 {
+                    //creo las variables para llenar el constructor a de la familia a editar
+                    string descripcionFamilia = txtDescripcionFamilia.Text;
+                    Decimal lista1 = Decimal.Parse((txtLista1.Text).Replace(".", ","));
+                    Decimal lista2 = Decimal.Parse((txtLista2.Text).Replace(".", ","));
+                    Decimal lista3 = Decimal.Parse((txtLista3.Text).Replace(".", ","));
+                    int tizada = int.Parse(txtTizada.Text);
+                    Decimal papel = Decimal.Parse((txtPapel.Text).Replace(".", ","));
+                    Decimal tela = Decimal.Parse((txtTela.Text).Replace(".", ","));
+                    Boolean activar = true;
+                    //creo el objeto familia
+                    Familia fam = new Familia(idFamilia, descripcionFamilia, lista1, lista2, lista3, tizada, papel, tela, activar);
+                    //edito el objeto con el metodo editar
+                    mfa.EditarFamilia(fam);
+                    MessageBox.Show("Editado con exito");
 
-                    if (txtDescripcionFamilia.Text == ""|| txtLista1.Text == "" || txtLista2.Text == "" || txtLista3.Text == "")
-                    {
-                        MessageBox.Show("Debes rellenar todos los campos");
-                    }
-
-                    else
-                    {
-                        //creo las variables para llenar el constructor a de la familia a insertar
-                        string descripcionFamilia = txtDescripcionFamilia.Text;
-                        float lista1 = float.Parse(txtLista1.Text);
-                        float lista2 = float.Parse(txtLista1.Text);
-                        float lista3 = float.Parse(txtLista1.Text);
-                        int tizada = int.Parse(txtTizada.Text);
-                        int papel = int.Parse(txtPapel.Text);
-                        int tela = int.Parse(txtTela.Text);
-                        //creo el objeto familia
-                        Familia fam = new Familia(descripcionFamilia, lista1, lista2, lista3, tizada, papel, tela);
-                        //inserto el objeto con el metodo insertar
-                        mfa.InsertarFamilia(fam);
-
-                        ListarFamiliaEnComboBox();
-                        ListarProductosEnGrid("");
-
-                    }
+                    ListarFamiliaEnComboBox();
+                    ListarProductosEnGrid("");
                 }
+                //si esta activo solo editar
+                else
+                {
+                    MessageBox.Show("El producto ya existe, seleccionelo y despues edite");
+
+
+                }
+
+
             }
-            else
+
+            else if (operacion == "editar")
             {
-                if (existe == false)
+                if (txtDescripcionFamilia.Text == "")
                 {
-
-                    if (txtDescripcionFamilia.Text == "")
-                    {
-                        MessageBox.Show("Debes rellenar todos los campos");
-                    }
-
-                    else
-                    {
-                        //creo las variables para llenar el constructor a de la familia a insertar
-                        
-                        string descripcionFamilia = txtDescripcionFamilia.Text;
-                        float lista1 = float.Parse(txtLista1.Text);
-                        float lista2 = float.Parse(txtLista1.Text);
-                        float lista3 = float.Parse(txtLista1.Text);
-                        int tizada = int.Parse(txtTizada.Text);
-                        int papel = int.Parse(txtPapel.Text);
-                        int tela = int.Parse(txtTela.Text);
-                        Boolean activo = true;
-                        //creo el objeto familia
-                        Familia fam = new Familia(idFamilia, descripcionFamilia, lista1, lista2, lista3, tizada, papel, tela, activo);
-                        //edito el objeto con el metodo insertar
-                        mfa.EditarFamilia(fam);
-
-                        ListarFamiliaEnComboBox();
-                        ListarProductosEnGrid("");
-
-                    }
+                    MessageBox.Show("Debes rellenar todos los campos");
                 }
 
+                else
+                {
+                    //creo las variables para llenar el constructor a de la familia a insertar
+                    string descripcionFamilia = txtDescripcionFamilia.Text;
+                    Decimal lista1 = Decimal.Parse((txtLista1.Text).Replace(".", ","));
+                    Decimal lista2 = Decimal.Parse((txtLista2.Text).Replace(".", ","));
+                    Decimal lista3 = Decimal.Parse((txtLista3.Text).Replace(".", ","));
+                    int tizada = int.Parse(txtTizada.Text);
+                    Decimal papel = Decimal.Parse((txtPapel.Text).Replace(".", ","));
+                    Decimal tela = Decimal.Parse((txtTela.Text).Replace(".", ","));
+                    Boolean activado = true;
+                    //creo el objeto familia
+                    Familia fam = new Familia(idFamilia, descripcionFamilia, lista1, lista2, lista3, tizada, papel, tela, activado);
+                    //edito el objeto con el metodo insertar
+                    mfa.EditarFamilia(fam);
+                    MessageBox.Show("Editado con exito");
+
+                    ListarFamiliaEnComboBox();
+                    ListarProductosEnGrid("");
+
+                }
             }
 
         }
-
+    
         private void btnAgregarDiseño_Click_1(object sender, EventArgs e)
         {
             Boolean existe = true;
@@ -231,6 +274,7 @@ namespace GestionIntegral.CapaPresentacion
             {
                 if (cbFamilia.SelectedIndex > 0 && cbFamilia.Text != default)
                 {
+                    operacion = "editar";
                     idFamilia = Convert.ToInt32(cbFamilia.SelectedValue.ToString());
 
                     Familia fa = mfa.CrearFamilia(idFamilia);
@@ -243,6 +287,13 @@ namespace GestionIntegral.CapaPresentacion
                     txtPapel.Text = fa.Papel.ToString();
                     txtTela.Text = fa.Tela.ToString();
                 }
+             
+
+            }
+            if (cbFamilia.Text == "Seleccione un valor")
+            {
+                limpiarCamposFamilia();
+                operacion = "insertar";
             }
         }
         
@@ -250,12 +301,18 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbDiseño.SelectedIndex > 0 && cbDiseño.Text != default)
             {
+                operacion = "editar";
                 idDiseño = Convert.ToInt32(cbDiseño.SelectedValue.ToString());
 
                 Diseño di = mDi.CrearDiseño(idDiseño);
 
                 txtDescripcionDiseño.Text = di.DescripcionDiseño;
-           
+
+            }
+            if (cbDiseño.Text == "Seleccione un valor")
+            {
+                operacion = "insertar";
+                limpiarCamposDiseño();
             }
         }
 
@@ -301,7 +358,7 @@ namespace GestionIntegral.CapaPresentacion
             if (operacion == "insertar")
             {
                 //valido que el valor unico no se repita con el metodo encuentravalorunico
-                if (encuentraValorUnico() == false)
+                if (encuentraValorUnicoProducto(idUnico.ToString()) == false)
                 {
                     //valido que tenga seleccionado una familia y un diseño
                     if (txtDescripcionFamilia.Text!="" && txtDescripcionDiseño.Text!="")
@@ -338,7 +395,6 @@ namespace GestionIntegral.CapaPresentacion
                 ListarProductosEnGrid("");
 
             }
-         
 
         }
 

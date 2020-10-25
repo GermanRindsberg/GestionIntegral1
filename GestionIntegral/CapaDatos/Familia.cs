@@ -11,26 +11,26 @@ namespace GestionIntegral.CapaDatos
        
         int idFamilia;
         string descripcionFamilia;
-        float lista1;
-        float lista2;
-        float lista3;
+        decimal lista1;
+        decimal lista2;
+        decimal lista3;
         int tizada;
-        float papel;
-        float tela;
+        decimal papel;
+        decimal tela;
         bool activo;
 
         public int IdFamilia { get => idFamilia; set => idFamilia = value; }
         public string DescripcionFamilia { get => descripcionFamilia; set => descripcionFamilia = value; }
-        public float Lista1 { get => lista1; set => lista1 = value; }
-        public float Lista2 { get => lista2; set => lista2 = value; }
-        public float Lista3 { get => lista3; set => lista3 = value; }
+        public decimal Lista1 { get => lista1; set => lista1 = value; }
+        public decimal Lista2 { get => lista2; set => lista2 = value; }
+        public decimal Lista3 { get => lista3; set => lista3 = value; }
         public int Tizada { get => tizada; set => tizada = value; }
-        public float Papel { get => papel; set => papel = value; }
-        public float Tela { get => tela; set => tela = value; }
+        public decimal Papel { get => papel; set => papel = value; }
+        public decimal Tela { get => tela; set => tela = value; }
         public bool Activo { get => activo; set => activo = value; }
 
         //constructor para insertar
-        public Familia(string descripcionFamilia, float lista1, float lista2, float lista3, int tizada, float papel, float tela)
+        public Familia(string descripcionFamilia, decimal lista1, decimal lista2, decimal lista3, int tizada, decimal papel, decimal tela)
         {
             DescripcionFamilia = descripcionFamilia;
             Lista1 = lista1;
@@ -42,8 +42,7 @@ namespace GestionIntegral.CapaDatos
         }
        
         //constructor para editar
-        public Familia(int idFamilia, string descripcionFamilia, float lista1, float lista2,
-            float lista3, int tizada, float papel, float tela, bool activo)
+        public Familia(int idFamilia, string descripcionFamilia, decimal lista1, decimal lista2, decimal lista3, int tizada, decimal papel, decimal tela, bool activo)
         {
             IdFamilia = idFamilia;
             DescripcionFamilia = descripcionFamilia;
