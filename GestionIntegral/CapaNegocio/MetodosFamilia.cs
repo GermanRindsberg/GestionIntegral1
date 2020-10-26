@@ -60,7 +60,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionFamilia);
             Comando.Parameters.AddWithValue("@lista1", tr.Lista1);
             Comando.Parameters.AddWithValue("@lista2", tr.Lista2);
-            Comando.Parameters.AddWithValue("@lista3", tr.Lista2);
+            Comando.Parameters.AddWithValue("@lista3", tr.Lista3);
             Comando.Parameters.AddWithValue("@tizada", tr.Tizada);
             Comando.Parameters.AddWithValue("@papel", tr.Papel);
             Comando.Parameters.AddWithValue("@tela", tr.Tela);

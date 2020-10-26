@@ -43,7 +43,7 @@ namespace GestionIntegral.CapaDatos
         public bool Activo { get => activo; set => activo = value; }
 
         //constructor para insertar
-        public Producto(int idDiseño, int idFamilia, int valorUnico, string descripcionProducto, int almacen, int taller1, int taller2, int taller3, int taller4, int stockMinimo, int stock, int potencialStock, int pedidos, int requeridos, bool activo)
+        public Producto(int idDiseño,  int valorUnico, int idFamilia, string descripcionProducto, int almacen, int taller1, int taller2, int taller3, int taller4, int stockMinimo, int stock, int potencialStock, int pedidos, int requeridos, bool activo)
         {
             
             this.idDiseño = idDiseño;
@@ -64,7 +64,9 @@ namespace GestionIntegral.CapaDatos
         }
         
         //constructor para editar
-        public Producto(int idProducto, int idDiseño, int idFamilia, int valorUnico, string descripcionProducto, int almacen, int taller1, int taller2, int taller3, int taller4, int stockMinimo, int stock, int potencialStock, int pedidos, int requeridos, bool activo) : this(idProducto)
+        public Producto(int idProducto, int idDiseño,  int valorUnico, int idFamilia, string descripcionProducto, int almacen,
+            int taller1, int taller2, int taller3, int taller4, int stockMinimo, int stock, int potencialStock, int pedidos,
+            int requeridos, bool activo)
         {
             IdDiseño = idDiseño;
             IdFamilia = idFamilia;

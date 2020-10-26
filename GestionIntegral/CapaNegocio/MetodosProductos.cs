@@ -26,7 +26,16 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.Parameters.AddWithValue("@valorUnico", tr.ValorUnico);
             Comando.Parameters.AddWithValue("@descripcionProducto", tr.DescripcionProducto);
-     
+            Comando.Parameters.AddWithValue("@almacen", tr.Almacen);
+            Comando.Parameters.AddWithValue("@taller1", tr.Taller1);
+            Comando.Parameters.AddWithValue("@taller2", tr.Taller2);
+            Comando.Parameters.AddWithValue("@taller3", tr.Taller3);
+            Comando.Parameters.AddWithValue("@taller4", tr.Taller4);
+            Comando.Parameters.AddWithValue("@stockMinimo", tr.StockMinimo);
+            Comando.Parameters.AddWithValue("@stock", tr.Stock);
+            Comando.Parameters.AddWithValue("@potencialStock", tr.PotencialStock);
+            Comando.Parameters.AddWithValue("@pedidos", tr.Pedidos);
+            Comando.Parameters.AddWithValue("@requeridos", tr.Requeridos);
             Comando.ExecuteNonQuery();
             Conexion.Close();
         }
@@ -55,15 +64,27 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idFamilia", tr.IdFamilia);
             Comando.Parameters.AddWithValue("@valorUnico", tr.ValorUnico);
             Comando.Parameters.AddWithValue("@descripcionProducto", tr.DescripcionProducto);
+            Comando.Parameters.AddWithValue("@almacen", tr.Almacen);
+            Comando.Parameters.AddWithValue("@taller1", tr.Taller1);
+            Comando.Parameters.AddWithValue("@taller2", tr.Taller2);
+            Comando.Parameters.AddWithValue("@taller3", tr.Taller3);
+            Comando.Parameters.AddWithValue("@taller4", tr.Taller4);
+            Comando.Parameters.AddWithValue("@stockMinimo", tr.StockMinimo);
+            Comando.Parameters.AddWithValue("@stock", tr.Stock);
+            Comando.Parameters.AddWithValue("@potencialStock", tr.PotencialStock);
+            Comando.Parameters.AddWithValue("@pedidos", tr.Pedidos);
+            Comando.Parameters.AddWithValue("@requeridos", tr.Requeridos);
             Comando.Parameters.AddWithValue("@idProducto", tr.IdProducto);
+            Comando.Parameters.AddWithValue("@activo", tr.Activo);
             Comando.ExecuteNonQuery();
      
             Conexion.Close();
 
         }
 
-        public List<Producto> ListarProducto(string condicion)
+        public DataTable ListarProducto(string condicion)
         {
+            DataTable Tabla = new DataTable();
             Comando.Connection = Conexion;
             Comando.CommandText = "ProductoRead";
             Comando.CommandType = CommandType.StoredProcedure;
@@ -72,35 +93,11 @@ namespace GestionIntegral.CapaNegocio
 
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
-            List<Producto> ListaGenerica = new List<Producto>();
-         
-            while (LeerFilas.Read())
-            {
-                ListaGenerica.Add(new Producto
-                {
-                    IdProducto = LeerFilas.GetInt32(0),
-                    IdFamilia = LeerFilas.GetInt32(1),
-                    IdDiseño = LeerFilas.GetInt32(2),
-                    ValorUnico = LeerFilas.GetInt32(3),
-                    DescripcionProducto = LeerFilas.GetString(4),
-                    
-                    Almacen= LeerFilas.GetInt32(5),
-                    Taller1 = LeerFilas.GetInt32(6),
-                    Taller2 = LeerFilas.GetInt32(7),
-                    Taller3 = LeerFilas.GetInt32(8),
-                    Taller4 = LeerFilas.GetInt32(9),
-                    StockMinimo = LeerFilas.GetInt32(10),
-                    Stock = LeerFilas.GetInt32(11),
-                    PotencialStock = LeerFilas.GetInt32(12),
-                    Pedidos = LeerFilas.GetInt32(13),
-                    Requeridos = LeerFilas.GetInt32(14),
-                    Activo = LeerFilas.GetBoolean(15)
-
-                }); ;
-            }
+            Tabla.Load(LeerFilas);
             LeerFilas.Close();
             Conexion.Close();
-            return ListaGenerica;
+            return Tabla;
+
         }
 
         public Producto CrearProducto(int id)

@@ -25,6 +25,8 @@ namespace GestionIntegral.CapaPresentacion
 
 
         string operacion = "insertar";
+        string operacionDiseño = "insertar";
+        string operacionProducto = "insertar";
 
         public Productos()
         {
@@ -46,11 +48,36 @@ namespace GestionIntegral.CapaPresentacion
 
         private void diseñoTabla()
         {
-            gridProducto.Columns[0].Visible = false;
-            gridProducto.Columns[1].Visible = false;
-            gridProducto.Columns[2].Visible = false;
-            gridProducto.Columns[3].Visible = false;
-            gridProducto.Columns[8].Visible = false;
+            gridProducto.Columns[0].Visible = false;//idProducto
+            gridProducto.Columns[1].Visible = false;//idFamilia
+            gridProducto.Columns[2].Visible = false;//idDIseño
+            gridProducto.Columns[3].Visible = false;//Valor unico
+            //gridProducto.Columns[4].Visible = false;//descripcion producto
+            gridProducto.Columns[5].Visible = false;//almacen
+            gridProducto.Columns[6].Visible = false;//taller1
+            gridProducto.Columns[7].Visible = false;//taller2
+            gridProducto.Columns[8].Visible = false;//taller3
+            gridProducto.Columns[9].Visible = false;//taller4
+            gridProducto.Columns[10].Visible = false;//stockMinimo
+            gridProducto.Columns[11].Visible = false;//stock
+            gridProducto.Columns[12].Visible = false;//potencialstock
+            gridProducto.Columns[13].Visible = false;//pedidos
+            gridProducto.Columns[14].Visible = false;//requeridos
+            gridProducto.Columns[15].Visible = false;//activoProducto
+            gridProducto.Columns[16].Visible = false;//idFamilia
+            gridProducto.Columns[17].Visible = false;//descripcionFamilia
+            //gridProducto.Columns[18].Visible = false;//Lista1
+            //gridProducto.Columns[19].Visible = false;//lista2
+            //gridProducto.Columns[20].Visible = false;//lista3
+            //gridProducto.Columns[21].Visible = false;//tizada
+            //gridProducto.Columns[22].Visible = false;//papel
+            //gridProducto.Columns[23].Visible = false;//tela
+            gridProducto.Columns[24].Visible = false;//activoFamilia
+
+
+
+
+
         }
 
         private void limpiarCampos()
@@ -160,9 +187,6 @@ namespace GestionIntegral.CapaPresentacion
                 }
             }
 
-
-
-
             //si la operacion es insertar y si existe la familia en la bbdd
             else if (operacion == "insertar" && existe == true)
             {
@@ -249,7 +273,7 @@ namespace GestionIntegral.CapaPresentacion
                 }
             }
 
-            if (existe == false)
+            if (existe == false && operacionDiseño == "insertar")
             {
                 if (txtDescripcionDiseño.Text == "")
                 {
@@ -264,6 +288,30 @@ namespace GestionIntegral.CapaPresentacion
                     ListarDiseñoEnComboBox();
                     ListarProductosEnGrid("");
                 }
+            }
+           
+            else if (operacionDiseño == "editar")
+            {
+                if (txtDescripcionDiseño.Text == "")
+                {
+                    MessageBox.Show("Debes rellenar todos los campos");
+                }
+
+                else
+                {
+                    //creo las variables para llenar el constructor a del diseño a editar
+                    string descripcionDiseño = txtDescripcionDiseño.Text;
+                    //creo el objeto diseño
+                    Diseño dis = new Diseño(idDiseño, descripcionDiseño);
+                    //edito el objeto con el metodo insertar
+                    mDi.EditarDiseño(dis);
+                    MessageBox.Show("Editado con exito");
+
+                    ListarDiseñoEnComboBox();
+                    ListarProductosEnGrid("");
+
+                }
+
             }
 
         }
@@ -301,7 +349,7 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbDiseño.SelectedIndex > 0 && cbDiseño.Text != default)
             {
-                operacion = "editar";
+                operacionDiseño = "editar";
                 idDiseño = Convert.ToInt32(cbDiseño.SelectedValue.ToString());
 
                 Diseño di = mDi.CrearDiseño(idDiseño);
@@ -330,11 +378,9 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (gridProducto.SelectedRows.Count > 0)
             { 
-                cbFamilia.SelectedValue=Convert.ToInt32( gridProducto.CurrentRow.Cells[3].Value.ToString());
-                cbDiseño.SelectedValue = Convert.ToInt32(gridProducto.CurrentRow.Cells[1].Value.ToString());
-                txtLista1.Text = gridProducto.CurrentRow.Cells[5].Value.ToString();
-                txtLista2.Text = gridProducto.CurrentRow.Cells[6].Value.ToString();
-                txtLista3.Text = gridProducto.CurrentRow.Cells[7].Value.ToString();
+                cbFamilia.SelectedValue=Convert.ToInt32( gridProducto.CurrentRow.Cells[1].Value.ToString());
+                cbDiseño.SelectedValue = Convert.ToInt32(gridProducto.CurrentRow.Cells[2].Value.ToString());
+                operacionProducto = "editar";
                 operacion = "editar";
             }
             
@@ -355,7 +401,7 @@ namespace GestionIntegral.CapaPresentacion
             string descripcionProducto = txtDescripcionFamilia.Text + " " + txtDescripcionDiseño.Text;
             
             //valido que la operacion sea insertar
-            if (operacion == "insertar")
+            if (operacionProducto == "insertar")
             {
                 //valido que el valor unico no se repita con el metodo encuentravalorunico
                 if (encuentraValorUnicoProducto(idUnico.ToString()) == false)
@@ -383,7 +429,7 @@ namespace GestionIntegral.CapaPresentacion
                 }
             }
             //edito
-            if (operacion == "editar")
+            if (operacionProducto == "editar")
             {
                 int idProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
                 Producto producto = new Producto(idProducto, idDiseño, idUnico, idFamilia, descripcionProducto, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true);

@@ -22,9 +22,9 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "DiseñoCreate";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionDiseño);
             Comando.ExecuteNonQuery();
-            Comando.Parameters.Clear();
             Conexion.Close();
         }
 
@@ -47,6 +47,8 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "DiseñoUpdate";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@idDiseño", tr.IdDiseño);
             Comando.Parameters.AddWithValue("@descripcion", tr.DescripcionDiseño);
             Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();

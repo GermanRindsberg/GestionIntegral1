@@ -27,6 +27,11 @@ namespace GestionIntegral.CapaDatos
 
         }
 
+        public Diseño(int idDiseño, string descripcionDiseño) : this(idDiseño)
+        {
+            DescripcionDiseño = descripcionDiseño;
+        }
+
         public Diseño(int idDiseño)
         {
             IdDiseño = idDiseño;
