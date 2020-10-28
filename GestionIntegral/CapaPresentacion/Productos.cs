@@ -21,6 +21,7 @@ namespace GestionIntegral.CapaPresentacion
         int idFamilia;
         int idDiseño;
         int idUnico;
+        int idProducto;
 
 
 
@@ -94,6 +95,7 @@ namespace GestionIntegral.CapaPresentacion
             txtTizada.Text = "";
             txtTela.Text = "";
             txtPapel.Text = "";
+            txtStockMinimo.Text = "";
         }
 
         private void limpiarCamposFamilia() 
@@ -380,10 +382,12 @@ namespace GestionIntegral.CapaPresentacion
             { 
                 cbFamilia.SelectedValue=Convert.ToInt32( gridProducto.CurrentRow.Cells[1].Value.ToString());
                 cbDiseño.SelectedValue = Convert.ToInt32(gridProducto.CurrentRow.Cells[2].Value.ToString());
+                txtStockMinimo.Text = gridProducto.CurrentRow.Cells[10].Value.ToString();
+                idProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
                 operacionProducto = "editar";
                 operacion = "editar";
+                
             }
-            
         }
 
         private void txtBuscar_KeyUp_1(object sender, KeyEventArgs e)
@@ -399,6 +403,8 @@ namespace GestionIntegral.CapaPresentacion
             
             //genero una descripcion del producto ejemplo mochila bananas
             string descripcionProducto = txtDescripcionFamilia.Text + " " + txtDescripcionDiseño.Text;
+
+            int stockMinimo = int.Parse(txtStockMinimo.Text);
             
             //valido que la operacion sea insertar
             if (operacionProducto == "insertar")
@@ -410,7 +416,7 @@ namespace GestionIntegral.CapaPresentacion
                     if (txtDescripcionFamilia.Text!="" && txtDescripcionDiseño.Text!="")
                     {
                         //creo un producto con todos los datos 
-                        Producto producto = new Producto(idDiseño, idUnico, idFamilia, descripcionProducto, 0,0,0,0,0,0,0,0,0,0,true);
+                        Producto producto = new Producto(idDiseño, idUnico, idFamilia, descripcionProducto, 0,0,0,0,0,stockMinimo,0,0,0,0,true);
                         //inserto el producto
                         mpro.InsertarProducto(producto);
                         MessageBox.Show("Datos Insertados con exito" );
@@ -431,8 +437,7 @@ namespace GestionIntegral.CapaPresentacion
             //edito
             if (operacionProducto == "editar")
             {
-                int idProducto = int.Parse(gridProducto.CurrentRow.Cells[0].Value.ToString());
-                Producto producto = new Producto(idProducto, idDiseño, idUnico, idFamilia, descripcionProducto, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true);
+                Producto producto = new Producto(idProducto, idDiseño, idUnico, idFamilia, descripcionProducto, 0, 0, 0, 0, 0, stockMinimo, 0, 0, 0, 0, true);
 
                 mpro.EditarProducto(producto);
 

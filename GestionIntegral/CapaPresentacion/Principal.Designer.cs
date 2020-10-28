@@ -37,6 +37,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +47,6 @@
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transportesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.productosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.talleresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordenesDeTrabajoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.gridListaPedidos = new System.Windows.Forms.DataGridView();
@@ -77,15 +78,7 @@
             this.btnNvaOT = new System.Windows.Forms.Button();
             this.btnEditarOT = new System.Windows.Forms.Button();
             this.btnBorrarOT = new System.Windows.Forms.Button();
-            this.txtMasAlmacen = new System.Windows.Forms.TextBox();
-            this.btnMasAlmacen = new System.Windows.Forms.Button();
-            this.btnMenosAlmacen = new System.Windows.Forms.Button();
-            this.txtMenosAlmacen = new System.Windows.Forms.TextBox();
-            this.btnMenosStock = new System.Windows.Forms.Button();
-            this.txtMenosStock = new System.Windows.Forms.TextBox();
-            this.btnMasStock = new System.Windows.Forms.Button();
-            this.txtMasStock = new System.Windows.Forms.TextBox();
-            this.lblProducto = new System.Windows.Forms.Label();
+            this.gridDetalleOT = new System.Windows.Forms.DataGridView();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
@@ -94,6 +87,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridDetalleOT)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -105,7 +99,6 @@
             this.clientesToolStripMenuItem,
             this.transportesToolStripMenuItem1,
             this.productosToolStripMenuItem,
-            this.talleresToolStripMenuItem,
             this.ordenesDeTrabajoToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -164,15 +157,6 @@
             this.productosToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
-            // 
-            // talleresToolStripMenuItem
-            // 
-            this.talleresToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.talleresToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.talleresToolStripMenuItem.Name = "talleresToolStripMenuItem";
-            this.talleresToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
-            this.talleresToolStripMenuItem.Text = "Talleres";
-            this.talleresToolStripMenuItem.Click += new System.EventHandler(this.talleresToolStripMenuItem_Click);
             // 
             // ordenesDeTrabajoToolStripMenuItem
             // 
@@ -354,8 +338,11 @@
             // gridStock
             // 
             this.gridStock.AllowUserToAddRows = false;
+            this.gridStock.AllowUserToDeleteRows = false;
             this.gridStock.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridStock.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.gridStock.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.gridStock.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
@@ -374,6 +361,7 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridStock.DefaultCellStyle = dataGridViewCellStyle4;
             this.gridStock.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.gridStock.EnableHeadersVisualStyles = false;
             this.gridStock.Location = new System.Drawing.Point(12, 483);
             this.gridStock.Name = "gridStock";
             this.gridStock.RowHeadersVisible = false;
@@ -382,11 +370,9 @@
             this.gridStock.ShowCellToolTips = false;
             this.gridStock.ShowEditingIcon = false;
             this.gridStock.ShowRowErrors = false;
-            this.gridStock.Size = new System.Drawing.Size(1031, 320);
+            this.gridStock.Size = new System.Drawing.Size(1031, 366);
             this.gridStock.TabIndex = 20;
-            this.gridStock.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellClick);
             this.gridStock.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellEndEdit);
-
             // 
             // radioTodosStock
             // 
@@ -495,7 +481,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
             this.groupBox2.Location = new System.Drawing.Point(12, 449);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1031, 34);
+            this.groupBox2.Size = new System.Drawing.Size(885, 34);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Disponibilidad";
@@ -505,9 +491,9 @@
             this.groupBox3.Controls.Add(this.radioProcesoOT);
             this.groupBox3.Controls.Add(this.radioRetirado);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.groupBox3.Location = new System.Drawing.Point(1071, 407);
+            this.groupBox3.Location = new System.Drawing.Point(1071, 416);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(501, 65);
+            this.groupBox3.Size = new System.Drawing.Size(495, 65);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ordenes de trabajo";
@@ -563,7 +549,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridOT.DefaultCellStyle = dataGridViewCellStyle8;
             this.gridOT.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridOT.Location = new System.Drawing.Point(1071, 480);
+            this.gridOT.Location = new System.Drawing.Point(1071, 483);
             this.gridOT.Name = "gridOT";
             this.gridOT.RowHeadersVisible = false;
             this.gridOT.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -571,13 +557,14 @@
             this.gridOT.ShowCellToolTips = false;
             this.gridOT.ShowEditingIcon = false;
             this.gridOT.ShowRowErrors = false;
-            this.gridOT.Size = new System.Drawing.Size(501, 333);
+            this.gridOT.Size = new System.Drawing.Size(201, 333);
             this.gridOT.TabIndex = 30;
+            this.gridOT.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridOT_CellClick);
             // 
             // btnNvaOT
             // 
             this.btnNvaOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnNvaOT.Location = new System.Drawing.Point(1071, 819);
+            this.btnNvaOT.Location = new System.Drawing.Point(1071, 822);
             this.btnNvaOT.Name = "btnNvaOT";
             this.btnNvaOT.Size = new System.Drawing.Size(130, 42);
             this.btnNvaOT.TabIndex = 29;
@@ -588,7 +575,7 @@
             // btnEditarOT
             // 
             this.btnEditarOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnEditarOT.Location = new System.Drawing.Point(1256, 819);
+            this.btnEditarOT.Location = new System.Drawing.Point(1253, 822);
             this.btnEditarOT.Name = "btnEditarOT";
             this.btnEditarOT.Size = new System.Drawing.Size(130, 42);
             this.btnEditarOT.TabIndex = 32;
@@ -600,7 +587,7 @@
             // 
             this.btnBorrarOT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnBorrarOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnBorrarOT.Location = new System.Drawing.Point(1441, 819);
+            this.btnBorrarOT.Location = new System.Drawing.Point(1435, 822);
             this.btnBorrarOT.Name = "btnBorrarOT";
             this.btnBorrarOT.Size = new System.Drawing.Size(130, 42);
             this.btnBorrarOT.TabIndex = 33;
@@ -608,87 +595,39 @@
             this.btnBorrarOT.UseVisualStyleBackColor = false;
             this.btnBorrarOT.Click += new System.EventHandler(this.btnBorrarOT_Click);
             // 
-            // txtMasAlmacen
+            // gridDetalleOT
             // 
-            this.txtMasAlmacen.Location = new System.Drawing.Point(276, 809);
-            this.txtMasAlmacen.Name = "txtMasAlmacen";
-            this.txtMasAlmacen.Size = new System.Drawing.Size(44, 20);
-            this.txtMasAlmacen.TabIndex = 34;
-            this.txtMasAlmacen.Text = "1";
-            // 
-            // btnMasAlmacen
-            // 
-            this.btnMasAlmacen.Location = new System.Drawing.Point(261, 835);
-            this.btnMasAlmacen.Name = "btnMasAlmacen";
-            this.btnMasAlmacen.Size = new System.Drawing.Size(75, 23);
-            this.btnMasAlmacen.TabIndex = 36;
-            this.btnMasAlmacen.Text = "+ Almacen";
-            this.btnMasAlmacen.UseVisualStyleBackColor = true;
-            this.btnMasAlmacen.Click += new System.EventHandler(this.btnMasAlmacen_Click);
-            // 
-            // btnMenosAlmacen
-            // 
-            this.btnMenosAlmacen.Location = new System.Drawing.Point(402, 835);
-            this.btnMenosAlmacen.Name = "btnMenosAlmacen";
-            this.btnMenosAlmacen.Size = new System.Drawing.Size(75, 23);
-            this.btnMenosAlmacen.TabIndex = 38;
-            this.btnMenosAlmacen.Text = "- Almacen";
-            this.btnMenosAlmacen.UseVisualStyleBackColor = true;
-            this.btnMenosAlmacen.Click += new System.EventHandler(this.btnMenosAlmacen_Click);
-            // 
-            // txtMenosAlmacen
-            // 
-            this.txtMenosAlmacen.Location = new System.Drawing.Point(417, 809);
-            this.txtMenosAlmacen.Name = "txtMenosAlmacen";
-            this.txtMenosAlmacen.Size = new System.Drawing.Size(44, 20);
-            this.txtMenosAlmacen.TabIndex = 37;
-            this.txtMenosAlmacen.Text = "1";
-            // 
-            // btnMenosStock
-            // 
-            this.btnMenosStock.Location = new System.Drawing.Point(686, 835);
-            this.btnMenosStock.Name = "btnMenosStock";
-            this.btnMenosStock.Size = new System.Drawing.Size(75, 23);
-            this.btnMenosStock.TabIndex = 42;
-            this.btnMenosStock.Text = "- Stock";
-            this.btnMenosStock.UseVisualStyleBackColor = true;
-            this.btnMenosStock.Click += new System.EventHandler(this.btnMenosStock_Click);
-            // 
-            // txtMenosStock
-            // 
-            this.txtMenosStock.Location = new System.Drawing.Point(701, 809);
-            this.txtMenosStock.Name = "txtMenosStock";
-            this.txtMenosStock.Size = new System.Drawing.Size(44, 20);
-            this.txtMenosStock.TabIndex = 41;
-            this.txtMenosStock.Text = "1";
-            // 
-            // btnMasStock
-            // 
-            this.btnMasStock.Location = new System.Drawing.Point(552, 835);
-            this.btnMasStock.Name = "btnMasStock";
-            this.btnMasStock.Size = new System.Drawing.Size(75, 23);
-            this.btnMasStock.TabIndex = 40;
-            this.btnMasStock.Text = "+ Stock";
-            this.btnMasStock.UseVisualStyleBackColor = true;
-            this.btnMasStock.Click += new System.EventHandler(this.btnMasStock_Click);
-            // 
-            // txtMasStock
-            // 
-            this.txtMasStock.Location = new System.Drawing.Point(567, 809);
-            this.txtMasStock.Name = "txtMasStock";
-            this.txtMasStock.Size = new System.Drawing.Size(44, 20);
-            this.txtMasStock.TabIndex = 39;
-            this.txtMasStock.Text = "1";
-            // 
-            // lblProducto
-            // 
-            this.lblProducto.AutoSize = true;
-            this.lblProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProducto.Location = new System.Drawing.Point(9, 828);
-            this.lblProducto.Name = "lblProducto";
-            this.lblProducto.Size = new System.Drawing.Size(74, 16);
-            this.lblProducto.TabIndex = 43;
-            this.lblProducto.Text = "Producto:";
+            this.gridDetalleOT.AllowUserToAddRows = false;
+            this.gridDetalleOT.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridDetalleOT.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridDetalleOT.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.gridDetalleOT.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridDetalleOT.DefaultCellStyle = dataGridViewCellStyle10;
+            this.gridDetalleOT.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.gridDetalleOT.Location = new System.Drawing.Point(1278, 483);
+            this.gridDetalleOT.Name = "gridDetalleOT";
+            this.gridDetalleOT.RowHeadersVisible = false;
+            this.gridDetalleOT.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridDetalleOT.ShowCellErrors = false;
+            this.gridDetalleOT.ShowCellToolTips = false;
+            this.gridDetalleOT.ShowEditingIcon = false;
+            this.gridDetalleOT.ShowRowErrors = false;
+            this.gridDetalleOT.Size = new System.Drawing.Size(288, 333);
+            this.gridDetalleOT.TabIndex = 30;
             // 
             // Principal
             // 
@@ -696,19 +635,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1584, 861);
-            this.Controls.Add(this.lblProducto);
-            this.Controls.Add(this.btnMenosStock);
-            this.Controls.Add(this.txtMenosStock);
-            this.Controls.Add(this.btnMasStock);
-            this.Controls.Add(this.txtMasStock);
-            this.Controls.Add(this.btnMenosAlmacen);
-            this.Controls.Add(this.txtMenosAlmacen);
-            this.Controls.Add(this.btnMasAlmacen);
-            this.Controls.Add(this.txtMasAlmacen);
             this.Controls.Add(this.btnBorrarOT);
             this.Controls.Add(this.btnEditarOT);
             this.Controls.Add(this.btnNvaOT);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.gridDetalleOT);
             this.Controls.Add(this.gridOT);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -749,6 +680,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridDetalleOT)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -786,7 +718,6 @@
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transportesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem productosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem talleresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordenesDeTrabajoToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioProcesoOT;
@@ -795,15 +726,7 @@
         private System.Windows.Forms.Button btnNvaOT;
         private System.Windows.Forms.Button btnEditarOT;
         private System.Windows.Forms.Button btnBorrarOT;
-        private System.Windows.Forms.TextBox txtMasAlmacen;
-        private System.Windows.Forms.Button btnMasAlmacen;
-        private System.Windows.Forms.Button btnMenosAlmacen;
-        private System.Windows.Forms.TextBox txtMenosAlmacen;
-        private System.Windows.Forms.Button btnMenosStock;
-        private System.Windows.Forms.TextBox txtMenosStock;
-        private System.Windows.Forms.Button btnMasStock;
-        private System.Windows.Forms.TextBox txtMasStock;
-        private System.Windows.Forms.Label lblProducto;
+        private System.Windows.Forms.DataGridView gridDetalleOT;
     }
 }
 

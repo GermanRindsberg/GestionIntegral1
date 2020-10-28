@@ -31,7 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnNuevosTaller = new System.Windows.Forms.Button();
             this.cbTaller = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnMenosCantidad = new System.Windows.Forms.Button();
@@ -65,30 +64,20 @@
             this.label7.TabIndex = 80;
             this.label7.Text = "Fecha de envio a taller";
             // 
-            // btnNuevosTaller
-            // 
-            this.btnNuevosTaller.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnNuevosTaller.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnNuevosTaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
-            this.btnNuevosTaller.ForeColor = System.Drawing.Color.Black;
-            this.btnNuevosTaller.Location = new System.Drawing.Point(324, 61);
-            this.btnNuevosTaller.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
-            this.btnNuevosTaller.Name = "btnNuevosTaller";
-            this.btnNuevosTaller.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnNuevosTaller.Size = new System.Drawing.Size(33, 27);
-            this.btnNuevosTaller.TabIndex = 84;
-            this.btnNuevosTaller.Text = "+";
-            this.btnNuevosTaller.UseVisualStyleBackColor = true;
-            this.btnNuevosTaller.Click += new System.EventHandler(this.btnNuevosTaller_Click);
-            // 
             // cbTaller
             // 
             this.cbTaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.cbTaller.FormattingEnabled = true;
+            this.cbTaller.Items.AddRange(new object[] {
+            "Taller 1",
+            "Taller 2",
+            "Taller 3",
+            "Taller 4"});
             this.cbTaller.Location = new System.Drawing.Point(10, 64);
             this.cbTaller.Name = "cbTaller";
             this.cbTaller.Size = new System.Drawing.Size(310, 24);
             this.cbTaller.TabIndex = 83;
+            this.cbTaller.Text = "Seleccione un valor";
             this.cbTaller.SelectedIndexChanged += new System.EventHandler(this.cbTaller_SelectedIndexChanged);
             // 
             // label1
@@ -344,7 +333,6 @@
             this.Controls.Add(this.txtCant);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.btnNuevosTaller);
             this.Controls.Add(this.cbTaller);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label7);
@@ -364,7 +352,6 @@
 
         #endregion
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btnNuevosTaller;
         private System.Windows.Forms.ComboBox cbTaller;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnMenosCantidad;

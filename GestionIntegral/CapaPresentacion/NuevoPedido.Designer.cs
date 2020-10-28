@@ -65,13 +65,13 @@
             this.cbProducto = new System.Windows.Forms.ComboBox();
             this.lblTotal = new System.Windows.Forms.Label();
             this.btnSumarProducto = new System.Windows.Forms.Button();
-            this.gridPedidoNuevo = new System.Windows.Forms.DataGridView();
             this.txtCant = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.dtFechaPedido = new System.Windows.Forms.DateTimePicker();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGenerarPedido = new System.Windows.Forms.Button();
+            this.gridPedidoNuevo = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -525,35 +525,6 @@
             this.btnSumarProducto.Click += new System.EventHandler(this.btnSumarProducto_Click);
             this.btnSumarProducto.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnSumarProducto_MouseClick);
             // 
-            // gridPedidoNuevo
-            // 
-            this.gridPedidoNuevo.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            this.gridPedidoNuevo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.gridPedidoNuevo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridPedidoNuevo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridPedidoNuevo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.gridPedidoNuevo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridPedidoNuevo.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridPedidoNuevo.Location = new System.Drawing.Point(9, 189);
-            this.gridPedidoNuevo.Name = "gridPedidoNuevo";
-            this.gridPedidoNuevo.RowHeadersVisible = false;
-            this.gridPedidoNuevo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.gridPedidoNuevo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPedidoNuevo.ShowCellErrors = false;
-            this.gridPedidoNuevo.ShowCellToolTips = false;
-            this.gridPedidoNuevo.ShowEditingIcon = false;
-            this.gridPedidoNuevo.ShowRowErrors = false;
-            this.gridPedidoNuevo.Size = new System.Drawing.Size(441, 260);
-            this.gridPedidoNuevo.TabIndex = 41;
-            // 
             // txtCant
             // 
             this.txtCant.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
@@ -619,6 +590,35 @@
             this.btnGenerarPedido.UseVisualStyleBackColor = true;
             this.btnGenerarPedido.Click += new System.EventHandler(this.btnGenerarPedido_Click);
             // 
+            // gridPedidoNuevo
+            // 
+            this.gridPedidoNuevo.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.gridPedidoNuevo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.gridPedidoNuevo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPedidoNuevo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridPedidoNuevo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.gridPedidoNuevo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPedidoNuevo.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.gridPedidoNuevo.Location = new System.Drawing.Point(9, 189);
+            this.gridPedidoNuevo.Name = "gridPedidoNuevo";
+            this.gridPedidoNuevo.RowHeadersVisible = false;
+            this.gridPedidoNuevo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.gridPedidoNuevo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPedidoNuevo.ShowCellErrors = false;
+            this.gridPedidoNuevo.ShowCellToolTips = false;
+            this.gridPedidoNuevo.ShowEditingIcon = false;
+            this.gridPedidoNuevo.ShowRowErrors = false;
+            this.gridPedidoNuevo.Size = new System.Drawing.Size(441, 260);
+            this.gridPedidoNuevo.TabIndex = 41;
+            // 
             // NuevoPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -658,7 +658,6 @@
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Button btnGenerarPedido;
         private System.Windows.Forms.Button btnSumarProducto;
-        private System.Windows.Forms.DataGridView gridPedidoNuevo;
         private System.Windows.Forms.TextBox txtCant;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label17;
@@ -689,5 +688,6 @@
         private System.Windows.Forms.Button btnNuevosCliente;
         private System.Windows.Forms.CheckBox checkEnviado;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView gridPedidoNuevo;
     }
 }

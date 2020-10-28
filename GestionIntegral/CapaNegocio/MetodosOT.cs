@@ -22,7 +22,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idDetalleOT", or.IdDetalleOT);
-            Comando.Parameters.AddWithValue("@idTaller", or.IdTaller);
+            Comando.Parameters.AddWithValue("@nombreTaller", or.NombreTaller);
             Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
             if (or.FechaRetiro == null)
             {
@@ -45,7 +45,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idOT", or.IdOT);
             Comando.Parameters.AddWithValue("@idDetalleOT", or.IdDetalleOT);
-            Comando.Parameters.AddWithValue("@idTaller", or.IdTaller);
+            Comando.Parameters.AddWithValue("@nombreTaller", or.NombreTaller);
             Comando.Parameters.AddWithValue("@fechaIngreso", or.FechaEnvio);
             if (or.FechaRetiro == null)
             {
@@ -76,7 +76,7 @@ namespace GestionIntegral.CapaNegocio
 
         public OrdenDeTrabajos CrearOT(int id)
         {
-            OrdenDeTrabajos or = new OrdenDeTrabajos();
+            OrdenDeTrabajos or = new OrdenDeTrabajos(id);
 
             Comando.Connection = Conexion;
             Conexion.Open();
@@ -89,7 +89,7 @@ namespace GestionIntegral.CapaNegocio
             {
                 or.IdOT = LeerFilas.GetInt32(0);
                 or.IdDetalleOT = LeerFilas.GetInt32(1);
-                or.IdTaller = LeerFilas.GetInt32(2);
+                or.NombreTaller = LeerFilas.GetString(2);
                 or.FechaEnvio = LeerFilas.GetDateTime(3);
                 if (!LeerFilas.IsDBNull(4))
                 {

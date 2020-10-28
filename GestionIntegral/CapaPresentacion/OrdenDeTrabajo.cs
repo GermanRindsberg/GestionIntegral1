@@ -19,7 +19,7 @@ namespace GestionIntegral.CapaPresentacion
         int idProducto;
         string detalleProducto;//cuando selecciona el comboBox producto trae a esta variable el texto
         int ultimoId;//id para crear el ultimo idDetallePedido y agregarle datos
-        int idTaller;
+        string nombreTaller;
         DateTime fechaEnvio;
         DateTime? fechaRetiro;
         int estado;
@@ -68,7 +68,7 @@ namespace GestionIntegral.CapaPresentacion
                 }
                 else
                 {
-                    OrdenDeTrabajos ot = new OrdenDeTrabajos(idDetalleOT, idTaller, fechaEnvio, fechaRetiro, activo);
+                    OrdenDeTrabajos ot = new OrdenDeTrabajos(idDetalleOT, nombreTaller, fechaEnvio, fechaRetiro, activo, 1);
                     metTO.InsertarOT(ot);
 
                     MessageBox.Show("Insertado con exito");
@@ -89,8 +89,6 @@ namespace GestionIntegral.CapaPresentacion
 
                 //elimino el detallePedido para luego insertar uno nuevo, debo investigar para editarlo y no tener que borrarlo
                 metDetOT.EliminarDetalleOt(otAborrar.IdDetalleOT);//borro el detalle anterior para agregar uno nuevo
-                
-
                 ultimoId = metDetOT.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
 
                 foreach (DataGridViewRow row in gridOT.Rows)
@@ -121,7 +119,7 @@ namespace GestionIntegral.CapaPresentacion
                 else
                 {
                     poAeditar.IdOT = idOrdenTrabajo;
-                    poAeditar.IdTaller = idTaller;
+                    poAeditar.NombreTaller = nombreTaller;
                     poAeditar.Estado = estado;
                     poAeditar.IdDetalleOT = ultimoId;
                     poAeditar.FechaEnvio = fechaEnvio;
@@ -141,12 +139,6 @@ namespace GestionIntegral.CapaPresentacion
             this.Close();
         }
 
-        private void btnNuevosTaller_Click(object sender, EventArgs e)
-        {
-            Talleres ta = new Talleres();
-            ta.ShowDialog();
-        }
-
         private void btnAgregarProductoNuevo_Click(object sender, EventArgs e)
         {
             Productos pr = new Productos();
@@ -155,20 +147,20 @@ namespace GestionIntegral.CapaPresentacion
 
         private void OrdenDeTrabajo_Load(object sender, EventArgs e)
         {
-            ListarTalleresEnComboBox();
+      
             ListarProductosEnComboBox();
             ta.CrearTablaOt(0);
             if (gridOT.Rows.Count > 0)
             {
                 gridOT.Columns[0].Visible = false;
             }
+            
             gridOT.ClearSelection();
 
 
 
             if (operacion == "editar")
             {
-                ListarTalleresEnComboBox(); //cargo combobox de Talleres
                 ListarProductosEnComboBox();//cargo combobox de productos
 
                 #region CREO Y TRAIGO DATOS DE OT
@@ -180,7 +172,7 @@ namespace GestionIntegral.CapaPresentacion
                 
                 dateHoy.Value = oT.FechaEnvio;
 
-                cbTaller.SelectedValue = oT.IdTaller;
+                cbTaller.SelectedItem = oT.NombreTaller;//falta esto
 
                 //creo la tabla
                 int idTablaOT = oT.IdDetalleOT;
@@ -235,11 +227,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void OrdenDeTrabajo_Activated(object sender, EventArgs e)
         {
-            if (int.Parse(cbTaller.SelectedValue.ToString()) == 0)
-            {
-                ListarTalleresEnComboBox();
-                
-            }
+        
             ListarProductosEnComboBox();
 
         }
@@ -252,8 +240,7 @@ namespace GestionIntegral.CapaPresentacion
         
         private void cbTaller_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cbTaller.SelectedIndex>0)
-            idTaller = int.Parse(cbTaller.SelectedValue.ToString());
+            nombreTaller = cbTaller.SelectedItem.ToString();
         }
         #endregion
 
@@ -266,11 +253,7 @@ namespace GestionIntegral.CapaPresentacion
             txtCant.Text = "";
     }
    
-        private void ListarTalleresEnComboBox()
-        {
-            mg.LlenarComboBox(cbTaller, "Talleres");
-        }
-        
+ 
         private void ElegirProducto()
         {
             if (cbProducto.SelectedIndex > 0)

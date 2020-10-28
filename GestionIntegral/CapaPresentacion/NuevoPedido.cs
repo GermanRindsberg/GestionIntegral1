@@ -51,6 +51,7 @@ namespace GestionIntegral.CapaPresentacion
                 ListarProductosEnComboBox();
                 ListarTransporteEncomboBox();
                 CrearidDetallePedido();
+                Refresh();
             }
 
             if (operacion == "editar")
@@ -62,12 +63,14 @@ namespace GestionIntegral.CapaPresentacion
                 #region CREO Y TRAIGO DATOS DE PEDIDO
 
                 Pedido pedido = metPedido.CrearPedido(idPedido);
+
                 dtFechaPedido.Value = pedido.Fecha;
                 cbCliente.SelectedValue = pedido.IdCliente;
-                //creo la tabla
 
-                ta.CrearTabla(pedido.IdDetallePedido);
-                gridPedidoNuevo.DataSource = ta.Tabla;
+                //creo la tabla
+             
+                gridPedidoNuevo.DataSource = ta.CrearTabla(pedido.IdDetallePedido);
+
                 gridPedidoNuevo.Columns[0].Visible = false;
                 
                 lblTotal.Text = pedido.Total.ToString();//le paso el total al lbltotal
@@ -126,9 +129,13 @@ namespace GestionIntegral.CapaPresentacion
          
                 ElegirProducto();//usa este metodo para que el usuario pueda elegir productos a agregar
             }
+
         }
 
         #region EVENTOS
+
+
+
         private void btnGenerarPedido_Click(object sender, EventArgs e)
         {
             if (operacion == "insertar")
@@ -138,19 +145,18 @@ namespace GestionIntegral.CapaPresentacion
                 string numGuia = txtNroGuia.Text;
                 //tipoPago
                 DateTime? fechaPago;
-                float totalPedido = float.Parse(lblTotal.Text);
+                decimal totalPedido = decimal.Parse(lblTotal.Text);
                 DateTime? fechaEnvio;
-                ultimoId = (metDetalle.UltimoIdDetallePedido())+1;
+                //ultimoId = (metDetalle.UltimoIdDetallePedido())+1;
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
-                    int idDetallePedido = ultimoId;
                     int idProducto = Convert.ToInt32(row.Cells[0].Value);
-                    float precioUnitario = float.Parse(row.Cells[2].Value.ToString());
+                    decimal precioUnitario = decimal.Parse(row.Cells[2].Value.ToString());
                     int cantidad = Convert.ToInt32(row.Cells[3].Value);
-                    float subtotal = Convert.ToInt32(row.Cells[4].Value);
+                    decimal subtotal = decimal.Parse(row.Cells[4].Value.ToString());
 
-                    DetallePedido detalle = new DetallePedido(idDetallePedido, idProducto, precioUnitario, cantidad, subtotal);
+                    DetallePedido detalle = new DetallePedido(ultimoId, idProducto, precioUnitario, cantidad, subtotal);
                     metDetalle.InsertarDetallePedido(detalle);
                 }
                
@@ -214,7 +220,7 @@ namespace GestionIntegral.CapaPresentacion
                
                 //tipoPago
                 DateTime? fechaPago;
-                float totalPedido = float.Parse(lblTotal.Text);
+                Decimal totalPedido = Decimal.Parse(lblTotal.Text);
                 DateTime? fechaEnvio;
 
                 Pedido pedidoAeditar = metPedido.CrearPedido(idPedido);
@@ -229,9 +235,9 @@ namespace GestionIntegral.CapaPresentacion
                 {
                     int idDetallePedido = ultimoId;
                     int idProducto = Convert.ToInt32(row.Cells[0].Value);
-                    float precioUnitario = float.Parse(row.Cells[2].Value.ToString());
+                    Decimal precioUnitario = Decimal.Parse(row.Cells[2].Value.ToString());
                     int cantidad = Convert.ToInt32(row.Cells[3].Value);
-                    float subtotal = Convert.ToInt32(row.Cells[4].Value);
+                    Decimal subtotal = Decimal.Parse(row.Cells[4].Value.ToString());
 
                     DetallePedido detalle = new DetallePedido(idDetallePedido, idProducto, precioUnitario, cantidad, subtotal);
                     metDetalle.InsertarDetallePedido(detalle);
@@ -303,6 +309,8 @@ namespace GestionIntegral.CapaPresentacion
                 }
             }
          }
+
+
 
         private void btnSumarProducto_Click(object sender, EventArgs e)
         {
@@ -454,6 +462,7 @@ namespace GestionIntegral.CapaPresentacion
         #endregion
 
         #region METODOS
+
        
 
         private void limpiarCamposPedido()
@@ -468,7 +477,7 @@ namespace GestionIntegral.CapaPresentacion
 
         private void CrearidDetallePedido()
         {
-            ultimoId = metDetalle.UltimoIdDetallePedido() + 1;
+            ultimoId = (metDetalle.UltimoIdDetallePedido()) + 1;
         }
 
         private void ListarClientesEnComboBox()

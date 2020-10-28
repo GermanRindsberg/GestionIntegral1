@@ -10,15 +10,15 @@ namespace GestionIntegral.CapaDatos
     {
         int idDetallePedido;
         int idProducto;
-        float precioUnitario;
+        decimal precioUnitario;
         int cantidad;
-        float subtotal;
+        decimal subtotal;
 
         public int IdDetallePedido { get => idDetallePedido; set => idDetallePedido = value; }
         public int IdProducto { get => idProducto; set => idProducto = value; }
-        public float PrecioUnitario { get => precioUnitario; set => precioUnitario = value; }
+        public decimal PrecioUnitario { get => precioUnitario; set => precioUnitario = value; }
         public int Cantidad { get => cantidad; set => cantidad = value; }
-        public float Subtotal { get => subtotal; set => subtotal = value; }
+        public decimal Subtotal { get => subtotal; set => subtotal = value; }
 
         public DetallePedido()
         {
@@ -29,8 +29,12 @@ namespace GestionIntegral.CapaDatos
             IdDetallePedido = idDetallePedido;
         }
 
-        public DetallePedido(int idDetallePedido, int idProducto, float precioUnitario, int cantidad, float subtotal) : this(idDetallePedido)
+
+
+
+        public DetallePedido(int idDetallePedido, int idProducto, decimal precioUnitario, int cantidad, decimal subtotal)
         {
+            IdDetallePedido = idDetallePedido;
             IdProducto = idProducto;
             PrecioUnitario = precioUnitario;
             Cantidad = cantidad;

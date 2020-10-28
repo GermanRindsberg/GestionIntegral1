@@ -68,6 +68,7 @@ namespace GestionIntegral.CapaDatos
             int taller1, int taller2, int taller3, int taller4, int stockMinimo, int stock, int potencialStock, int pedidos,
             int requeridos, bool activo)
         {
+            IdProducto = idProducto;
             IdDiseño = idDiseño;
             IdFamilia = idFamilia;
             ValorUnico = valorUnico;

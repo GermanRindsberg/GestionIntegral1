@@ -163,11 +163,7 @@ namespace GestionIntegral.CapaPresentacion
             pr.ShowDialog();
         }
 
-        private void talleresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Talleres ta = new Talleres();
-            ta.ShowDialog();
-        }
+  
 
         private void ordenesDeTrabajoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -178,9 +174,9 @@ namespace GestionIntegral.CapaPresentacion
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            actualizarGridPedidos(estadoPedido);
+            actualizarGridPedidos(estadoPedido);//actualiza el grid de pedidos
 
-            date20diasAntes.Value = DateTime.Now.AddDays(-20);
+            date20diasAntes.Value = DateTime.Now.AddDays(-20);//inicializa la fecha con 20 dias antes
 
             LlenarGridStock();
             LlenarGrillaResumen();
@@ -210,6 +206,8 @@ namespace GestionIntegral.CapaPresentacion
                 actualizarGridPedidos(1);
             }
             devolverRequeridosParaStock();
+
+            actualizarTotalImportes();
 
         }
 
@@ -339,6 +337,7 @@ namespace GestionIntegral.CapaPresentacion
                     MessageBox.Show("Eliminado con exito");
                     actualizarGridPedidos(1);
                     banderaGridOtBorradoPedido = 0;
+                    actualizarTotalImportes();
                 }
                 else
                     return;
@@ -366,13 +365,43 @@ namespace GestionIntegral.CapaPresentacion
            gridStock.DataSource = metStock.ListarStock();
            gridStock.ClearSelection();
 
-            gridStock.Columns[0].Visible = false;
-            gridStock.Columns[1].HeaderText = "Descripcion";
-            gridStock.Columns[2].HeaderText = "Almacen";
-            gridStock.Columns[3].HeaderText = "Stock";
-            gridStock.Columns[4].HeaderText = "Stock Potencial";
-            gridStock.Columns[5].HeaderText = "Pedidos";
-            gridStock.Columns[6].HeaderText ="Requeridos";
+            gridStock.Columns[0].Visible = false;//id producto
+            gridStock.Columns[1].Visible = false;//id familia
+            gridStock.Columns[2].Visible = false;//id diseño
+            gridStock.Columns[3].Visible = false;//valor unico
+            //gridStock.Columns[4].Visible = false;//descripcion
+            //gridStock.Columns[5].Visible = false;//almacen
+            //gridStock.Columns[6].Visible = false;//taller 1
+            //gridStock.Columns[7].Visible = false;//taller 2
+            //gridStock.Columns[8].Visible = false;// taller 3
+            //gridStock.Columns[9].Visible = false;// taller 4
+            //gridStock.Columns[10].Visible = false;//stock minimo
+            //gridStock.Columns[11].Visible = false;//stock disponible
+            //gridStock.Columns[12].Visible = false;//potencial stock
+            //gridStock.Columns[13].Visible = false;//pedidos
+            //gridStock.Columns[14].Visible = false;//requeridos
+            gridStock.Columns[15].Visible = false;//activo
+
+            gridStock.Columns[4].HeaderText = "Descripcion";
+            gridStock.Columns[5].HeaderText = "Almacen";
+            gridStock.Columns[6].HeaderText = "Taller 1";
+            gridStock.Columns[7].HeaderText = "Taller 2";
+            gridStock.Columns[8].HeaderText = "Taller 3";
+            gridStock.Columns[9].HeaderText = "Taller 4";
+            gridStock.Columns[10].HeaderText = "Stock Minimo";
+            gridStock.Columns[11].HeaderText = "Stock disponible";
+            gridStock.Columns[12].HeaderText = "Stock Potencial";
+            gridStock.Columns[13].HeaderText = "Productos Pedidos";
+            gridStock.Columns[14].HeaderText ="Productos Requeridos";
+
+            gridStock.Columns[4].Width = 150;
+            gridStock.Columns[5].Width = 65;
+            gridStock.Columns[6].Width = 55;
+            gridStock.Columns[7].Width = 55;
+            gridStock.Columns[8].Width = 55;
+            gridStock.Columns[9].Width = 55;
+            
+
 
 
         }
@@ -416,8 +445,6 @@ namespace GestionIntegral.CapaPresentacion
 
         #endregion
         
-       
-
         #region METODOS RESUMEN VENTAS
 
         private void LlenarGrillaResumen()
@@ -462,11 +489,11 @@ namespace GestionIntegral.CapaPresentacion
 
             gridOT.Columns[0].Visible = false;//idOt
             gridOT.Columns[1].Visible = false;//idDetalle
-            gridOT.Columns[2].Visible = false;//idTaller
+            //gridOT.Columns[2].Visible = false;//nombre taller
             gridOT.Columns[5].Visible = false;//activo
             gridOT.Columns[6].Visible = false;//estado
-            gridOT.Columns[7].DisplayIndex = 0;
-
+            //gridOT.Columns[7].DisplayIndex = 0;
+            gridOT.Columns[2].HeaderText = "Taller";
             gridOT.Columns[3].HeaderText = "Fecha de envio";
             gridOT.Columns[4].HeaderText = "Fecha de retiro";
 
@@ -477,6 +504,8 @@ namespace GestionIntegral.CapaPresentacion
 
 
         #endregion
+
+        #region EVENTOS ORDEN DE TRABAJO
 
         private void radioProcesoOT_CheckedChanged(object sender, EventArgs e)
         {
@@ -525,74 +554,17 @@ namespace GestionIntegral.CapaPresentacion
 
         }
 
-        private void btnMasAlmacen_Click(object sender, EventArgs e)
+        private void gridOT_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (lblProducto.Text != "Producto:")
-            {
-                if (txtMasAlmacen.Text != "")
-                {
-                    metStock.AgregarStock(int.Parse(txtMasAlmacen.Text), "almacen", idProductoStock);
-                    LlenarGridStock();
-                }
-            }
-            else
-                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
+            TablaParaPedido ta = new TablaParaPedido();
+            int idOt= int.Parse(gridOT.CurrentRow.Cells[1].Value.ToString());
+            ta.CrearTablaOt(idOt);
+            gridDetalleOT.DataSource = ta.Tabla;
+            gridDetalleOT.Columns[0].Visible = false;//idOt
+
+
         }
-
-        private void gridStock_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-          
-                idProductoStock = int.Parse(gridStock.CurrentRow.Cells[0].Value.ToString());
-                lblProducto.Text = "Producto: " + gridStock.CurrentRow.Cells[1].Value.ToString();
-           
-        }
-
-        private void btnMenosAlmacen_Click(object sender, EventArgs e)
-        {
-            if (lblProducto.Text != "Producto:")
-            {
-                if (txtMenosAlmacen.Text != "")
-                {
-                    metStock.RestarStock(int.Parse(txtMenosAlmacen.Text), "almacen", idProductoStock);
-                    LlenarGridStock();
-                    
-                }
-            }
-            else
-                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
-           
-        }
-
-        private void btnMasStock_Click(object sender, EventArgs e)
-        {
-
-            if (lblProducto.Text != "Producto:")
-            {
-                if (txtMasStock.Text != "")
-                {
-                    metStock.AgregarStock(int.Parse(txtMasStock.Text), "stock", idProductoStock);
-                    LlenarGridStock();
-                }
-            }
-            else
-                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
-        }
-
-        private void btnMenosStock_Click(object sender, EventArgs e)
-        {
-            if (lblProducto.Text != "Producto:")
-            {
-                if (txtMenosStock.Text != "")
-                {
-                    metStock.RestarStock(int.Parse(txtMenosStock.Text), "stock", idProductoStock);
-                    LlenarGridStock();
-                }
-            }
-            else
-                MessageBox.Show("Debes seleccionar un producto de la tabla stock");
-        }
-
-        
+        #endregion
     }
 }
 

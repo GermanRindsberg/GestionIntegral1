@@ -176,7 +176,7 @@ namespace GestionIntegral.CapaNegocio
             {
                 pe.IdPedido = LeerFilas.GetInt32(0);
                 pe.IdCliente = LeerFilas.GetInt32(1);
-                pe.Total = LeerFilas.GetDouble(2);
+                pe.Total = LeerFilas.GetDecimal(2);
                 pe.IdEstado = LeerFilas.GetInt32(3);
                 pe.IdDetallePedido = LeerFilas.GetInt32(4);
                 pe.Fecha = LeerFilas.GetDateTime(5);

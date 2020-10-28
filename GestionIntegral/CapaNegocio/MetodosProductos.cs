@@ -121,14 +121,17 @@ namespace GestionIntegral.CapaNegocio
                 tr.IdDiseño = LeerFilas.GetInt32(2);
                 tr.ValorUnico = LeerFilas.GetInt32(3);
                 tr.DescripcionProducto = LeerFilas.GetString(4);
-                tr.Activo = LeerFilas.GetBoolean(5);
-                tr.StockMinimo = LeerFilas.GetInt32(6);
-                tr.Almacen = LeerFilas.GetInt32(7);
-                tr.Stock = LeerFilas.GetInt32(8);
-                tr.PotencialStock = LeerFilas.GetInt32(9);
-                tr.Pedidos = LeerFilas.GetInt32(10);
-                tr.Requeridos = LeerFilas.GetInt32(11);
-
+                tr.Almacen = LeerFilas.GetInt32(5);
+                tr.Taller1 = LeerFilas.GetInt32(6);
+                tr.Taller2 = LeerFilas.GetInt32(7);
+                tr.Taller3 = LeerFilas.GetInt32(8);
+                tr.Taller4 = LeerFilas.GetInt32(9);
+                tr.StockMinimo = LeerFilas.GetInt32(10);
+                tr.Stock = LeerFilas.GetInt32(11);
+                tr.PotencialStock = LeerFilas.GetInt32(12);
+                tr.Pedidos = LeerFilas.GetInt32(13);
+                tr.Requeridos = LeerFilas.GetInt32(14);
+                tr.Activo = LeerFilas.GetBoolean(15);
 
             }
             LeerFilas.Close();

@@ -77,37 +77,6 @@ namespace GestionIntegral.CapaNegocio
                 cb.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
 
-            if (nombreTabla == "Talleres")
-            {
-                DataTable Tabla = new DataTable();
-                Comando.Connection = Conexion;
-                Conexion.Open();
-                Comando.CommandText = "RellenarComboBox";
-                Comando.CommandType = CommandType.StoredProcedure;
-                Comando.Parameters.Clear();
-                Comando.Parameters.AddWithValue("@nombreTabla", nombreTabla);
-                Comando.Parameters.AddWithValue("@activo", 1);
-              
-                LeerFilas = Comando.ExecuteReader();
-                Tabla.Load(LeerFilas);
-                DataRow workRow = Tabla.NewRow();
-                workRow[0] = 0;
-                workRow[1] = "Seleccione un valor";
-                workRow[2] = 0;
-                workRow[3] = 0;
-                workRow[4] = 0;
-                workRow[5] = 0;
-                workRow[6] = 0;
-                Tabla.Rows.InsertAt(workRow, 0);
-                LeerFilas.Close();
-                Conexion.Close();
-                cb.DataSource = Tabla;
-                cb.DisplayMember = "razonSocial";
-                cb.ValueMember = "id";
-                cb.AutoCompleteMode = AutoCompleteMode.Suggest;
-                cb.AutoCompleteSource = AutoCompleteSource.ListItems;
-            }
-
             if (nombreTabla == "Familia"|| nombreTabla == "Diseño")
             {
                 DataTable Tabla = new DataTable();

@@ -225,7 +225,7 @@ namespace GestionIntegral.CapaPresentacion
                 txtMail.Text = cl.Email;
                 checkActivo.Checked = cl.Activo;
                 cbTipoLista.SelectedIndex = cl.TipoLista;
-                dtpFechaAlta.Value = cl.FechaAlta;
+                dtpFechaAlta.Value = cl.FechaAlta;//error aca
                 txtObservaciones.Text = cl.Observaciones;
                 operacion = "editar";
             }

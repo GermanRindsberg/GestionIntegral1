@@ -20,10 +20,10 @@ namespace GestionIntegral.CapaNegocio
 
         
 
-        public void CrearTabla(int id)
+        public DataTable CrearTabla(int id)
         {
             Tabla= metDetalle.ListarDetallePedidoPorId(id);
-            
+            return Tabla;
         }
 
         public void CrearTablaOt(int id)

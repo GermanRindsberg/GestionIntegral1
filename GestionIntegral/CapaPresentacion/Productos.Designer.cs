@@ -44,9 +44,11 @@
             this.txtPapel = new System.Windows.Forms.TextBox();
             this.txtTela = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.txtStockMinimo = new System.Windows.Forms.TextBox();
             this.txtTizada = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtLista1 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.txtDescripcionFamilia = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAgregarFamilia = new System.Windows.Forms.Button();
@@ -89,7 +91,7 @@
             // btnCerrar
             // 
             this.btnCerrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnCerrar.Location = new System.Drawing.Point(205, 421);
+            this.btnCerrar.Location = new System.Drawing.Point(205, 451);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(180, 50);
             this.btnCerrar.TabIndex = 51;
@@ -100,7 +102,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnLimpiar.Location = new System.Drawing.Point(12, 421);
+            this.btnLimpiar.Location = new System.Drawing.Point(12, 451);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(180, 50);
             this.btnLimpiar.TabIndex = 50;
@@ -111,7 +113,7 @@
             // btnAgregar
             // 
             this.btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnAgregar.Location = new System.Drawing.Point(12, 365);
+            this.btnAgregar.Location = new System.Drawing.Point(12, 395);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(180, 50);
             this.btnAgregar.TabIndex = 48;
@@ -143,7 +145,7 @@
             this.gridProducto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProducto.ShowCellErrors = false;
             this.gridProducto.ShowCellToolTips = false;
-            this.gridProducto.Size = new System.Drawing.Size(784, 417);
+            this.gridProducto.Size = new System.Drawing.Size(784, 444);
             this.gridProducto.TabIndex = 47;
             this.gridProducto.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridProducto_CellClick);
             // 
@@ -156,9 +158,11 @@
             this.groupBox1.Controls.Add(this.txtPapel);
             this.groupBox1.Controls.Add(this.txtTela);
             this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.txtStockMinimo);
             this.groupBox1.Controls.Add(this.txtTizada);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtLista1);
+            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.txtDescripcionFamilia);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnAgregarFamilia);
@@ -177,7 +181,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(371, 345);
+            this.groupBox1.Size = new System.Drawing.Size(371, 377);
             this.groupBox1.TabIndex = 46;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agregar Producto";
@@ -188,7 +192,7 @@
             this.btnBorrarDiseño.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBorrarDiseño.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnBorrarDiseño.ForeColor = System.Drawing.Color.Black;
-            this.btnBorrarDiseño.Location = new System.Drawing.Point(289, 304);
+            this.btnBorrarDiseño.Location = new System.Drawing.Point(290, 337);
             this.btnBorrarDiseño.Name = "btnBorrarDiseño";
             this.btnBorrarDiseño.Size = new System.Drawing.Size(71, 30);
             this.btnBorrarDiseño.TabIndex = 50;
@@ -209,7 +213,7 @@
             this.btnBorrarFamilia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBorrarFamilia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnBorrarFamilia.ForeColor = System.Drawing.Color.Black;
-            this.btnBorrarFamilia.Location = new System.Drawing.Point(288, 215);
+            this.btnBorrarFamilia.Location = new System.Drawing.Point(290, 227);
             this.btnBorrarFamilia.Name = "btnBorrarFamilia";
             this.btnBorrarFamilia.Size = new System.Drawing.Size(71, 30);
             this.btnBorrarFamilia.TabIndex = 49;
@@ -223,7 +227,7 @@
             this.btnAgregarDiseño.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAgregarDiseño.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnAgregarDiseño.ForeColor = System.Drawing.Color.Black;
-            this.btnAgregarDiseño.Location = new System.Drawing.Point(211, 304);
+            this.btnAgregarDiseño.Location = new System.Drawing.Point(212, 337);
             this.btnAgregarDiseño.Name = "btnAgregarDiseño";
             this.btnAgregarDiseño.Size = new System.Drawing.Size(76, 30);
             this.btnAgregarDiseño.TabIndex = 47;
@@ -256,9 +260,16 @@
             this.label9.TabIndex = 34;
             this.label9.Text = "Tela";
             // 
+            // txtStockMinimo
+            // 
+            this.txtStockMinimo.Location = new System.Drawing.Point(11, 231);
+            this.txtStockMinimo.Name = "txtStockMinimo";
+            this.txtStockMinimo.Size = new System.Drawing.Size(108, 26);
+            this.txtStockMinimo.TabIndex = 36;
+            // 
             // txtTizada
             // 
-            this.txtTizada.Location = new System.Drawing.Point(11, 183);
+            this.txtTizada.Location = new System.Drawing.Point(11, 184);
             this.txtTizada.Name = "txtTizada";
             this.txtTizada.Size = new System.Drawing.Size(108, 26);
             this.txtTizada.TabIndex = 36;
@@ -280,6 +291,17 @@
             this.txtLista1.Name = "txtLista1";
             this.txtLista1.Size = new System.Drawing.Size(108, 26);
             this.txtLista1.TabIndex = 33;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.label12.ForeColor = System.Drawing.Color.Black;
+            this.label12.Location = new System.Drawing.Point(18, 213);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 15);
+            this.label12.TabIndex = 34;
+            this.label12.Text = "Stock Minimo";
             // 
             // txtDescripcionFamilia
             // 
@@ -306,7 +328,7 @@
             this.btnAgregarFamilia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAgregarFamilia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnAgregarFamilia.ForeColor = System.Drawing.Color.Black;
-            this.btnAgregarFamilia.Location = new System.Drawing.Point(206, 215);
+            this.btnAgregarFamilia.Location = new System.Drawing.Point(212, 227);
             this.btnAgregarFamilia.Name = "btnAgregarFamilia";
             this.btnAgregarFamilia.Size = new System.Drawing.Size(76, 30);
             this.btnAgregarFamilia.TabIndex = 46;
@@ -319,7 +341,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(11, 288);
+            this.label11.Location = new System.Drawing.Point(12, 321);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(151, 15);
             this.label11.TabIndex = 34;
@@ -350,7 +372,7 @@
             // cbDiseño
             // 
             this.cbDiseño.FormattingEnabled = true;
-            this.cbDiseño.Location = new System.Drawing.Point(9, 259);
+            this.cbDiseño.Location = new System.Drawing.Point(10, 292);
             this.cbDiseño.Name = "cbDiseño";
             this.cbDiseño.Size = new System.Drawing.Size(350, 28);
             this.cbDiseño.TabIndex = 44;
@@ -388,7 +410,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(9, 241);
+            this.label6.Location = new System.Drawing.Point(10, 274);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(52, 15);
             this.label6.TabIndex = 40;
@@ -419,7 +441,7 @@
             // txtDescripcionDiseño
             // 
             this.txtDescripcionDiseño.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtDescripcionDiseño.Location = new System.Drawing.Point(9, 306);
+            this.txtDescripcionDiseño.Location = new System.Drawing.Point(10, 339);
             this.txtDescripcionDiseño.Name = "txtDescripcionDiseño";
             this.txtDescripcionDiseño.Size = new System.Drawing.Size(200, 26);
             this.txtDescripcionDiseño.TabIndex = 39;
@@ -428,7 +450,7 @@
             // 
             this.btnBorrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnBorrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnBorrar.Location = new System.Drawing.Point(205, 365);
+            this.btnBorrar.Location = new System.Drawing.Point(205, 395);
             this.btnBorrar.Name = "btnBorrar";
             this.btnBorrar.Size = new System.Drawing.Size(180, 50);
             this.btnBorrar.TabIndex = 54;
@@ -441,7 +463,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1185, 485);
+            this.ClientSize = new System.Drawing.Size(1185, 510);
             this.Controls.Add(this.btnBorrar);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtBuscar);
@@ -498,5 +520,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtStockMinimo;
+        private System.Windows.Forms.Label label12;
     }
 }
