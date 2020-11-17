@@ -79,6 +79,7 @@
             this.btnEditarOT = new System.Windows.Forms.Button();
             this.btnBorrarOT = new System.Windows.Forms.Button();
             this.gridDetalleOT = new System.Windows.Forms.DataGridView();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
@@ -362,7 +363,7 @@
             this.gridStock.DefaultCellStyle = dataGridViewCellStyle4;
             this.gridStock.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.gridStock.EnableHeadersVisualStyles = false;
-            this.gridStock.Location = new System.Drawing.Point(12, 483);
+            this.gridStock.Location = new System.Drawing.Point(12, 501);
             this.gridStock.Name = "gridStock";
             this.gridStock.RowHeadersVisible = false;
             this.gridStock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -370,7 +371,7 @@
             this.gridStock.ShowCellToolTips = false;
             this.gridStock.ShowEditingIcon = false;
             this.gridStock.ShowRowErrors = false;
-            this.gridStock.Size = new System.Drawing.Size(1031, 366);
+            this.gridStock.Size = new System.Drawing.Size(1031, 348);
             this.gridStock.TabIndex = 20;
             this.gridStock.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellEndEdit);
             // 
@@ -379,7 +380,7 @@
             this.radioTodosStock.AutoSize = true;
             this.radioTodosStock.BackColor = System.Drawing.Color.Transparent;
             this.radioTodosStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.radioTodosStock.Location = new System.Drawing.Point(202, 13);
+            this.radioTodosStock.Location = new System.Drawing.Point(202, 19);
             this.radioTodosStock.Name = "radioTodosStock";
             this.radioTodosStock.Size = new System.Drawing.Size(66, 21);
             this.radioTodosStock.TabIndex = 24;
@@ -392,7 +393,7 @@
             this.radioPendientesStock.AutoSize = true;
             this.radioPendientesStock.BackColor = System.Drawing.Color.Transparent;
             this.radioPendientesStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.radioPendientesStock.Location = new System.Drawing.Point(274, 13);
+            this.radioPendientesStock.Location = new System.Drawing.Point(274, 19);
             this.radioPendientesStock.Name = "radioPendientesStock";
             this.radioPendientesStock.Size = new System.Drawing.Size(97, 21);
             this.radioPendientesStock.TabIndex = 23;
@@ -476,12 +477,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBox1);
             this.groupBox2.Controls.Add(this.radioTodosStock);
             this.groupBox2.Controls.Add(this.radioPendientesStock);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
             this.groupBox2.Location = new System.Drawing.Point(12, 449);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(885, 34);
+            this.groupBox2.Size = new System.Drawing.Size(1030, 46);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Disponibilidad";
@@ -629,12 +631,23 @@
             this.gridDetalleOT.Size = new System.Drawing.Size(288, 333);
             this.gridDetalleOT.TabIndex = 30;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.checkBox1.Location = new System.Drawing.Point(860, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(164, 21);
+            this.checkBox1.TabIndex = 25;
+            this.checkBox1.Text = "Requeridos con stock";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1584, 861);
+            this.ClientSize = new System.Drawing.Size(1584, 870);
             this.Controls.Add(this.btnBorrarOT);
             this.Controls.Add(this.btnEditarOT);
             this.Controls.Add(this.btnNvaOT);
@@ -727,6 +740,7 @@
         private System.Windows.Forms.Button btnEditarOT;
         private System.Windows.Forms.Button btnBorrarOT;
         private System.Windows.Forms.DataGridView gridDetalleOT;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

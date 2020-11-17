@@ -45,6 +45,7 @@ namespace GestionIntegral.CapaNegocio
             Conexion.Open();
             Comando.CommandText = "ClienteDelete";
             Comando.CommandType = CommandType.StoredProcedure;
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idCliente", cl.IdCliente);
             Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
@@ -85,7 +86,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", activo);
             Comando.Parameters.AddWithValue("@condicion", condicion);
-
+            Comando.Parameters.AddWithValue("@id","");
             LeerFilas = Comando.ExecuteReader();
             List<Cliente> ListaGenerica = new List<Cliente>();
             while (LeerFilas.Read())
@@ -111,7 +112,7 @@ namespace GestionIntegral.CapaNegocio
             return ListaGenerica;
         }
 
-        public Cliente CrearCliente(string id)
+        public Cliente CrearCliente(int id)
         {
             Cliente cl = new Cliente();
 
@@ -121,8 +122,9 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@activo", 1);
-            Comando.Parameters.AddWithValue("@condicion", id);
-            
+            Comando.Parameters.AddWithValue("@condicion", " ");
+            Comando.Parameters.AddWithValue("@id", id);
+     
             LeerFilas = Comando.ExecuteReader();
             
             while (LeerFilas.Read())

@@ -138,6 +138,8 @@ namespace GestionIntegral.CapaPresentacion
 
         private void btnGenerarPedido_Click(object sender, EventArgs e)
         {
+         //hay un trigger en la tabla detalle pedido para insertar "pedido" al producto       
+                
             if (operacion == "insertar")
             {
                 DateTime fecha = dtFechaPedido.Value;
@@ -147,7 +149,6 @@ namespace GestionIntegral.CapaPresentacion
                 DateTime? fechaPago;
                 decimal totalPedido = decimal.Parse(lblTotal.Text);
                 DateTime? fechaEnvio;
-                //ultimoId = (metDetalle.UltimoIdDetallePedido())+1;
 
                 foreach (DataGridViewRow row in gridPedidoNuevo.Rows)
                 {
@@ -158,6 +159,7 @@ namespace GestionIntegral.CapaPresentacion
 
                     DetallePedido detalle = new DetallePedido(ultimoId, idProducto, precioUnitario, cantidad, subtotal);
                     metDetalle.InsertarDetallePedido(detalle);
+
                 }
                
                 if (checkPagado.Checked == true)
@@ -217,8 +219,7 @@ namespace GestionIntegral.CapaPresentacion
                 DateTime fecha = dtFechaPedido.Value;
                 int idEstado = 0;
                 string numGuia = txtNroGuia.Text;
-               
-                //tipoPago
+       
                 DateTime? fechaPago;
                 Decimal totalPedido = Decimal.Parse(lblTotal.Text);
                 DateTime? fechaEnvio;
@@ -309,8 +310,6 @@ namespace GestionIntegral.CapaPresentacion
                 }
             }
          }
-
-
 
         private void btnSumarProducto_Click(object sender, EventArgs e)
         {
@@ -540,8 +539,10 @@ namespace GestionIntegral.CapaPresentacion
         {
                 if (cbCliente.SelectedIndex > 0 && cbCliente.Text != default)
                 {
+                
                 idCliente = Convert.ToInt32(cbCliente.SelectedValue.ToString());
-                Cliente cl = metCliente.CrearCliente(cbCliente.SelectedValue.ToString());
+
+                Cliente cl = metCliente.CrearCliente(idCliente);
                     
                     tipoLista = cl.TipoLista;
                     if (tipoLista == 0)
@@ -641,7 +642,6 @@ namespace GestionIntegral.CapaPresentacion
             
         }
         #endregion
-
       
     }
 }

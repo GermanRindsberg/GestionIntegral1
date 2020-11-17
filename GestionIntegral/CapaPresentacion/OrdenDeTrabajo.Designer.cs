@@ -69,6 +69,7 @@
             this.cbTaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.cbTaller.FormattingEnabled = true;
             this.cbTaller.Items.AddRange(new object[] {
+            "Almacen",
             "Taller 1",
             "Taller 2",
             "Taller 3",

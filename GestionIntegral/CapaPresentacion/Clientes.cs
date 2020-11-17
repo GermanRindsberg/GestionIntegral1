@@ -137,8 +137,6 @@ namespace GestionIntegral.CapaPresentacion
 
                 mtDir.InsertarDireccion(dir);//inserto la direccion
 
-                
-
                 //creo un cliente
                 razonSocial = cbRazonSocial.Text.ToString();
                 idDireccion = mtDir.UltimoIdDireccion();
@@ -146,7 +144,14 @@ namespace GestionIntegral.CapaPresentacion
                 tel2 = txtTel2.Text;
                 email = txtMail.Text;
                 cuit = txtCuit.Text;
-                idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                if (cbTransporte.SelectedValue == null || int.Parse(cbTransporte.SelectedValue.ToString()) == 0)
+                {
+                    idTransporte = 1;
+                }
+                else
+                {
+                    idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                }
                 fechaAlta = dtpFechaAlta.Value;
                 observaciones = txtObservaciones.Text;
 
@@ -205,11 +210,12 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (cbRazonSocial.SelectedIndex > 0 && cbRazonSocial.Text != default)
             {
-               idCliente =  Convert.ToInt32(cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
-
-                Cliente cl = mtcl.CrearCliente(idCliente.ToString());
+               
+                idCliente = int.Parse(cbRazonSocial.SelectedValue.ToString()); //COn esto le mando al cliente cual es la id
+                Cliente cl = mtcl.CrearCliente(idCliente);
                
                 Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(cl.IdDireccion));
+              
                 idDireccion = cl.IdDireccion;
                 txtCalle.Text = dir.Calle;
                 txtNro.Text = dir.Numero;
@@ -225,7 +231,7 @@ namespace GestionIntegral.CapaPresentacion
                 txtMail.Text = cl.Email;
                 checkActivo.Checked = cl.Activo;
                 cbTipoLista.SelectedIndex = cl.TipoLista;
-                dtpFechaAlta.Value = cl.FechaAlta;//error aca
+                dtpFechaAlta.Value = cl.FechaAlta;
                 txtObservaciones.Text = cl.Observaciones;
                 operacion = "editar";
             }
@@ -302,29 +308,11 @@ namespace GestionIntegral.CapaPresentacion
             {
                 if (MessageBox.Show("¿Desea eliminar el Cliente, pasara a ser inactivo?", "ELIMINAR CLIENTE", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Cliente objCliente = mtcl.CrearCliente(Convert.ToString(idCliente));//traigo el cliente y su direccion por id
-                    Direccion dir = mtDir.CrearDireccion(Convert.ToInt32(objCliente.IdDireccion));
-                    Boolean activo = false;
-
-                    //creo una direccion
-                    dir.IdLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                    dir.Calle = txtCalle.Text;
-                    dir.Numero = txtNro.Text;
-                    dir.Piso = txtPiso.Text;
-                    dir.Depto = txtDepto.Text;
-                    mtDir.EditarDireccion(dir);//edito la direccion
-         
-
-                    objCliente.Email = txtMail.Text;
-                    objCliente.Cuit = txtCuit.Text;
-                    objCliente.IdTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
-                    objCliente.Activo = activo;
-                    objCliente.FechaAlta = dtpFechaAlta.Value;
-                    objCliente.Observaciones = txtObservaciones.Text;
-                    objCliente.TipoLista = tipoLista;
-
-                    mtcl.EditarClientes(objCliente);
-
+                    MetodosCliente metcl = new MetodosCliente();
+                    
+                    Cliente clienteAborrar = metcl.CrearCliente(idCliente);
+                    
+                    metcl.EliminarClientes(clienteAborrar);
                     MessageBox.Show("Borrado con exito");
                     operacion = "insertar";
                     limpiarCampos();

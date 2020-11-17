@@ -95,6 +95,18 @@ namespace GestionIntegral.CapaDatos
         //contructor vacio para tabla de pedidos
         public Producto() { }
 
-       
+        public Producto(int idProducto, int almacen, int taller1, int taller2, int taller3, int taller4) : this(idProducto)
+        {
+            Almacen = almacen;
+            Taller1 = taller1;
+            Taller2 = taller2;
+            Taller3 = taller3;
+            Taller4 = taller4;
+        }
+
+        //constructor para editar stocks
+
+
+
     }
 }

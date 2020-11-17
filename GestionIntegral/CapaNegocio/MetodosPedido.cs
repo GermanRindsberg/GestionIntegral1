@@ -156,6 +156,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@idPedido", pe.IdPedido);
+            Comando.Parameters.AddWithValue("@idDetallePedido", pe.IdDetallePedido);
             Comando.ExecuteNonQuery();
             Comando.Parameters.Clear();
             Conexion.Close();

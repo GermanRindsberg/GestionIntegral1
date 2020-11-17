@@ -185,7 +185,7 @@ namespace GestionIntegral.CapaPresentacion
             radioPendientesStock.Checked = true;
             LlenarGridOT();
             devolverPedidosParaStock();
-            devolverRequeridosParaStock();
+
 
         }
 
@@ -205,8 +205,7 @@ namespace GestionIntegral.CapaPresentacion
             {
                 actualizarGridPedidos(1);
             }
-            devolverRequeridosParaStock();
-
+           
             actualizarTotalImportes();
 
         }
@@ -332,12 +331,13 @@ namespace GestionIntegral.CapaPresentacion
                 if (MessageBox.Show("¿Desea eliminar el Pedido? esto puede alterar el stock y balances", "ELIMINAR PEDIDO", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     int idPedido = int.Parse(gridListaPedidos.CurrentRow.Cells[0].Value.ToString());
-                    Pedido pe = new Pedido(idPedido);
+                    Pedido pe = metPedido.CrearPedido(idPedido);
                     metPedido.EliminarPedido(pe) ;
                     MessageBox.Show("Eliminado con exito");
                     actualizarGridPedidos(1);
                     banderaGridOtBorradoPedido = 0;
                     actualizarTotalImportes();
+                    LlenarGridStock();
                 }
                 else
                     return;
@@ -380,7 +380,9 @@ namespace GestionIntegral.CapaPresentacion
             //gridStock.Columns[12].Visible = false;//potencial stock
             //gridStock.Columns[13].Visible = false;//pedidos
             //gridStock.Columns[14].Visible = false;//requeridos
-            gridStock.Columns[15].Visible = false;//activo
+            //gridStock.Columns[15].Visible = false;//Pliegosrequeridos
+            //gridStock.Columns[16].Visible = false;//Papelrequeridos
+            gridStock.Columns[17].Visible = false;//activo
 
             gridStock.Columns[4].HeaderText = "Descripcion";
             gridStock.Columns[5].HeaderText = "Almacen";
@@ -392,7 +394,11 @@ namespace GestionIntegral.CapaPresentacion
             gridStock.Columns[11].HeaderText = "Stock disponible";
             gridStock.Columns[12].HeaderText = "Stock Potencial";
             gridStock.Columns[13].HeaderText = "Productos Pedidos";
-            gridStock.Columns[14].HeaderText ="Productos Requeridos";
+            gridStock.Columns[14].HeaderText = "Productos Requeridos";
+            gridStock.Columns[15].HeaderText = "Pliegos requeridos";
+            gridStock.Columns[16].HeaderText = "Papel Requerido";
+
+
 
             gridStock.Columns[4].Width = 150;
             gridStock.Columns[5].Width = 65;
@@ -400,7 +406,7 @@ namespace GestionIntegral.CapaPresentacion
             gridStock.Columns[7].Width = 55;
             gridStock.Columns[8].Width = 55;
             gridStock.Columns[9].Width = 55;
-            
+
 
 
 
@@ -413,25 +419,6 @@ namespace GestionIntegral.CapaPresentacion
 
         }
 
-        public void devolverRequeridosParaStock()//potencial mas stock menos pedidos
-        {
-
-            foreach (DataGridViewRow row in gridStock.Rows)
-            {
-                //int stock = int.Parse(row.Cells[6].Value.ToString());
-                //int potencial = int.Parse(row.Cells[4].Value.ToString());
-                //int pedidos = int.Parse(row.Cells[3].Value.ToString());
-                //int resultado = pedidos - (stock + potencial);
-                //if (resultado > 0)
-                //{
-                //    row.Cells[5].Value = resultado;
-                //}
-                //else
-                //    row.Cells[5].Value = 0;
-
-            }
-
-        }
 
         #endregion
 
@@ -544,6 +531,7 @@ namespace GestionIntegral.CapaPresentacion
                     metOT.EliminarOT(ot);
                     MessageBox.Show("Eliminado con exito");
                     LlenarGridOT();
+                    LlenarGridStock();
                     banderaGridOtBorrado = 0;
                 }
                 else

@@ -29,8 +29,16 @@ namespace GestionIntegral.CapaNegocio
             leerFilas.Close();
             Conexion.Close();
 
-            return Tabla;
+            foreach (DataRow fila in Tabla.Rows)
+            {
+                int valor = int.Parse(fila[14].ToString());
+                if (valor < 0)
+                {
+                    fila[14] = 0;
+                }
+            }
 
+            return Tabla;
         }
 
         public void PasarStock(string columnaDesde, string columnaHasta, int valorDesde, int valorHasta,  int idProducto)

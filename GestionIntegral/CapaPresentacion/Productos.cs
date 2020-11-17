@@ -170,12 +170,15 @@ namespace GestionIntegral.CapaPresentacion
                 //inserto
                 else
                 {
+                    Decimal tiz = Math.Ceiling(decimal.Parse((txtTizada.Text).Replace(".", ",")));
+
+
                     //creo las variables para llenar el constructor a de la familia a insertar
                     string descripcionFamilia = txtDescripcionFamilia.Text;
                     Decimal lista1 = Decimal.Parse((txtLista1.Text).Replace(".", ","));
                     Decimal lista2 = Decimal.Parse((txtLista2.Text).Replace(".", ","));
                     Decimal lista3 = Decimal.Parse((txtLista3.Text).Replace(".", ","));
-                    int tizada = int.Parse(txtTizada.Text);
+                    int tizada = int.Parse(tiz.ToString());
                     Decimal papel = Decimal.Parse((txtPapel.Text).Replace(".", ","));
                     Decimal tela = Decimal.Parse((txtTela.Text).Replace(".", ","));
                     //creo el objeto familia

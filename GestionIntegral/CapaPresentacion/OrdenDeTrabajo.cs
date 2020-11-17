@@ -14,6 +14,8 @@ namespace GestionIntegral.CapaPresentacion
         MetodosGenericos mg = new MetodosGenericos();
         MetodosDetalleOrdenTrabajo metDetOT = new MetodosDetalleOrdenTrabajo();
         MetodosOT metTO = new MetodosOT();
+        MetodosStock metStock = new MetodosStock();
+
 
 
         int idProducto;
@@ -39,20 +41,33 @@ namespace GestionIntegral.CapaPresentacion
         #region EVENTOS
         private void btnInsertar_Click(object sender, EventArgs e)
         {
+            string nombreColumna = "";
+            if (nombreTaller == "Taller 1")
+            {
+                nombreColumna = "taller1";
+            }
+            else if (nombreTaller == "Taller 2")
+            {
+                nombreColumna = "taller2";
+            }
+            else if (nombreTaller == "Taller 3")
+            {
+                nombreColumna = "taller3";
+            }
+            else if (nombreTaller == "Taller 4")
+            {
+                nombreColumna = "taller4";
+            }
+            else if (nombreTaller == "Almacen")
+            {
+                nombreColumna = "almacen";
+            }
+
             if (operacion == "insertar")
             {
                 fechaEnvio = dateHoy.Value;
-           
                 ultimoId = metDetOT.UltimoIdDetallePedido();
-
                 int idDetalleOT = ultimoId;
-              
-                if (checkRetirado.Checked == false)
-                {
-                    fechaRetiro = null;
-                }
-                else
-                    fechaRetiro = dtFechaRetirado.Value;
 
                 foreach (DataGridViewRow row in gridOT.Rows)
                 {
@@ -60,6 +75,16 @@ namespace GestionIntegral.CapaPresentacion
                     int cantidad = Convert.ToInt32(row.Cells[2].Value);
                     DetalleOrdenTrabajo detalle = new DetalleOrdenTrabajo(idDetalleOT, idProducto, cantidad);
                     metDetOT.InsertarDetalleOT(detalle);
+
+                }
+
+                if (checkRetirado.Checked == false)
+                {
+                    fechaRetiro = null;
+                }
+                else
+                {
+                    fechaRetiro = dtFechaRetirado.Value;
                 }
 
                 if (gridOT.RowCount == 0)
@@ -70,10 +95,10 @@ namespace GestionIntegral.CapaPresentacion
                 {
                     OrdenDeTrabajos ot = new OrdenDeTrabajos(idDetalleOT, nombreTaller, fechaEnvio, fechaRetiro, activo, 1);
                     metTO.InsertarOT(ot);
-
                     MessageBox.Show("Insertado con exito");
                     limpiarCamposPedido();
                     this.Close();
+                    
                 }
                     
            
@@ -86,10 +111,13 @@ namespace GestionIntegral.CapaPresentacion
 
                 fechaRetiro = poAeditar.FechaRetiro;
                 fechaEnvio = poAeditar.FechaEnvio;
+                
+                
 
                 //elimino el detallePedido para luego insertar uno nuevo, debo investigar para editarlo y no tener que borrarlo
                 metDetOT.EliminarDetalleOt(otAborrar.IdDetalleOT);//borro el detalle anterior para agregar uno nuevo
-                ultimoId = metDetOT.UltimoIdDetallePedido();//empiezo a crear un nuevo detalle
+                
+                ultimoId = metDetOT.UltimoIdDetallePedido()+1;//empiezo a crear un nuevo detalle
 
                 foreach (DataGridViewRow row in gridOT.Rows)
                 {
@@ -98,6 +126,7 @@ namespace GestionIntegral.CapaPresentacion
                     int cantidad = Convert.ToInt32(row.Cells[2].Value);
                     DetalleOrdenTrabajo detalle = new DetalleOrdenTrabajo(idDetallePedido, idProducto, cantidad);
                     metDetOT.InsertarDetalleOT(detalle);
+                   
                 }
 
                 if (checkRetirado.Checked == false)
