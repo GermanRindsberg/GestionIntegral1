@@ -26,7 +26,7 @@ namespace GestionIntegral.CapaNegocio
             Comando.Parameters.AddWithValue("@idDireccion", cl.IdDireccion);
             Comando.Parameters.AddWithValue("@tel1", cl.Tel1);
             Comando.Parameters.AddWithValue("@tel2", cl.Tel2);
-            Comando.Parameters.AddWithValue("@activo", cl.Activo);
+            Comando.Parameters.AddWithValue("@activo", true);
             Comando.Parameters.AddWithValue("@email", cl.Email);
             Comando.Parameters.AddWithValue("@cuit", cl.Cuit);
             Comando.Parameters.AddWithValue("@idTransporte", cl.IdTransporte);

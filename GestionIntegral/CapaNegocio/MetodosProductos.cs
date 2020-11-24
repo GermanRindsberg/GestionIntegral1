@@ -131,7 +131,11 @@ namespace GestionIntegral.CapaNegocio
                 tr.PotencialStock = LeerFilas.GetInt32(12);
                 tr.Pedidos = LeerFilas.GetInt32(13);
                 tr.Requeridos = LeerFilas.GetInt32(14);
-                tr.Activo = LeerFilas.GetBoolean(15);
+                tr.PliegosRequeridos= LeerFilas.GetInt32(15);
+                tr.PliegosSinStock = LeerFilas.GetInt32(16);
+                tr.PapelRequerido = LeerFilas.GetInt32(17);
+                tr.PapelSinStock = LeerFilas.GetInt32(18);
+                tr.Activo = LeerFilas.GetBoolean(19);
 
             }
             LeerFilas.Close();

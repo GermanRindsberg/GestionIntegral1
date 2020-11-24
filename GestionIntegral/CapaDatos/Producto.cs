@@ -23,6 +23,10 @@ namespace GestionIntegral.CapaDatos
         int potencialStock;
         int pedidos;
         int requeridos;
+        int pliegosRequeridos;
+        int pliegosSinStock;
+        int papelRequerido;
+        int papelSinStock;
         bool activo;
 
         public int IdProducto { get => idProducto; set => idProducto = value; }
@@ -41,6 +45,10 @@ namespace GestionIntegral.CapaDatos
         public int Pedidos { get => pedidos; set => pedidos = value; }
         public int Requeridos { get => requeridos; set => requeridos = value; }
         public bool Activo { get => activo; set => activo = value; }
+        public int PliegosRequeridos { get => pliegosRequeridos; set => pliegosRequeridos = value; }
+        public int PliegosSinStock { get => pliegosSinStock; set => pliegosSinStock = value; }
+        public int PapelRequerido { get => papelRequerido; set => papelRequerido = value; }
+        public int PapelSinStock { get => papelSinStock; set => papelSinStock = value; }
 
         //constructor para insertar
         public Producto(int idDiseño,  int valorUnico, int idFamilia, string descripcionProducto, int almacen, int taller1, int taller2, int taller3, int taller4, int stockMinimo, int stock, int potencialStock, int pedidos, int requeridos, bool activo)

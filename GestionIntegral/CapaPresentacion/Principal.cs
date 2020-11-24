@@ -381,8 +381,10 @@ namespace GestionIntegral.CapaPresentacion
             //gridStock.Columns[13].Visible = false;//pedidos
             //gridStock.Columns[14].Visible = false;//requeridos
             //gridStock.Columns[15].Visible = false;//Pliegosrequeridos
-            //gridStock.Columns[16].Visible = false;//Papelrequeridos
-            gridStock.Columns[17].Visible = false;//activo
+            //gridStock.Columns[16].Visible = false;//PliegosrequeridosSinStock
+            //gridStock.Columns[17].Visible = false;//Papelrequeridos
+            //gridStock.Columns[18].Visible = false;//PapelrequeridosSinStock
+            gridStock.Columns[19].Visible = false;//activo
 
             gridStock.Columns[4].HeaderText = "Descripcion";
             gridStock.Columns[5].HeaderText = "Almacen";
@@ -396,16 +398,19 @@ namespace GestionIntegral.CapaPresentacion
             gridStock.Columns[13].HeaderText = "Productos Pedidos";
             gridStock.Columns[14].HeaderText = "Productos Requeridos";
             gridStock.Columns[15].HeaderText = "Pliegos requeridos";
-            gridStock.Columns[16].HeaderText = "Papel Requerido";
+            gridStock.Columns[16].HeaderText = "Pliegos sin stock Requeridos";
+            gridStock.Columns[17].HeaderText = "Papel requerido";
+            gridStock.Columns[18].HeaderText = "Papel sin stock Requerido";
 
 
 
             gridStock.Columns[4].Width = 150;
             gridStock.Columns[5].Width = 65;
-            gridStock.Columns[6].Width = 55;
-            gridStock.Columns[7].Width = 55;
-            gridStock.Columns[8].Width = 55;
-            gridStock.Columns[9].Width = 55;
+            gridStock.Columns[6].Width = 50;
+            gridStock.Columns[7].Width = 50;
+            gridStock.Columns[8].Width = 50;
+            gridStock.Columns[9].Width = 50;
+            gridStock.Columns[10].Width = 60;
 
 
 
@@ -442,6 +447,10 @@ namespace GestionIntegral.CapaPresentacion
             }
             else
                 gridResumen.DataSource = metPedido.ListarResumenDePedidos(0);
+
+            gridResumen.Columns[0].HeaderText = "Descripcion del producto";
+            gridResumen.Columns[1].HeaderText = "Cantidad total vendida";
+
         }
 
 

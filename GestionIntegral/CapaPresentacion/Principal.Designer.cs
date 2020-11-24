@@ -79,7 +79,6 @@
             this.btnEditarOT = new System.Windows.Forms.Button();
             this.btnBorrarOT = new System.Windows.Forms.Button();
             this.gridDetalleOT = new System.Windows.Forms.DataGridView();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridListaPedidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStock)).BeginInit();
@@ -199,7 +198,7 @@
             this.gridListaPedidos.ShowCellToolTips = false;
             this.gridListaPedidos.ShowEditingIcon = false;
             this.gridListaPedidos.ShowRowErrors = false;
-            this.gridListaPedidos.Size = new System.Drawing.Size(1031, 320);
+            this.gridListaPedidos.Size = new System.Drawing.Size(1151, 320);
             this.gridListaPedidos.TabIndex = 4;
             // 
             // dateTimePicker1
@@ -278,7 +277,7 @@
             // btnNuevo
             // 
             this.btnNuevo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevo.Location = new System.Drawing.Point(251, 416);
+            this.btnNuevo.Location = new System.Drawing.Point(372, 416);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(188, 34);
             this.btnNuevo.TabIndex = 14;
@@ -289,7 +288,7 @@
             // btnEditar
             // 
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.Location = new System.Drawing.Point(452, 416);
+            this.btnEditar.Location = new System.Drawing.Point(573, 416);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(188, 34);
             this.btnEditar.TabIndex = 15;
@@ -301,7 +300,7 @@
             // 
             this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(854, 416);
+            this.btnEliminar.Location = new System.Drawing.Point(975, 416);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(188, 34);
             this.btnEliminar.TabIndex = 16;
@@ -312,7 +311,7 @@
             // btnFichaCliente
             // 
             this.btnFichaCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFichaCliente.Location = new System.Drawing.Point(653, 416);
+            this.btnFichaCliente.Location = new System.Drawing.Point(774, 416);
             this.btnFichaCliente.Name = "btnFichaCliente";
             this.btnFichaCliente.Size = new System.Drawing.Size(188, 34);
             this.btnFichaCliente.TabIndex = 17;
@@ -322,7 +321,7 @@
             // 
             // txtTotalImportes
             // 
-            this.txtTotalImportes.Location = new System.Drawing.Point(114, 423);
+            this.txtTotalImportes.Location = new System.Drawing.Point(214, 423);
             this.txtTotalImportes.Name = "txtTotalImportes";
             this.txtTotalImportes.Size = new System.Drawing.Size(131, 20);
             this.txtTotalImportes.TabIndex = 18;
@@ -330,7 +329,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 427);
+            this.label4.Location = new System.Drawing.Point(120, 427);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 19;
@@ -371,7 +370,7 @@
             this.gridStock.ShowCellToolTips = false;
             this.gridStock.ShowEditingIcon = false;
             this.gridStock.ShowRowErrors = false;
-            this.gridStock.Size = new System.Drawing.Size(1031, 348);
+            this.gridStock.Size = new System.Drawing.Size(1151, 363);
             this.gridStock.TabIndex = 20;
             this.gridStock.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridStock_CellEndEdit);
             // 
@@ -424,7 +423,7 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridResumen.DefaultCellStyle = dataGridViewCellStyle6;
             this.gridResumen.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridResumen.Location = new System.Drawing.Point(1071, 85);
+            this.gridResumen.Location = new System.Drawing.Point(1179, 93);
             this.gridResumen.Name = "gridResumen";
             this.gridResumen.RowHeadersVisible = false;
             this.gridResumen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -432,7 +431,7 @@
             this.gridResumen.ShowCellToolTips = false;
             this.gridResumen.ShowEditingIcon = false;
             this.gridResumen.ShowRowErrors = false;
-            this.gridResumen.Size = new System.Drawing.Size(501, 316);
+            this.gridResumen.Size = new System.Drawing.Size(393, 308);
             this.gridResumen.TabIndex = 25;
             // 
             // radioDiseño
@@ -468,22 +467,21 @@
             this.groupBox1.Controls.Add(this.radioFamilia);
             this.groupBox1.Controls.Add(this.radioDiseño);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.groupBox1.Location = new System.Drawing.Point(1071, 29);
+            this.groupBox1.Location = new System.Drawing.Point(1179, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(501, 60);
+            this.groupBox1.Size = new System.Drawing.Size(393, 60);
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Resumen de ventas";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.checkBox1);
             this.groupBox2.Controls.Add(this.radioTodosStock);
             this.groupBox2.Controls.Add(this.radioPendientesStock);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
             this.groupBox2.Location = new System.Drawing.Point(12, 449);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1030, 46);
+            this.groupBox2.Size = new System.Drawing.Size(1151, 46);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Disponibilidad";
@@ -493,9 +491,9 @@
             this.groupBox3.Controls.Add(this.radioProcesoOT);
             this.groupBox3.Controls.Add(this.radioRetirado);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.groupBox3.Location = new System.Drawing.Point(1071, 416);
+            this.groupBox3.Location = new System.Drawing.Point(1179, 416);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(495, 65);
+            this.groupBox3.Size = new System.Drawing.Size(387, 65);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ordenes de trabajo";
@@ -551,7 +549,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridOT.DefaultCellStyle = dataGridViewCellStyle8;
             this.gridOT.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridOT.Location = new System.Drawing.Point(1071, 483);
+            this.gridOT.Location = new System.Drawing.Point(1179, 483);
             this.gridOT.Name = "gridOT";
             this.gridOT.RowHeadersVisible = false;
             this.gridOT.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -559,16 +557,16 @@
             this.gridOT.ShowCellToolTips = false;
             this.gridOT.ShowEditingIcon = false;
             this.gridOT.ShowRowErrors = false;
-            this.gridOT.Size = new System.Drawing.Size(201, 333);
+            this.gridOT.Size = new System.Drawing.Size(190, 333);
             this.gridOT.TabIndex = 30;
             this.gridOT.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridOT_CellClick);
             // 
             // btnNvaOT
             // 
             this.btnNvaOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnNvaOT.Location = new System.Drawing.Point(1071, 822);
+            this.btnNvaOT.Location = new System.Drawing.Point(1179, 822);
             this.btnNvaOT.Name = "btnNvaOT";
-            this.btnNvaOT.Size = new System.Drawing.Size(130, 42);
+            this.btnNvaOT.Size = new System.Drawing.Size(120, 42);
             this.btnNvaOT.TabIndex = 29;
             this.btnNvaOT.Text = "Nueva Or. de trabajo";
             this.btnNvaOT.UseVisualStyleBackColor = true;
@@ -577,9 +575,9 @@
             // btnEditarOT
             // 
             this.btnEditarOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnEditarOT.Location = new System.Drawing.Point(1253, 822);
+            this.btnEditarOT.Location = new System.Drawing.Point(1315, 822);
             this.btnEditarOT.Name = "btnEditarOT";
-            this.btnEditarOT.Size = new System.Drawing.Size(130, 42);
+            this.btnEditarOT.Size = new System.Drawing.Size(120, 42);
             this.btnEditarOT.TabIndex = 32;
             this.btnEditarOT.Text = "Editar Or. de trabajo";
             this.btnEditarOT.UseVisualStyleBackColor = true;
@@ -589,9 +587,9 @@
             // 
             this.btnBorrarOT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnBorrarOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnBorrarOT.Location = new System.Drawing.Point(1435, 822);
+            this.btnBorrarOT.Location = new System.Drawing.Point(1451, 822);
             this.btnBorrarOT.Name = "btnBorrarOT";
-            this.btnBorrarOT.Size = new System.Drawing.Size(130, 42);
+            this.btnBorrarOT.Size = new System.Drawing.Size(120, 42);
             this.btnBorrarOT.TabIndex = 33;
             this.btnBorrarOT.Text = "Borrar Orden de trabajo";
             this.btnBorrarOT.UseVisualStyleBackColor = false;
@@ -620,7 +618,7 @@
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridDetalleOT.DefaultCellStyle = dataGridViewCellStyle10;
             this.gridDetalleOT.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridDetalleOT.Location = new System.Drawing.Point(1278, 483);
+            this.gridDetalleOT.Location = new System.Drawing.Point(1375, 483);
             this.gridDetalleOT.Name = "gridDetalleOT";
             this.gridDetalleOT.RowHeadersVisible = false;
             this.gridDetalleOT.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -628,19 +626,8 @@
             this.gridDetalleOT.ShowCellToolTips = false;
             this.gridDetalleOT.ShowEditingIcon = false;
             this.gridDetalleOT.ShowRowErrors = false;
-            this.gridDetalleOT.Size = new System.Drawing.Size(288, 333);
+            this.gridDetalleOT.Size = new System.Drawing.Size(197, 333);
             this.gridDetalleOT.TabIndex = 30;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.checkBox1.Location = new System.Drawing.Point(860, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(164, 21);
-            this.checkBox1.TabIndex = 25;
-            this.checkBox1.Text = "Requeridos con stock";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Principal
             // 
@@ -740,7 +727,6 @@
         private System.Windows.Forms.Button btnEditarOT;
         private System.Windows.Forms.Button btnBorrarOT;
         private System.Windows.Forms.DataGridView gridDetalleOT;
-        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
