@@ -28,17 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnProductoNuevo = new System.Windows.Forms.GroupBox();
             this.radioInactivos = new System.Windows.Forms.RadioButton();
             this.radioActivos = new System.Windows.Forms.RadioButton();
             this.btnEliminarCliente = new System.Windows.Forms.Button();
-            this.btnTransporte = new System.Windows.Forms.Button();
             this.cbLocalidad = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.cbTransporte = new System.Windows.Forms.ComboBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cbProvincia = new System.Windows.Forms.ComboBox();
             this.gridClientes = new System.Windows.Forms.DataGridView();
@@ -51,7 +49,6 @@
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.dtpFechaAlta = new System.Windows.Forms.DateTimePicker();
             this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.txtMail = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -74,6 +71,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtCalle = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btnTransporte = new System.Windows.Forms.Button();
+            this.cbTransporte = new System.Windows.Forms.ComboBox();
             this.btnProductoNuevo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -169,25 +169,6 @@
             this.btnEliminarCliente.UseVisualStyleBackColor = false;
             this.btnEliminarCliente.Click += new System.EventHandler(this.btnEliminarCliente_Click);
             // 
-            // btnTransporte
-            // 
-            this.btnTransporte.BackgroundImage = global::GestionIntegral.Properties.Resources._89140;
-            this.btnTransporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnTransporte.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTransporte.FlatAppearance.BorderSize = 0;
-            this.btnTransporte.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnTransporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTransporte.ForeColor = System.Drawing.Color.Black;
-            this.btnTransporte.Location = new System.Drawing.Point(171, 245);
-            this.btnTransporte.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTransporte.Name = "btnTransporte";
-            this.btnTransporte.Size = new System.Drawing.Size(26, 28);
-            this.btnTransporte.TabIndex = 53;
-            this.btnTransporte.Text = "+";
-            this.btnTransporte.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnTransporte.UseVisualStyleBackColor = true;
-            this.btnTransporte.Click += new System.EventHandler(this.btnTransporte_Click);
-            // 
             // cbLocalidad
             // 
             this.cbLocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -208,15 +189,6 @@
             this.label21.Size = new System.Drawing.Size(158, 15);
             this.label21.TabIndex = 35;
             this.label21.Text = "Buscar por razon social";
-            // 
-            // cbTransporte
-            // 
-            this.cbTransporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbTransporte.FormattingEnabled = true;
-            this.cbTransporte.Location = new System.Drawing.Point(11, 249);
-            this.cbTransporte.Name = "cbTransporte";
-            this.cbTransporte.Size = new System.Drawing.Size(157, 24);
-            this.cbTransporte.TabIndex = 12;
             // 
             // txtBuscar
             // 
@@ -244,30 +216,30 @@
             this.gridClientes.AllowUserToDeleteRows = false;
             this.gridClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridClientes.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.gridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridClientes.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridClientes.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridClientes.DefaultCellStyle = dataGridViewCellStyle5;
             this.gridClientes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.gridClientes.Location = new System.Drawing.Point(396, 62);
             this.gridClientes.Name = "gridClientes";
             this.gridClientes.RowHeadersVisible = false;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            this.gridClientes.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            this.gridClientes.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.gridClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridClientes.ShowCellErrors = false;
             this.gridClientes.ShowCellToolTips = false;
@@ -375,16 +347,6 @@
             this.label14.Size = new System.Drawing.Size(103, 16);
             this.label14.TabIndex = 28;
             this.label14.Text = "Fecha de alta";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(11, 231);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(158, 16);
-            this.label13.TabIndex = 26;
-            this.label13.Text = "Transporte que utiliza";
             // 
             // label12
             // 
@@ -592,6 +554,44 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Razon Social";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(11, 231);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(158, 16);
+            this.label13.TabIndex = 26;
+            this.label13.Text = "Transporte que utiliza";
+            // 
+            // btnTransporte
+            // 
+            this.btnTransporte.BackgroundImage = global::GestionIntegral.Properties.Resources._89140;
+            this.btnTransporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnTransporte.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTransporte.FlatAppearance.BorderSize = 0;
+            this.btnTransporte.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnTransporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTransporte.ForeColor = System.Drawing.Color.Black;
+            this.btnTransporte.Location = new System.Drawing.Point(171, 245);
+            this.btnTransporte.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTransporte.Name = "btnTransporte";
+            this.btnTransporte.Size = new System.Drawing.Size(26, 28);
+            this.btnTransporte.TabIndex = 53;
+            this.btnTransporte.Text = "+";
+            this.btnTransporte.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnTransporte.UseVisualStyleBackColor = true;
+            this.btnTransporte.Click += new System.EventHandler(this.btnTransporte_Click);
+            // 
+            // cbTransporte
+            // 
+            this.cbTransporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbTransporte.FormattingEnabled = true;
+            this.cbTransporte.Location = new System.Drawing.Point(11, 249);
+            this.cbTransporte.Name = "cbTransporte";
+            this.cbTransporte.Size = new System.Drawing.Size(157, 24);
+            this.cbTransporte.TabIndex = 12;
+            // 
             // Clientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -618,10 +618,8 @@
 
         private System.Windows.Forms.GroupBox btnProductoNuevo;
         private System.Windows.Forms.Button btnEliminarCliente;
-        private System.Windows.Forms.Button btnTransporte;
         private System.Windows.Forms.ComboBox cbLocalidad;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.ComboBox cbTransporte;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.ComboBox cbProvincia;
         private System.Windows.Forms.DataGridView gridClientes;
@@ -634,7 +632,6 @@
         private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.DateTimePicker dtpFechaAlta;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtMail;
         private System.Windows.Forms.Label label11;
@@ -659,5 +656,8 @@
         private System.Windows.Forms.RadioButton radioInactivos;
         private System.Windows.Forms.RadioButton radioActivos;
         private System.Windows.Forms.CheckBox checkActivo;
+        private System.Windows.Forms.Button btnTransporte;
+        private System.Windows.Forms.ComboBox cbTransporte;
+        private System.Windows.Forms.Label label13;
     }
 }

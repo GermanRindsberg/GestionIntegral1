@@ -277,7 +277,7 @@
             // btnNuevo
             // 
             this.btnNuevo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevo.Location = new System.Drawing.Point(372, 416);
+            this.btnNuevo.Location = new System.Drawing.Point(264, 407);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(188, 34);
             this.btnNuevo.TabIndex = 14;
@@ -288,7 +288,7 @@
             // btnEditar
             // 
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.Location = new System.Drawing.Point(573, 416);
+            this.btnEditar.Location = new System.Drawing.Point(501, 407);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(188, 34);
             this.btnEditar.TabIndex = 15;
@@ -300,7 +300,7 @@
             // 
             this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(975, 416);
+            this.btnEliminar.Location = new System.Drawing.Point(975, 407);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(188, 34);
             this.btnEliminar.TabIndex = 16;
@@ -311,7 +311,7 @@
             // btnFichaCliente
             // 
             this.btnFichaCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFichaCliente.Location = new System.Drawing.Point(774, 416);
+            this.btnFichaCliente.Location = new System.Drawing.Point(738, 407);
             this.btnFichaCliente.Name = "btnFichaCliente";
             this.btnFichaCliente.Size = new System.Drawing.Size(188, 34);
             this.btnFichaCliente.TabIndex = 17;
@@ -321,7 +321,7 @@
             // 
             // txtTotalImportes
             // 
-            this.txtTotalImportes.Location = new System.Drawing.Point(214, 423);
+            this.txtTotalImportes.Location = new System.Drawing.Point(111, 407);
             this.txtTotalImportes.Name = "txtTotalImportes";
             this.txtTotalImportes.Size = new System.Drawing.Size(131, 20);
             this.txtTotalImportes.TabIndex = 18;
@@ -329,7 +329,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(120, 427);
+            this.label4.Location = new System.Drawing.Point(17, 411);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 19;

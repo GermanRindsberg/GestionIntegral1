@@ -126,83 +126,109 @@ namespace GestionIntegral.CapaPresentacion
         {
             if (operacion == "insertar")
             {
-                //creo una direccion
-                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                calle = txtCalle.Text;
-                numero = txtNro.Text;
-                piso = txtPiso.Text;
-                depto = txtDepto.Text;
-
-                Direccion dir = new Direccion(idLocalidad, calle, numero, piso, depto);//creo el objeto direccion 
-
-                mtDir.InsertarDireccion(dir);//inserto la direccion
-
-                //creo un cliente
-                razonSocial = cbRazonSocial.Text.ToString();
-                idDireccion = mtDir.UltimoIdDireccion();
-                tel1 = txtTel1.Text;
-                tel2 = txtTel2.Text;
-                email = txtMail.Text;
-                cuit = txtCuit.Text;
-                if (cbTransporte.SelectedValue == null || int.Parse(cbTransporte.SelectedValue.ToString()) == 0)
+                if (txtCalle.Text == "" || txtCodigoPostal.Text == "" || cbTipoLista.SelectedIndex == 0)
                 {
-                    idTransporte = 1;
+                    MessageBox.Show("Faltan datos");
+
                 }
                 else
                 {
-                    idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                    //creo una direccion
+                    idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                    calle = txtCalle.Text;
+                    numero = txtNro.Text;
+                    piso = txtPiso.Text;
+                    depto = txtDepto.Text;
+
+                    Direccion dir = new Direccion(idLocalidad, calle, numero, piso, depto);//creo el objeto direccion 
+
+                    mtDir.InsertarDireccion(dir);//inserto la direccion
+
+                    //creo un cliente
+                    razonSocial = cbRazonSocial.Text.ToString();
+                    idDireccion = mtDir.UltimoIdDireccion();
+                    tel1 = txtTel1.Text;
+                    tel2 = txtTel2.Text;
+                    email = txtMail.Text;
+                    cuit = txtCuit.Text;
+                    if (cbTransporte.SelectedValue == null || int.Parse(cbTransporte.SelectedValue.ToString()) == 0)
+                    {
+                        MessageBox.Show("Falta seleccionar un transporte");
+                        return;
+                    }
+                    else
+                    {
+                        idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                    }
+                    fechaAlta = dtpFechaAlta.Value;
+                    observaciones = txtObservaciones.Text;
+
+                    Cliente objCliente = new Cliente(razonSocial, idDireccion, tel1, tel2, activo,
+                        email, cuit, idTransporte, fechaAlta, observaciones, tipoLista);//creo el objeto cliente
+
+                    mtcl.InsertarClientes(objCliente);//inserto el cliente
+
+                    MessageBox.Show("Insertado con exito");
+                    limpiarCampos();
+                    ListarClientesEnGrid("", "1");
+                    ListarTransporteEnComboBox();
                 }
-                fechaAlta = dtpFechaAlta.Value;
-                observaciones = txtObservaciones.Text;
+                }
 
-                Cliente objCliente = new Cliente(razonSocial, idDireccion, tel1, tel2, activo,
-                    email, cuit, idTransporte, fechaAlta, observaciones, tipoLista);//creo el objeto cliente
-
-                mtcl.InsertarClientes(objCliente);//inserto el cliente
-
-                MessageBox.Show("Insertado con exito");
-                limpiarCampos();
-                ListarClientesEnGrid("", "1");
-                ListarTransporteEnComboBox();
-            }
-            if (operacion == "editar")
-            {
-               //edito la direccion
-                idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
-                calle = txtCalle.Text;
-                numero = txtNro.Text;
-                piso = txtPiso.Text;
-                depto = txtDepto.Text;
-                Direccion dir = new Direccion(idDireccion, idLocalidad, calle, numero, depto, piso);
-                mtDir.EditarDireccion(dir);//edito la direccion
-
-
-                if (checkActivo.Checked == true)
+                if (operacion == "editar")
                 {
-                    activo = true;
-                }
-                if (checkActivo.Checked == false)
+                if (txtCalle.Text == "" || txtCodigoPostal.Text == "" || cbTipoLista.SelectedIndex == 0)
                 {
-                    activo = false;
+                    MessageBox.Show("Faltan datos");
+
                 }
-                razonSocial = cbRazonSocial.Text;
-                tel1 = txtTel1.Text;
-                tel2 = txtTel2.Text;
-                email = txtMail.Text;
-                cuit = txtCuit.Text;
-                idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
-                fechaAlta = dtpFechaAlta.Value;
-                observaciones = txtObservaciones.Text;
+                else
+                {
+                    //edito la direccion
+                    idLocalidad = Convert.ToInt32(cbLocalidad.SelectedValue.ToString());
+                    calle = txtCalle.Text;
+                    numero = txtNro.Text;
+                    piso = txtPiso.Text;
+                    depto = txtDepto.Text;
+                    Direccion dir = new Direccion(idDireccion, idLocalidad, calle, numero, depto, piso);
+                    mtDir.EditarDireccion(dir);//edito la direccion
 
-                Cliente cl = new Cliente(idCliente,razonSocial, idDireccion,tel1,tel2,activo,email,cuit,idTransporte,fechaAlta,observaciones,tipoLista);
 
-                mtcl.EditarClientes(cl);
+                    if (checkActivo.Checked == true)
+                    {
+                        activo = true;
+                    }
+                    if (checkActivo.Checked == false)
+                    {
+                        activo = false;
+                    }
+                    razonSocial = cbRazonSocial.Text;
+                    tel1 = txtTel1.Text;
+                    tel2 = txtTel2.Text;
+                    email = txtMail.Text;
+                    cuit = txtCuit.Text;
+                    if (cbTransporte.SelectedValue == null || int.Parse(cbTransporte.SelectedValue.ToString()) == 0)
+                    {
+                        MessageBox.Show("Falta seleccionar un transporte");
+                        return;
+                    }
+                    else
+                    {
+                        idTransporte = Convert.ToInt32(cbTransporte.SelectedValue.ToString());
+                    }
+                    fechaAlta = dtpFechaAlta.Value;
+                    observaciones = txtObservaciones.Text;
 
-                MessageBox.Show("Editado con exito");
-                limpiarCampos();
-                ListarClientesEnGrid("", "1");
-                ListarTransporteEnComboBox();
-                cbProvincia.SelectedIndex = 0;
+                    Cliente cl = new Cliente(idCliente, razonSocial, idDireccion, tel1, tel2, activo, email, cuit, idTransporte, fechaAlta, observaciones, tipoLista);
+
+                    mtcl.EditarClientes(cl);
+
+                    MessageBox.Show("Editado con exito");
+                    limpiarCampos();
+                    ListarClientesEnGrid("", "1");
+                    ListarTransporteEnComboBox();
+                    cbProvincia.SelectedIndex = 0;
+                }
             }
         }
 
